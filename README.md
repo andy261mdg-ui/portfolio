@@ -21,7 +21,7 @@ css/style.css         Design (fond neutre + accent bleu)
 js/main.js            Menu mobile, scrollspy, FAQ, formulaire mailto, année
 assets/favicon.svg    Monogramme « AR »
 assets/cv/            CV d'Andy (CV-Andy-Rakotondrabe.pdf)
-assets/img/           Portrait pro (andy-rakotondrabe-pro.jpg) + original
+assets/img/           Portrait (andy-rakotondrabe-portrait-cadre.png) + source
 ```
 
 ## Points à compléter plus tard
@@ -29,9 +29,9 @@ assets/img/           Portrait pro (andy-rakotondrabe-pro.jpg) + original
 - **CV** : le PDF est intégré (`assets/cv/CV-Andy-Rakotondrabe.pdf`) et lié depuis le
   Hero et la section Contact. Remplacer le fichier pour mettre le CV à jour.
 - **Photo / logo** : le Hero utilise le portrait professionnel
-  (`assets/img/andy-rakotondrabe-pro.jpg`) ; l'original reste conservé
-  (`assets/img/andy-rakotondrabe.jpg`). L'en-tête conserve le monogramme « AR » ; le favicon
-  est à mettre à jour (`assets/favicon.svg`) si vous souhaitez une icône différente.
+  (`assets/img/andy-rakotondrabe-portrait-cadre.png`) ; la photo source est conservée
+  (`assets/img/andy-rakotondrabe-portrait.png`). L'en-tête conserve le monogramme « AR » ; le
+  favicon est à mettre à jour (`assets/favicon.svg`) si vous souhaitez une icône différente.
 - **Témoignages** : remplacer le bloc `<!-- PLACEHOLDER -->` de la section
   `#temoignages` par de vrais avis clients dès réception.
 - **FAQ n°5** (« Comment se déroule une collaboration ? ») : texte générique à valider
