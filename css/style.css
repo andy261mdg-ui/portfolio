@@ -914,6 +914,16 @@ a:hover {
   background: var(--accent-soft);
 }
 
+/* Sur écran tactile, le bouton « Copier l'adresse » atteint la cible
+   confortable de 44 px (il mesure 30 px à la souris, ce qui suffit au pointeur
+   fin mais pas au doigt). */
+@media (pointer: coarse) {
+  .copy-btn {
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+}
+
 .contact-form {
   background: #fff;
   border: 1px solid var(--border);
