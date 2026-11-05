@@ -185,17 +185,18 @@
         return;
       }
       hintEl.textContent = isRemote
-        ? "Votre message m'est envoyé directement, sans ouvrir de logiciel de messagerie. " +
-          "Réponse sous 24 à 48 h ouvrées. Les informations transmises sont traitées par " +
-          "le service d'envoi Formspree. Vous préférez un email ? "
+        ? "Réponse sous 24 à 48 h ouvrées. Les informations transmises sont traitées par " +
+          "le service d'envoi Formspree."
         : "Ce formulaire ouvre votre logiciel de messagerie avec un message pré-rempli. " +
           "Sans messagerie configurée, écrivez directement à ";
 
-      var link = document.createElement("a");
-      link.href = "mailto:" + DEST;
-      link.textContent = DEST;
-      hintEl.appendChild(link);
-      hintEl.appendChild(document.createTextNode("."));
+      if (!isRemote) {
+        var link = document.createElement("a");
+        link.href = "mailto:" + DEST;
+        link.textContent = DEST;
+        hintEl.appendChild(link);
+        hintEl.appendChild(document.createTextNode("."));
+      }
     }
 
     setHint(/^https?:\/\//i.test((form.getAttribute("action") || "").trim()));
