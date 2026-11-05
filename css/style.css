@@ -225,6 +225,17 @@ a:hover {
   font-size: 0.95rem;
 }
 
+/* Le bouton du menu est un lien : .nav-list a (gris) l'emportait sur .btn-primary,
+   d'où un texte gris sur fond bleu. On rétablit le blanc. */
+.nav-list a.nav-cta {
+  color: #fff;
+}
+
+.nav-list a.nav-cta:hover {
+  color: #fff;
+  background: var(--accent-hover);
+}
+
 .nav-cta.active {
   color: #fff !important;
 }
@@ -511,37 +522,58 @@ a:hover {
 
 .more-pubs {
   margin-top: 40px;
-  max-width: 820px;
+  max-width: 880px;
 }
 
 .more-pubs-title {
   font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
 }
 
-.pubs-list {
+.more-pubs-lead {
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* Grille des autres médias : une « pastille » cliquable par média */
+.media-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 8px 28px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
 }
 
-.pubs-list li {
+.media-grid a {
   display: flex;
-  flex-wrap: wrap;
-  gap: 3px 10px;
-  align-items: baseline;
-}
-
-.pubs-list a {
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  padding: 13px 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.98rem;
   font-weight: 600;
+  line-height: 1.35;
+  transition: transform 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.pubs-list span {
-  font-size: 0.88rem;
+.media-grid a:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.media-host {
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--text-muted);
 }
 
@@ -829,6 +861,12 @@ a:hover {
     -webkit-hyphens: manual;
     hyphens: manual;
   }
+
+  /* Grille des médias : deux colonnes plutôt qu'une longue liste verticale */
+  .media-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -889,6 +927,10 @@ a:hover {
   }
 
   .btn:hover {
+    transform: none;
+  }
+
+  .media-grid a:hover {
     transform: none;
   }
 }
