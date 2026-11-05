@@ -185,18 +185,21 @@
         return;
       }
       hintEl.textContent = isRemote
-        ? "Réponse sous 24 à 48 h ouvrées. Les informations transmises sont traitées par " +
-          "le service d'envoi Formspree."
+        ? "Réponse sous 48 h ouvrées. Vos données (nom, email, message) servent uniquement " +
+          "à vous répondre, via Formspree. "
         : "Ce formulaire ouvre votre logiciel de messagerie avec un message pré-rempli. " +
           "Sans messagerie configurée, écrivez directement à ";
 
-      if (!isRemote) {
-        var link = document.createElement("a");
+      var link = document.createElement("a");
+      if (isRemote) {
+        link.href = "confidentialite.html";
+        link.textContent = "Politique de confidentialité";
+      } else {
         link.href = "mailto:" + DEST;
         link.textContent = DEST;
-        hintEl.appendChild(link);
-        hintEl.appendChild(document.createTextNode("."));
       }
+      hintEl.appendChild(link);
+      hintEl.appendChild(document.createTextNode("."));
     }
 
     setHint(/^https?:\/\//i.test((form.getAttribute("action") || "").trim()));

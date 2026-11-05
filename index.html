@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=5">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -466,7 +466,7 @@
         <h2 class="section-title" id="contact-title">Contact</h2>
         <div class="contact-grid">
           <div class="contact-info">
-            <p class="contact-lead">Un projet de contenu ? Écrivez-moi, je vous réponds rapidement.</p>
+            <p class="contact-lead">Un projet de contenu ? Écrivez-moi — réponse sous 48 h ouvrées.</p>
             <ul class="contact-list">
               <li>
                 <span class="contact-label">Email</span>
@@ -496,7 +496,7 @@
               <input type="email" id="cf-email" name="email" autocomplete="email" required>
             </div>
             <div class="form-row">
-              <label for="cf-subject">Sujet</label>
+              <label for="cf-subject">Sujet <span class="label-optional">(facultatif)</span></label>
               <input type="text" id="cf-subject" name="subject">
             </div>
             <div class="form-row">
@@ -509,10 +509,11 @@
             <div class="form-honeypot" aria-hidden="true">
               <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
             </div>
-            <button class="btn btn-primary" type="submit">Envoyer le message</button>
+            <button class="btn btn-primary" type="submit" aria-describedby="form-hint">Envoyer le message</button>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            <p class="form-hint" id="form-hint">Réponse sous 24 à 48 h ouvrées. Les informations
-              transmises sont traitées par le service d'envoi Formspree.</p>
+            <p class="form-hint" id="form-hint">Réponse sous 48 h ouvrées. Vos données (nom, email,
+              message) servent uniquement à vous répondre, via Formspree.
+              <a href="confidentialite.html">Politique de confidentialité</a>.</p>
           </form>
         </div>
       </div>
@@ -525,11 +526,12 @@
       <p class="footer-copy">© <span id="year">2026</span> Andy Rakotondrabe — SEO Content Writer - Guest Blogger</p>
       <p class="footer-links">
         <a href="https://www.linkedin.com/in/andy-rakotondrabe/" target="_blank" rel="me noopener">LinkedIn</a>
+        <a href="confidentialite.html">Confidentialité</a>
         <a href="#haut">Haut de page</a>
       </p>
     </div>
   </footer>
 
-  <script src="js/main.js?v=4"></script>
+  <script src="js/main.js?v=5"></script>
 </body>
 </html>

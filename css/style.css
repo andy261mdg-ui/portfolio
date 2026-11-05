@@ -404,6 +404,46 @@ a:hover {
   hyphens: auto;
 }
 
+/* ---------- Page annexe : confidentialité & mentions légales ---------- */
+.legal .prose {
+  max-width: 760px;
+  gap: 14px;
+}
+
+.legal .prose h2 {
+  margin-top: 18px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.legal .prose h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.legal .prose ul {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}
+
+.legal .prose a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal .prose a.btn {
+  text-decoration: none;
+}
+
+.legal-back {
+  margin-top: 10px;
+}
+
 /* Liste des collaborations régulières (section À propos) */
 .collab {
   display: grid;
@@ -753,6 +793,13 @@ a:hover {
 
 .form-hint a {
   font-weight: 600;
+}
+
+/* Mention « (facultatif) » dans les libellés de formulaire */
+.label-optional {
+  font-weight: 500;
+  font-size: 0.85em;
+  color: var(--text-muted);
 }
 
 .form-status {
