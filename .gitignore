@@ -1,0 +1,12 @@
+# Système / éditeurs
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Fichiers temporaires
+*.log
+*.tmp
+.chrome-profile/
+
+# Dépendances éventuelles
+node_modules/
