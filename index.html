@@ -33,12 +33,11 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <meta name="theme-color" content="#2563eb">
 
-  <!-- Police (dégradation gracieuse si hors ligne) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Police auto-hébergée (Inter, variable, sous-ensemble latin, 47 Ko) :
+       aucune requête tierce bloquante. Licence : assets/fonts/LICENSE-Inter.txt -->
+  <link rel="preload" href="assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=16">
+  <link rel="stylesheet" href="css/style.css?v=18">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -211,7 +210,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#haut" aria-label="Andy Rakotondrabe — accueil">
-        <span class="brand-mark" aria-hidden="true">AR</span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name">Andy Rakotondrabe</span>
       </a>
 
@@ -713,6 +712,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=8"></script>
+  <script src="js/main.js?v=9"></script>
 </body>
 </html>

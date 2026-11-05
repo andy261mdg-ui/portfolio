@@ -147,8 +147,16 @@
       },
       {
         el: form.elements["email"],
-        ok: function (value) {
-          return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(value);
+        ok: function (value, el) {
+          // Source de vérité : l'API de validation native du navigateur
+          // (type="email"), la même que celle utilisée sans JavaScript.
+          if (el.validity && el.validity.typeMismatch) {
+            return false;
+          }
+          // Heuristique complémentaire : le navigateur accepte « nom@domaine »
+          // sans extension, or une adresse sans point est presque toujours une
+          // faute de frappe.
+          return /\.[a-z]{2,}$/i.test(value);
         },
         message: "Indiquez une adresse email valide, par exemple nom@domaine.fr."
       },
@@ -178,7 +186,7 @@
 
     // Valide un champ ; renvoie true si sa valeur est acceptée
     function validateField(field) {
-      var isValid = field.ok(field.el.value.trim());
+      var isValid = field.ok(field.el.value.trim(), field.el);
       setFieldState(field, isValid ? "" : field.message);
       return isValid;
     }
