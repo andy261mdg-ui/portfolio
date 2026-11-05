@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=13">
+  <link rel="stylesheet" href="css/style.css?v=14">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -68,7 +68,9 @@
           "https://android-mt.ouest-france.fr/author/andyamt/",
           "https://fr.ign.com/u/andy-r",
           "https://www.numedia.fr/author/andy",
-          "https://lemagjeuxhightech.com/author/andy-rakotondrabe/"
+          "https://lemagjeuxhightech.com/author/andy-rakotondrabe/",
+          "https://www.neozone.org/author/andy/",
+          "https://www.justgeek.fr/author/andy/"
         ]
       },
       {
@@ -250,7 +252,7 @@
             <a class="btn btn-secondary" href="#realisations">Voir mes réalisations</a>
             <a class="btn btn-secondary" href="assets/cv/CV-Andy-Rakotondrabe.pdf" download>Télécharger mon CV</a>
           </div>
-          <p class="hero-meta">15+ ans d'expérience · IGN France · Android MT · NuMedia</p>
+          <p class="hero-meta">15 ans d'expérience · IGN France · Android MT · NuMedia</p>
         </div>
         <div class="hero-photo">
           <picture>
@@ -421,6 +423,7 @@
             <p class="card-meta">Pigiste · depuis avril 2024</p>
             <p class="card-text">Suivez mes publications sur Android MT.</p>
             <span class="card-arrow" aria-hidden="true">→</span>
+            <span class="sr-only"> (nouvel onglet)</span>
           </a>
 
           <a class="card card-link" href="https://fr.ign.com/u/andy-r" target="_blank" rel="noopener">
@@ -429,6 +432,7 @@
             <p class="card-meta">Pigiste · depuis décembre 2024</p>
             <p class="card-text">Suivez mes publications sur IGN France.</p>
             <span class="card-arrow" aria-hidden="true">→</span>
+            <span class="sr-only"> (nouvel onglet)</span>
           </a>
 
           <a class="card card-link" href="https://www.numedia.fr/author/andy" target="_blank" rel="noopener">
@@ -437,6 +441,7 @@
             <p class="card-meta">Pigiste · depuis février 2023</p>
             <p class="card-text">Suivez mes publications sur NuMedia.</p>
             <span class="card-arrow" aria-hidden="true">→</span>
+            <span class="sr-only"> (nouvel onglet)</span>
           </a>
 
           <a class="card card-link" href="https://lemagjeuxhightech.com/author/andy-rakotondrabe/" target="_blank" rel="noopener">
@@ -445,6 +450,7 @@
             <p class="card-meta">Guest blogger · depuis juin 2021</p>
             <p class="card-text">Veille IT, rédaction et intégration sous WordPress.</p>
             <span class="card-arrow" aria-hidden="true">→</span>
+            <span class="sr-only"> (nouvel onglet)</span>
           </a>
 
           <a class="card card-link" href="https://www.neozone.org/author/andy/" target="_blank" rel="noopener">
@@ -452,6 +458,25 @@
             <h3 class="card-title">NeozOne</h3>
             <p class="card-meta">Rédacteur indépendant · 2019–2022</p>
             <p class="card-text">Suivez mes publications sur NeozOne.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+            <span class="sr-only"> (nouvel onglet)</span>
+          </a>
+
+          <!-- Carte d'appel à l'action : ferme la grille sur ses trois colonnes
+               (6 cartes = aucune ligne incomplète) et offre une porte de sortie
+               au visiteur qui ne trouve pas son média dans la liste. -->
+          <a class="card card-link card-cta" href="#contact">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9h4"/>
+                <path d="M18 14h-8"/>
+                <path d="M15 18h-5"/>
+                <path d="M10 6h8v4h-8V6Z"/>
+              </svg>
+            </div>
+            <h3 class="card-title">Un autre média&nbsp;?</h3>
+            <p class="card-text">Presse spécialisée, marque ou site e&#8209;commerce : dites-moi ce que
+              vous publiez, je m'adapte au format.</p>
             <span class="card-arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -468,6 +493,7 @@
                   <span class="media-name">Blog-United</span>
                   <span class="media-host">blog-united.com</span>
                 </span>
+                <span class="sr-only"> (nouvel onglet)</span>
               </a>
             </li>
             <li>
@@ -477,6 +503,7 @@
                   <span class="media-name">BuzzArena</span>
                   <span class="media-host">buzzarena.com</span>
                 </span>
+                <span class="sr-only"> (nouvel onglet)</span>
               </a>
             </li>
             <li>
@@ -486,15 +513,17 @@
                   <span class="media-name">JustGeek</span>
                   <span class="media-host">justgeek.fr</span>
                 </span>
+                <span class="sr-only"> (nouvel onglet)</span>
               </a>
             </li>
             <li>
               <a href="https://pix-geeks.com" target="_blank" rel="noopener">
                 <img class="media-logo" src="assets/img/media/pix-geeks.png" alt="" width="22" height="22" loading="lazy" decoding="async">
                 <span class="media-text">
-                  <span class="media-name">Pix Geeks</span>
+                  <span class="media-name">PIX GEEKS</span>
                   <span class="media-host">pix-geeks.com</span>
                 </span>
+                <span class="sr-only"> (nouvel onglet)</span>
               </a>
             </li>
           </ul>
@@ -610,7 +639,7 @@
               </li>
               <li>
                 <span class="contact-label">LinkedIn</span>
-                <a href="https://www.linkedin.com/in/andy-rakotondrabe/" target="_blank" rel="noopener">Profil LinkedIn</a>
+                <a href="https://www.linkedin.com/in/andy-rakotondrabe/" target="_blank" rel="noopener">Profil LinkedIn<span class="sr-only"> (nouvel onglet)</span></a>
               </li>
               <li>
                 <span class="contact-label">CV</span>
@@ -660,7 +689,7 @@
     <div class="container footer-inner">
       <p class="footer-copy">© <span id="year">2026</span> Andy Rakotondrabe — SEO Content Writer - Guest Blogger</p>
       <p class="footer-links">
-        <a href="https://www.linkedin.com/in/andy-rakotondrabe/" target="_blank" rel="me noopener">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/andy-rakotondrabe/" target="_blank" rel="me noopener">LinkedIn<span class="sr-only"> (nouvel onglet)</span></a>
         <a href="confidentialite.html">Confidentialité</a>
         <a href="#haut">Haut de page</a>
       </p>

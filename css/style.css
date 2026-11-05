@@ -100,6 +100,23 @@ a:hover {
   left: 0;
 }
 
+/* Texte réservé aux lecteurs d'écran. Contrairement à .skip-link, qui doit
+   redevenir visible au clavier, ce motif ne prend jamais le focus : il ajoute
+   une précision que la mise en page ne peut pas afficher (par exemple
+   « (nouvel onglet) » après un lien sortant). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- Boutons ---------- */
 .btn {
   display: inline-flex;
@@ -630,9 +647,9 @@ a:hover {
 }
 
 /* ---------- Carte d'appel à l'action ---------- */
-/* Sixième carte de « Services » : teintée d'accent pour se distinguer des
-   prestations, et compléter la grille (6 cartes = aucune ligne incomplète,
-   que la grille affiche 3, 2 ou 1 colonne). */
+/* Sixième carte de « Services » et de « Réalisations » : teintée d'accent pour
+   se distinguer des cartes de contenu, et compléter la grille (6 cartes =
+   aucune ligne incomplète, que la grille affiche 3, 2 ou 1 colonne). */
 .card-cta {
   display: flex;
   flex-direction: column;
