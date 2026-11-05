@@ -1119,4 +1119,8 @@ a:hover {
   .media-grid a:hover {
     transform: none;
   }
+
+  .card-link:hover {
+    transform: none;
+  }
 }
