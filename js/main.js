@@ -185,8 +185,7 @@
         return;
       }
       hintEl.textContent = isRemote
-        ? "Réponse sous 48 h ouvrées. Vos données (nom, email, message) servent uniquement " +
-          "à vous répondre, via Formspree. "
+        ? "Vos données (nom, email, message) servent uniquement à vous répondre, via Formspree. "
         : "Ce formulaire ouvre votre logiciel de messagerie avec un message pré-rempli. " +
           "Sans messagerie configurée, écrivez directement à ";
 
