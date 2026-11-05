@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="stylesheet" href="css/style.css?v=15">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -636,6 +636,7 @@
                 <span class="contact-label">Email</span>
                 <a href="mailto:andy261mdg@gmail.com">andy261mdg@gmail.com</a>
                 <button class="copy-btn" type="button" data-copy="andy261mdg@gmail.com">Copier l'adresse</button>
+                <span class="sr-only" role="status" id="copy-status"></span>
               </li>
               <li>
                 <span class="contact-label">LinkedIn</span>
@@ -652,20 +653,36 @@
                Pour changer de formulaire, remplacer uniquement l'URL ci-dessous. -->
           <form class="contact-form" id="contact-form" action="https://formspree.io/f/mpppnpkj" method="post">
             <div class="form-row">
-              <label for="cf-name">Nom</label>
-              <input type="text" id="cf-name" name="name" autocomplete="name" required>
+              <label for="cf-name">Nom et prénom</label>
+              <input type="text" id="cf-name" name="name" autocomplete="name" maxlength="80" required
+                aria-describedby="cf-name-error">
+              <p class="form-error" id="cf-name-error"></p>
             </div>
             <div class="form-row">
               <label for="cf-email">Email</label>
-              <input type="email" id="cf-email" name="email" autocomplete="email" required>
+              <input type="email" id="cf-email" name="email" autocomplete="email" maxlength="120" required
+                aria-describedby="cf-email-error">
+              <p class="form-error" id="cf-email-error"></p>
             </div>
             <div class="form-row">
-              <label for="cf-subject">Sujet <span class="label-optional">(facultatif)</span></label>
-              <input type="text" id="cf-subject" name="subject">
+              <label for="cf-subject">Type de prestation <span class="label-optional">(facultatif)</span></label>
+              <select id="cf-subject" name="subject">
+                <option value="">Sans préférence</option>
+                <option>Articles de blog &amp; contenus SEO</option>
+                <option>Fiches produits e&#8209;commerce</option>
+                <option>Newsletters &amp; emails marketing</option>
+                <option>Réécriture &amp; optimisation</option>
+                <option>Relecture &amp; correction</option>
+                <option>Autre besoin</option>
+              </select>
             </div>
             <div class="form-row">
               <label for="cf-message">Message</label>
-              <textarea id="cf-message" name="message" rows="5" required></textarea>
+              <textarea id="cf-message" name="message" rows="5" maxlength="2000" required
+                aria-describedby="cf-message-help cf-message-error"></textarea>
+              <p class="form-help" id="cf-message-help">Décrivez votre projet, vos délais et, si possible,
+                votre budget.</p>
+              <p class="form-error" id="cf-message-error"></p>
             </div>
             <input type="hidden" id="cf-mail-subject" name="_subject" value="[Portfolio] Nouveau message">
             <!-- Champ leurre anti-robots : hors écran, sans libellé pour ne jamais
@@ -676,7 +693,7 @@
             <button class="btn btn-primary" type="submit" aria-describedby="form-hint">Envoyer le message</button>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
             <p class="form-hint" id="form-hint">Vos données (nom, email, message) servent uniquement à
-              vous répondre, via Formspree.
+              vous répondre sous 48 h ouvrées, via Formspree.
               <a href="confidentialite.html">Politique de confidentialité</a>.</p>
           </form>
         </div>
@@ -696,6 +713,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=7"></script>
+  <script src="js/main.js?v=8"></script>
 </body>
 </html>

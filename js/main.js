@@ -130,6 +130,68 @@
       submitBtn.textContent = isSending ? "Envoi en cours…" : submitLabel;
     }
 
+    /* ---------- Validation accessible des champs ----------
+       Sans JavaScript, le navigateur valide nativement (required, type=email).
+       Dès que le script est actif, on reprend la main : message d'erreur
+       visible rattaché au champ (aria-describedby), état aria-invalid et
+       focus sur le premier champ fautif (RGAA 11.10). */
+    form.noValidate = true;
+
+    var FIELDS = [
+      {
+        el: form.elements["name"],
+        ok: function (value) {
+          return value.length >= 2;
+        },
+        message: "Indiquez votre nom et prénom (2 caractères minimum)."
+      },
+      {
+        el: form.elements["email"],
+        ok: function (value) {
+          return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(value);
+        },
+        message: "Indiquez une adresse email valide, par exemple nom@domaine.fr."
+      },
+      {
+        el: form.elements["message"],
+        ok: function (value) {
+          return value.length >= 10;
+        },
+        message: "Décrivez votre besoin en quelques mots (10 caractères minimum)."
+      }
+    ].filter(function (field) {
+      return field.el;
+    });
+
+    function setFieldState(field, message) {
+      var errorEl = document.getElementById(field.el.id + "-error");
+
+      if (message) {
+        field.el.setAttribute("aria-invalid", "true");
+      } else {
+        field.el.removeAttribute("aria-invalid");
+      }
+      if (errorEl) {
+        errorEl.textContent = message || "";
+      }
+    }
+
+    // Valide un champ ; renvoie true si sa valeur est acceptée
+    function validateField(field) {
+      var isValid = field.ok(field.el.value.trim());
+      setFieldState(field, isValid ? "" : field.message);
+      return isValid;
+    }
+
+    // Un champ déjà signalé se nettoie dès qu'il redevient conforme
+    FIELDS.forEach(function (field) {
+      field.el.addEventListener("input", function () {
+        if (field.el.getAttribute("aria-invalid") === "true") {
+          validateField(field);
+        }
+      });
+    });
+
     function buildMailto(name, email, subject, message) {
       var body =
         "Bonjour Andy,\n\n" +
@@ -173,7 +235,7 @@
         return;
       }
       hintEl.textContent = isRemote
-        ? "Vos données (nom, email, message) servent uniquement à vous répondre, via Formspree. "
+        ? "Vos données (nom, email, message) servent uniquement à vous répondre sous 48 h ouvrées, via Formspree. "
         : "Ce formulaire ouvre votre logiciel de messagerie avec un message pré-rempli. " +
           "Sans messagerie configurée, écrivez directement à ";
 
@@ -207,6 +269,26 @@
         form.reset();
         return;
       }
+
+      // Validation : messages visibles, aria-invalid et focus sur le premier
+      // champ fautif — les bulles natives ne sont pas personnalisables.
+      var champsInvalides = FIELDS.filter(function (field) {
+        return !validateField(field);
+      });
+
+      if (champsInvalides.length) {
+        event.preventDefault();
+        setStatus(
+          champsInvalides.length === 1
+            ? "Un champ est à corriger avant l'envoi."
+            : champsInvalides.length + " champs sont à corriger avant l'envoi.",
+          "error"
+        );
+        champsInvalides[0].el.focus();
+        return;
+      }
+
+      setStatus("", null);
 
       var endpoint = (form.getAttribute("action") || "").trim();
       var hasRemoteEndpoint = /^https?:\/\//i.test(endpoint);
@@ -261,7 +343,7 @@
           setSending(false);
           form.reset();
           setStatus(
-            "Merci ! Votre message a bien été envoyé. Je vous réponds sous 24 à 48 h ouvrées.",
+            "Merci ! Votre message a bien été envoyé. Je vous réponds sous 48 h ouvrées.",
             "success"
           );
         })
@@ -281,9 +363,20 @@
   copyButtons.forEach(function (btn) {
     var initialLabel = btn.textContent;
     var timer = null;
+    var liveEl = document.getElementById("copy-status");
 
     function feedback(message) {
       btn.textContent = message;
+
+      // Le changement de libellé du bouton n'est pas annoncé de façon fiable
+      // par les lecteurs d'écran : la région de statut s'en charge.
+      if (liveEl) {
+        liveEl.textContent = "";
+        window.setTimeout(function () {
+          liveEl.textContent = message;
+        }, 80);
+      }
+
       window.clearTimeout(timer);
       timer = window.setTimeout(function () {
         btn.textContent = initialLabel;

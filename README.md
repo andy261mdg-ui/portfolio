@@ -132,12 +132,20 @@ visiteur : le site fonctionne donc avant même la configuration.
 - **Quota** : 50 envois/mois au niveau gratuit. Au-delà, Formspree renvoie une erreur et le
   site affiche un lien `mailto` pré-rempli (aucun message n'est perdu dans le vide).
 - **Anti-spam** : filtrage Formspree + champ leurre `_gotcha` (invisible, jamais focusable).
+- **Validation accessible** : message d'erreur visible sous chaque champ, relié par
+  `aria-describedby` et doublé de `aria-invalid`, focus placé sur le premier champ fautif,
+  résumé annoncé par la région `role="status"` (RGAA 11.10). Sans JavaScript, la validation
+  native du navigateur reprend la main (`required`, `type="email"`).
+- **Qualification sans friction** : le menu « Type de prestation » (facultatif) reprend les
+  cinq offres et alimente l'objet du message (`_subject`), sans ajouter de champ obligatoire.
+- **Un seul délai annoncé** : « 48 h ouvrées » (chapeau, aide du formulaire, message de succès).
 - **Réseau coupé / service indisponible** : après 10 s d'attente, un lien `mailto`
   pré-rempli remplace le message d'erreur.
 - **Données personnelles** : nom, email et message transitent par Formspree (conformité RGPD
   annoncée par le service) et ne servent qu'à répondre au message.
 - Le bouton **« Copier l'adresse »** et le lien `mailto` de la section contact restent
-  disponibles en secours.
+  disponibles en secours ; la copie est confirmée visuellement **et** annoncée via une
+  région `role="status"` (lecteurs d'écran).
 
 ## Déploiement
 

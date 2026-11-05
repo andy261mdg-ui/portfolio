@@ -963,7 +963,8 @@ a:hover {
 }
 
 .contact-form input,
-.contact-form textarea {
+.contact-form textarea,
+.contact-form select {
   width: 100%;
   padding: 12px 14px;
   border: 1px solid var(--border);
@@ -976,10 +977,38 @@ a:hover {
 }
 
 .contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
+.contact-form textarea:focus,
+.contact-form select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Champ invalide : bordure rouge, doublée du message texte — la couleur n'est
+   jamais le seul indicateur. L'anneau de focus du site reste visible par-dessus
+   (outline `:focus-visible`), si bien que les deux états restent distincts. */
+.contact-form [aria-invalid="true"],
+.contact-form [aria-invalid="true"]:focus,
+.contact-form [aria-invalid="true"]:focus-visible {
+  border-color: #b91c1c;
+}
+
+/* Message d'erreur rattaché au champ (RGAA 11.10) */
+.form-error {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #b91c1c;
+}
+
+.form-error:empty {
+  display: none;
+}
+
+/* Aide à la saisie sous un champ */
+.form-help {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 .contact-form textarea {
