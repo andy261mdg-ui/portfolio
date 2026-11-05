@@ -35,6 +35,16 @@
         toggle.setAttribute("aria-label", "Ouvrir le menu");
       }
     });
+
+    // Fermer le menu avec la touche Échap
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && menu.classList.contains("open")) {
+        menu.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Ouvrir le menu");
+        toggle.focus();
+      }
+    });
   }
 
   /* ---------- Scrollspy : lien actif ---------- */
@@ -134,7 +144,70 @@
         "&body=" +
         encodeURIComponent(body);
 
+      // Message de repli affiché avant l'ouverture du client de messagerie
+      var status = document.getElementById("form-status");
+      if (status) {
+        status.textContent =
+          "Votre logiciel de messagerie va s'ouvrir avec le message pré-rempli. " +
+          "Rien ne se passe ? Écrivez directement à " +
+          DEST +
+          ".";
+      }
+
       window.location.href = mailto;
     });
   }
+
+  /* ---------- Copie de l'adresse email ---------- */
+  var copyButtons = Array.prototype.slice.call(
+    document.querySelectorAll("[data-copy]")
+  );
+
+  copyButtons.forEach(function (btn) {
+    var initialLabel = btn.textContent;
+    var timer = null;
+
+    function feedback(message) {
+      btn.textContent = message;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () {
+        btn.textContent = initialLabel;
+      }, 2600);
+    }
+
+    btn.addEventListener("click", function () {
+      var value = btn.getAttribute("data-copy") || "";
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value).then(
+          function () {
+            feedback("Adresse copiée !");
+          },
+          function () {
+            feedback("Copie impossible — sélectionnez l'adresse");
+          }
+        );
+        return;
+      }
+
+      // Repli pour les navigateurs sans API Clipboard
+      var field = document.createElement("textarea");
+      field.value = value;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.top = "-1000px";
+      document.body.appendChild(field);
+      field.select();
+
+      var copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch (error) {
+        copied = false;
+      }
+      document.body.removeChild(field);
+
+      feedback(copied ? "Adresse copiée !" : "Copie impossible — sélectionnez l'adresse");
+    });
+  });
 })();

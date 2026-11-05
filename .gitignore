@@ -10,3 +10,6 @@ Desktop.ini
 
 # Dépendances éventuelles
 node_modules/
+
+# Sources haute définition (conservées en local, jamais déployées)
+sources/

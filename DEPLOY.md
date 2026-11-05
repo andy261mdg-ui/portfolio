@@ -64,4 +64,18 @@ GitHub Pages republie automatiquement à chaque `push`.
 - Tous les liens sont **relatifs** : le site fonctionne aussi dans un sous-dossier (`/portfolio/`).
 - Le formulaire de contact est un **`mailto`** : il ouvre le logiciel de messagerie du
   visiteur, sans serveur ni service externe.
-- Pensez à envoyer aussi `assets/` (CV PDF et photos) : ils font partie du site.
+- Pensez à envoyer aussi `assets/` (CV PDF et images) : ils font partie du site.
+- `sources/` (originaux haute définition) est ignoré par Git : il n'est jamais publié.
+
+## Référencement après mise en ligne
+
+1. Vérifier que `https://<votre-pseudo>.github.io/portfolio/robots.txt` et
+   `.../sitemap.xml` sont accessibles.
+2. Si vous utilisez un **domaine personnalisé**, remplacer les URL absolues dans
+   `index.html` (`canonical`, `og:url`, `og:image`, `twitter:image`, JSON-LD),
+   `robots.txt` et `sitemap.xml`.
+3. Déclarer le site dans **Google Search Console** et **Bing Webmaster Tools**
+   (soumission du sitemap).
+4. Tester la carte de partage (LinkedIn Post Inspector, opengraph.xyz) après le premier
+   déploiement.
+

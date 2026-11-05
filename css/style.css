@@ -269,6 +269,10 @@ a:hover {
   justify-self: end;
 }
 
+.hero-photo picture {
+  display: block;
+}
+
 .hero-photo img {
   display: block;
   width: 300px;
@@ -500,27 +504,6 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* ---------- Placeholder ---------- */
-.placeholder {
-  border: 1.5px dashed #cbd5e1;
-  border-radius: var(--radius);
-  padding: 40px 26px;
-  text-align: center;
-  color: var(--text-muted);
-  background: #fff;
-}
-
-.placeholder p:first-child {
-  font-weight: 700;
-  color: var(--text);
-  font-size: 1.05rem;
-}
-
-.placeholder-sub {
-  margin-top: 6px;
-  font-size: 0.95rem;
-}
-
 /* ---------- FAQ ---------- */
 .faq {
   display: grid;
@@ -618,6 +601,27 @@ a:hover {
   font-size: 1.02rem;
 }
 
+.copy-btn {
+  justify-self: start;
+  margin-top: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.copy-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
 .contact-form {
   background: #fff;
   border: 1px solid var(--border);
@@ -672,6 +676,23 @@ a:hover {
   font-size: 0.85rem;
   color: var(--text-muted);
   text-align: center;
+}
+
+.form-hint a {
+  font-weight: 600;
+}
+
+.form-status {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--accent);
+  text-align: center;
+}
+
+.form-status:empty {
+  display: none;
 }
 
 /* ---------- Pied de page ---------- */
@@ -763,5 +784,25 @@ a:hover {
 
   .section {
     padding: 60px 0;
+  }
+}
+
+/* ---------- Mouvement réduit (accessibilité) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .btn:hover {
+    transform: none;
   }
 }
