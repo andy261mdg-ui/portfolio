@@ -391,6 +391,17 @@ a:hover {
   letter-spacing: -0.02em;
   font-weight: 800;
   margin-bottom: 28px;
+  /* Répartit la longueur des lignes si le titre venait à se replier. */
+  text-wrap: balance;
+}
+
+/* Chapeau de section : une phrase de cadrage (pour qui / quel résultat)
+   placée sous le titre, sur la même largeur de lecture que les autres blocs. */
+.section-lead {
+  max-width: var(--measure);
+  margin: -12px 0 32px;
+  color: var(--text-muted);
+  font-size: 1.05rem;
 }
 
 /* ---------- Prose ---------- */
@@ -411,6 +422,7 @@ a:hover {
    française (html lang="fr") évite les grands blancs dans les lignes. */
 .hero-tagline,
 .hero-offer,
+.section-lead,
 .prose p {
   text-align: justify;
   text-justify: inter-word;
@@ -503,9 +515,10 @@ a:hover {
     border-color 0.18s ease;
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+/* Survol des cartes : le « soulèvement » est réservé aux cartes cliquables
+   (.card-link). Une carte statique qui se soulève laisse croire à un lien
+   inexistant — les prestations ne gardent qu'un rappel de bordure. */
+.card:not(.card-link):hover {
   border-color: #cbd5e1;
 }
 
@@ -561,6 +574,9 @@ a:hover {
 
 .card-link:hover {
   text-decoration: none;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: #cbd5e1;
 }
 
 .card-meta {
@@ -580,6 +596,42 @@ a:hover {
 
 .card-link:hover .card-arrow {
   transform: translateX(4px);
+}
+
+/* ---------- Carte d'appel à l'action ---------- */
+/* Sixième carte de « Services » : teintée d'accent pour se distinguer des
+   prestations, et compléter la grille (6 cartes = aucune ligne incomplète,
+   que la grille affiche 3, 2 ou 1 colonne). */
+.card-cta {
+  display: flex;
+  flex-direction: column;
+  background: var(--accent-soft);
+  border-color: #bfdbfe;
+}
+
+/* Flèche calée en bas de carte : elle occupe le vide laissé par la hauteur
+   de la ligne de grille, au lieu de flotter sous le texte. */
+.card-cta .card-arrow {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.card-cta .card-icon {
+  background: #fff;
+}
+
+.card-cta .card-title {
+  color: var(--accent-hover);
+}
+
+/* Bleu foncé : le gris atténué des cartes n'atteint pas le contraste AA
+   sur ce fond teinté (4,3:1 au lieu des 4,5:1 exigés). */
+.card-cta .card-text {
+  color: #1e40af;
+}
+
+.card-cta:hover {
+  border-color: var(--accent);
 }
 
 .note {

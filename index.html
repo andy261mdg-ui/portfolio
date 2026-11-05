@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -86,7 +86,53 @@
           "Rédaction de newsletters et d'emails marketing",
           "Réécriture et optimisation de contenus",
           "Relecture et correction"
-        ]
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Prestations de rédaction web",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Articles de blog et contenus SEO",
+                "description": "Articles, tutoriels, dossiers et guides d'achat structurés, sourcés et optimisés pour le référencement."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Fiches produits e-commerce",
+                "description": "Descriptions de produits claires et persuasives, structurées pour lever les doutes et déclencher la conversion."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Newsletters et emails marketing",
+                "description": "Messages rythmés qui informent et donnent envie de cliquer."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Réécriture et optimisation de contenus",
+                "description": "Reprise de contenus existants : clarté, structure et SEO, sans dénaturer le ton de la marque."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Relecture et correction",
+                "description": "Correction orthographique, grammaticale et stylistique avant publication."
+              }
+            }
+          ]
+        }
       },
       {
         "@type": "WebSite",
@@ -274,7 +320,11 @@
     <section class="section section-soft" id="services" aria-labelledby="services-title">
       <div class="container">
         <p class="section-eyebrow">Prestations</p>
-        <h2 class="section-title" id="services-title">Services</h2>
+        <h2 class="section-title" id="services-title">Rédaction web &amp; SEO</h2>
+        <p class="section-lead">
+          Articles, fiches produits, newsletters : des textes structurés et prêts à publier pour les
+          médias et les marques.
+        </p>
         <div class="cards-grid">
           <article class="card">
             <div class="card-icon" aria-hidden="true">
@@ -285,8 +335,8 @@
               </svg>
             </div>
             <h3 class="card-title">Articles de blog &amp; contenus SEO</h3>
-            <p class="card-text">Articles, tutoriels, dossiers et guides d'achat optimisés pour le
-              référencement, prêts à publier.</p>
+            <p class="card-text">Articles, tutoriels, dossiers et guides d'achat : des textes
+              structurés, sourcés et pensés pour le référencement.</p>
           </article>
 
           <article class="card">
@@ -297,7 +347,8 @@
               </svg>
             </div>
             <h3 class="card-title">Fiches produits e-commerce</h3>
-            <p class="card-text">Descriptions claires et persuasives, orientées conversion.</p>
+            <p class="card-text">Descriptions claires et persuasives, structurées pour lever les doutes
+              et déclencher la conversion.</p>
           </article>
 
           <article class="card">
@@ -308,7 +359,8 @@
               </svg>
             </div>
             <h3 class="card-title">Newsletters &amp; emails marketing</h3>
-            <p class="card-text">Contenus engageants pour fidéliser et informer vos lecteurs.</p>
+            <p class="card-text">Newsletters et emails promotionnels : des messages rythmés qui
+              informent et donnent envie de cliquer.</p>
           </article>
 
           <article class="card">
@@ -321,7 +373,8 @@
               </svg>
             </div>
             <h3 class="card-title">Réécriture &amp; optimisation</h3>
-            <p class="card-text">Amélioration de contenus existants : clarté, structure, SEO.</p>
+            <p class="card-text">Reprise de vos contenus existants : clarté, structure et SEO, sans
+              dénaturer votre ton.</p>
           </article>
 
           <article class="card">
@@ -332,8 +385,24 @@
               </svg>
             </div>
             <h3 class="card-title">Relecture &amp; correction</h3>
-            <p class="card-text">Correction orthographique, grammaticale et stylistique de vos textes.</p>
+            <p class="card-text">Correction orthographique, grammaticale et stylistique : vos textes
+              gagnent en fiabilité avant publication.</p>
           </article>
+
+          <!-- Carte d'appel à l'action : ferme la section sur une porte de sortie
+               commerciale et complète la grille sur ses trois colonnes (6 cartes
+               = aucune ligne incomplète, quel que soit le nombre de colonnes). -->
+          <a class="card card-link card-cta" href="#contact">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <h3 class="card-title">Un besoin sur mesure ?</h3>
+            <p class="card-text">Ligne éditoriale, gros volumes, formats spécifiques : décrivez votre
+              projet, je réponds sous 48 h ouvrées.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </section>
