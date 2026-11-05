@@ -1,0 +1,19 @@
+{
+  "name": "portfolio-andy-rakotondrabe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site vitrine statique. Les dépendances ci-dessous servent uniquement aux tests : elles ne sont jamais livrées avec le site.",
+  "scripts": {
+    "serve": "node tools/serve.mjs 8765",
+    "test": "playwright test",
+    "test:liste": "playwright test --list",
+    "test:ui": "playwright test --ui",
+    "guard": "node tools/check-asset-versions.mjs",
+    "live": "node tools/check-live.mjs",
+    "audit": "node tools/lighthouse-report.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1"
+  }
+}

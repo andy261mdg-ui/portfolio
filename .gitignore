@@ -11,5 +11,11 @@ Desktop.ini
 # Dépendances éventuelles
 node_modules/
 
+# Sorties des tests
+test-results/
+playwright-report/
+blob-report/
+.cache/
+
 # Sources haute définition (conservées en local, jamais déployées)
 sources/

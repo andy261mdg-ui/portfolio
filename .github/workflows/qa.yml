@@ -1,0 +1,62 @@
+name: QA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # chaque lundi, 6 h UTC : contrôle du site publié
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: Tests de non-régression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # nécessaire au garde-fou des versions (?v=)
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Installer les dépendances de test
+        run: npm ci
+
+      - name: Installer Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Garde-fou des versions d'assets
+        run: node tools/check-asset-versions.mjs
+        continue-on-error: true
+
+      - name: Lancer les tests
+        run: npm test
+
+      - name: Archiver le rapport en cas d'échec
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  live:
+    name: Site en ligne (hebdomadaire)
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Vérifier le site publié
+        run: node tools/check-live.mjs
