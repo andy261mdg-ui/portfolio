@@ -380,6 +380,34 @@ a:hover {
   color: var(--text);
 }
 
+/* Liste des collaborations régulières (section À propos) */
+.collab {
+  display: grid;
+  gap: 10px;
+}
+
+.collab-list {
+  margin: 0;
+  padding-left: 22px;
+  list-style: disc;
+  display: grid;
+  gap: 8px;
+}
+
+.collab-list li {
+  padding-left: 2px;
+}
+
+.collab-list a {
+  font-weight: 600;
+}
+
+.collab-meta {
+  margin-left: 6px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
 /* ---------- Cartes ---------- */
 .cards-grid {
   display: grid;
