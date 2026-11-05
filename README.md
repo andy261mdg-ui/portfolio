@@ -52,6 +52,7 @@ npm install     # une seule fois (outils de test uniquement)
 npm test        # 52 tests sur deux profils : 1366×900 et 390×844
 npm run guard   # échoue si css/js a changé sans incrémenter ?v=
 npm run live    # contrôle le site réellement publié
+npm run vitals  # Web Vitals du site publié → docs/performance.json
 npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run audit)
 ```
 

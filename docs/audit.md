@@ -54,17 +54,24 @@ La suite tourne à chaque `push` (voir `.github/workflows/qa.yml`) et en local (
 
 Voir `docs/performance.json` (mesure Chrome, viewport 1366×900, cache vidé).
 
-| Indicateur | Avant correction | Après auto-hébergement de la police |
+| Indicateur | Avant (Google Fonts) | Après (police auto-hébergée) |
 |---|---|---|
-| FCP | 3 356 ms | voir mesure ci-dessous |
-| LCP | 3 356 ms | — |
-| CLS | 0,015 | — |
-| Requêtes tierces | 2 (fonts.googleapis.com, fonts.gstatic.com) | **0** |
+| FCP | 3 356 ms | **1 440 ms** |
+| LCP | 3 356 ms | **1 440 ms** |
+| CLS | 0,015 | 0,015 |
+| TTFB | 629 ms | 536 ms |
+| Transféré | 8 Ko HTML + 21 Ko de ressources | 8 Ko + 68 Ko (police incluse) |
+| Requêtes tierces | 2 (`fonts.googleapis.com`, `fonts.gstatic.com`) | **0** |
+
+Le LCP passe de « à améliorer » (> 2 500 ms) à « bon » (< 2 500 ms). L'ajout de 47 Ko de police
+locale est largement compensé par la suppression de 950 ms d'attente bloquante.
 
 Cause identifiée : la feuille de style Google Fonts était **bloquante sur le chemin critique**
 (949 ms mesurés, seule ressource externe du site). La police Inter est désormais auto-hébergée
 (woff2 variable, 47 Ko, `preload`), ce qui supprime la requête tierce et la transmission
 d'adresse IP à Google (politique de confidentialité mise à jour en conséquence).
+
+Reproduire la mesure : `npm run vitals` (met à jour `docs/performance.json`).
 
 ## 5. Limites connues (à lever manuellement)
 

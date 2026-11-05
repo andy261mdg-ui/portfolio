@@ -1,46 +1,47 @@
 {
   "url": "https://andy261mdg-ui.github.io/portfolio/",
   "genere_le": "2026-11-05",
-  "methode": "Chrome (Playwright), viewport 1366x900, réseau local, cache vidé. Mesures PerformanceObserver, pas un audit Lighthouse complet.",
-  "lcp_ms": 1872,
+  "methode": "Chrome local (Playwright), viewport 1366x900, cache vidé, réseau du poste. Mesures PerformanceObserver : ce n'est pas un audit Lighthouse complet.",
+  "lcp_ms": 1440,
   "cls": 0.015,
-  "fcp_ms": 1872,
-  "ttfb_ms": 347,
-  "dom_content_loaded_ms": 1600,
-  "load_ms": 1961,
+  "fcp_ms": 1440,
+  "ttfb_ms": 536,
+  "dom_content_loaded_ms": 1132,
+  "load_ms": 1141,
   "transfert_ko": {
     "html": 8,
-    "ressources": 21
+    "ressources": 68
   },
+  "requetes_tierces": [],
   "ressources_plus_longues": [
     {
-      "url": "fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&displa",
-      "debut_ms": 396,
-      "duree_ms": 949,
-      "ko": 1
+      "url": "andy261mdg-ui.github.io/portfolio/assets/fonts/inter-latin-var.woff2",
+      "debut_ms": 552,
+      "duree_ms": 440,
+      "ko": 47
     },
     {
-      "url": "andy261mdg-ui.github.io/portfolio/assets/img/andy-rakotondrabe-portrai",
-      "debut_ms": 397,
-      "duree_ms": 399,
-      "ko": 8
-    },
-    {
-      "url": "andy261mdg-ui.github.io/portfolio/js/main.js?v=8",
-      "debut_ms": 397,
-      "duree_ms": 110,
-      "ko": 4
-    },
-    {
-      "url": "andy261mdg-ui.github.io/portfolio/css/style.css?v=16",
-      "debut_ms": 396,
-      "duree_ms": 109,
+      "url": "andy261mdg-ui.github.io/portfolio/css/style.css?v=18",
+      "debut_ms": 553,
+      "duree_ms": 438,
       "ko": 7
     },
     {
+      "url": "andy261mdg-ui.github.io/portfolio/js/main.js?v=9",
+      "debut_ms": 554,
+      "duree_ms": 348,
+      "ko": 5
+    },
+    {
+      "url": "andy261mdg-ui.github.io/portfolio/assets/img/andy-rakotondrabe-portrai",
+      "debut_ms": 554,
+      "duree_ms": 329,
+      "ko": 8
+    },
+    {
       "url": "andy261mdg-ui.github.io/portfolio/assets/favicon.svg",
-      "debut_ms": 2024,
-      "duree_ms": 89,
+      "debut_ms": 1215,
+      "duree_ms": 323,
       "ko": 1
     }
   ]
