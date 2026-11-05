@@ -37,7 +37,7 @@ test.describe("Structure et contenu", () => {
     await expect(page.locator(".hero-actions .btn-primary")).toHaveCount(1);
     await expect(page.locator(".hero-actions .btn-primary")).toHaveText("Parlons de votre projet");
     await expect(page.locator(".hero-actions .btn").last()).toContainText("PDF");
-    await expect(page.locator(".hero-reassurance")).toContainText("48 h ouvrées");
+    await expect(page.locator(".hero-reassurance")).toContainText("48 heures ouvrées");
   });
 });
 

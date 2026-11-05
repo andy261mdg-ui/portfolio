@@ -243,7 +243,7 @@
         return;
       }
       hintEl.textContent = isRemote
-        ? "Vos données (nom, email, message) servent uniquement à vous répondre sous 48 h ouvrées, via Formspree. "
+        ? "Vos données (nom, email, message) servent uniquement à vous répondre sous 48 heures ouvrées, via Formspree. "
         : "Ce formulaire ouvre votre logiciel de messagerie avec un message pré-rempli. " +
           "Sans messagerie configurée, écrivez directement à ";
 
@@ -351,7 +351,7 @@
           setSending(false);
           form.reset();
           setStatus(
-            "Merci ! Votre message a bien été envoyé. Je vous réponds sous 48 h ouvrées.",
+            "Merci ! Votre message a bien été envoyé. Je vous réponds sous 48 heures ouvrées.",
             "success"
           );
         })

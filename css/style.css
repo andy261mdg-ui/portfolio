@@ -373,9 +373,9 @@ a:hover {
 .hero-promise {
   position: relative;
   margin-top: 26px;
-  font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--text);
   max-width: var(--measure);
 }
@@ -476,9 +476,10 @@ a:hover {
 /* Texte justifié : bords gauche ET droit alignés sur la largeur commune (--measure).
    Appliqué aux paragraphes uniquement (pas aux listes à puces). La césure
    française (html lang="fr") évite les grands blancs dans les lignes.
-   Exception : .hero-promise, composée en corps plus grand, où la justification
-   produirait des rivières (écarts trop visibles entre les mots). */
+   La promesse du hero suit la même règle : sa taille est donc plafonnée à
+   ~1.3rem, au-delà les lignes trop courtes produisent des « rivières ». */
 .hero-tagline,
+.hero-promise,
 .section-lead,
 .prose p {
   text-align: justify;

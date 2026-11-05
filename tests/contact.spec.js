@@ -50,7 +50,7 @@ test.describe("Formulaire de contact", () => {
     await page.getByRole("button", { name: "Envoyer le message" }).click();
 
     await expect(page.locator("#form-status")).toHaveAttribute("data-state", "success");
-    await expect(page.locator("#form-status")).toContainText("48 h");
+    await expect(page.locator("#form-status")).toContainText("48 heures");
   });
 
   test("type de prestation : menu à 7 options, valeur transmise", async ({ page }) => {

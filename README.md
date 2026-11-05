@@ -138,7 +138,7 @@ Conventions à respecter :
 - **Hero** : hiérarchie de lecture figée — `.hero-subtitle` = signature de marque
   (discrète), `.hero-promise` = bénéfice client (message principal, barre d'accent),
   `.hero-tagline` = livrables, puis un seul CTA primaire (`Parlons de votre projet`)
-  suivi de `.hero-reassurance` (« Réponse sous 48 h ouvrées. »). Modifier le délai de
+  suivi de `.hero-reassurance` (« Réponse sous 48 heures ouvrées. »). Modifier le délai de
   réponse impose de mettre à jour les trois emplacements (hero, formulaire, message
   de succès) — la promesse doit rester identique partout.
 
@@ -193,7 +193,7 @@ visiteur : le site fonctionne donc avant même la configuration.
   native du navigateur reprend la main (`required`, `type="email"`).
 - **Qualification sans friction** : le menu « Type de prestation » (facultatif) reprend les
   cinq offres et alimente l'objet du message (`_subject`), sans ajouter de champ obligatoire.
-- **Un seul délai annoncé** : « 48 h ouvrées » (chapeau, aide du formulaire, message de succès).
+- **Un seul délai annoncé** : « 48 heures ouvrées » (chapeau, aide du formulaire, message de succès).
 - **Réseau coupé / service indisponible** : après 10 s d'attente, un lien `mailto`
   pré-rempli remplace le message d'erreur.
 - **Données personnelles** : nom, email et message transitent par Formspree (conformité RGPD
