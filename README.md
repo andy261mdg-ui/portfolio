@@ -62,6 +62,31 @@ python tools/generate-images.py
 Le script produit le portrait 300/600 px (WebP + JPEG de repli), la carte Open Graph
 1200×630 et l'icône Apple 180×180.
 
+## Maintenance courante
+
+Trois gestes à faire à chaque modification publiée :
+
+1. **Versionner les assets** : incrémenter `?v=` sur `css/style.css` (et `js/main.js`
+   si le script change) dans **les trois pages** — `index.html`, `404.html`,
+   `confidentialite.html`. GitHub Pages sert ces fichiers avec
+   `Cache-Control: max-age=600` : sans incrément, un visiteur peut conserver
+   l'ancienne version jusqu'à 10 minutes.
+2. **Datation** : reporter la date du jour dans `sitemap.xml` (`<lastmod>` de l'URL
+   modifiée). Une date figée fait douter les moteurs de la fraîcheur du contenu.
+3. **Cohérence des données structurées** : si les questions de la FAQ ou les
+   prestations changent, mettre à jour le bloc JSON-LD correspondant (`FAQPage`,
+   `hasOfferCatalog`). Un commentaire de rappel suit le bloc dans `index.html`.
+
+Conventions à respecter :
+
+- **Lien sortant** (`target="_blank"`) : toujours avec `rel="noopener"` **et**
+  `<span class="sr-only"> (nouvel onglet)</span>` (RGAA 10.7).
+- **Carte cliquable** : classe `.card-link` — seules ces cartes se soulèvent au survol.
+- **Largeur de lecture** : `--measure` (640 px) pour tout bloc de texte long.
+- **Grilles de cartes** : 6 éléments = aucune ligne incomplète, quel que soit le
+  nombre de colonnes (`auto-fit`, minimum 250 px) ; d'où les cartes d'appel à l'action
+  qui referment les grilles « Services » et « Réalisations ».
+
 ## Points à compléter plus tard
 
 - **CV** : le PDF est intégré (`assets/cv/CV-Andy-Rakotondrabe.pdf`) et lié depuis le
