@@ -564,7 +564,6 @@ a:hover {
 
 .more-pubs {
   margin-top: 40px;
-  max-width: 880px;
 }
 
 .more-pubs-title {
@@ -580,13 +579,15 @@ a:hover {
 }
 
 /* Grille des autres médias : une « pastille » cliquable par média */
+/* Grille des autres médias : mêmes colonnes que .cards-grid (Réalisations)
+   pour que les pastilles s'alignent à gauche et à droite sur les cartes. */
 .media-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .media-grid a {
@@ -957,12 +958,6 @@ a:hover {
     text-align: left;
     -webkit-hyphens: manual;
     hyphens: manual;
-  }
-
-  /* Grille des médias : deux colonnes plutôt qu'une longue liste verticale */
-  .media-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
   }
 }
 
