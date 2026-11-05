@@ -32,6 +32,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
+  /* Permet l'animation des hauteurs « auto » (accordéon FAQ) */
+  interpolate-size: allow-keywords;
 }
 
 body {
@@ -654,6 +656,33 @@ a:hover {
   display: none;
 }
 
+.faq-item summary:hover {
+  color: var(--accent);
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Ouverture animée — progressive enhancement :
+   sans support de ::details-content, l'ouverture reste instantanée. */
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition: block-size 0.25s ease;
+}
+
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content {
+    transition: none;
+  }
+}
+
 .faq-item summary::after {
   content: "+";
   font-size: 1.4rem;
@@ -671,6 +700,27 @@ a:hover {
   padding: 0 22px 20px;
   color: var(--text-muted);
   font-size: 0.99rem;
+}
+
+.faq-answer ol {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}
+
+.faq-answer a {
+  font-weight: 600;
+}
+
+.faq-cta {
+  margin-top: 20px;
+  font-size: 0.98rem;
+  color: var(--text-muted);
+}
+
+.faq-cta a {
+  font-weight: 600;
 }
 
 /* ---------- Contact ---------- */

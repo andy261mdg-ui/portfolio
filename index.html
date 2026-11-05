@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -102,42 +102,50 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Quels types de contenus rédigez-vous ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Articles de blog, tutoriels, dossiers, guides d'achat, fiches produits e-commerce, newsletters et contenus SEO, principalement dans les domaines des NTIC et de la high-tech."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Dans quelle langue écrivez-vous ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "En français."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Sous quel format livrez-vous les contenus ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Textes prêts à publier, avec intégration et publication possibles sous WordPress."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Travaillez-vous avec des médias ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Oui : collaborations régulières avec IGN France, Android MT (Ouest-France), NuMedia et Le Mag Jeux High-Tech ; ancien rédacteur chez PhonAndroid."
-            }
-          },
-          {
-            "@type": "Question",
             "name": "Comment se déroule une collaboration ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Un échange pour cadrer le besoin (sujet, ton, longueur, mots-clés), une proposition avec devis, la rédaction, puis une passe de retours et la livraison. L'intégration et la publication sous WordPress sont possibles."
+              "text": "1. Cadrage : un échange (email ou visio) pour définir le sujet, le ton, la longueur et les mots-clés. 2. Proposition : le plan du contenu et le calendrier de livraison, sous 48 h ouvrées. 3. Rédaction : le texte est écrit et structuré selon le brief validé. 4. Retours : je retravaille le contenu selon vos remarques. 5. Livraison : le texte prêt à publier, avec intégration et publication WordPress possibles."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quels sont les délais de livraison ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Le délai est annoncé avec la proposition, et je m'y tiens. Pour une publication régulière, nous fixons un calendrier à l'avance afin que vous ne manquiez jamais de contenus."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quels retours sont inclus ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Les corrections font partie de la prestation : après la livraison, je retravaille le texte selon vos retours, dans le cadre défini au brief."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Sous quel format les contenus sont-ils livrés ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Des textes prêts à publier, structurés (titres Hn) et optimisés SEO sur demande, livrés dans Google Docs ou Word. L'intégration et la publication sous WordPress sont possibles si vous le souhaitez."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Sur quels sujets écrivez-vous ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "NTIC, high-tech, objets connectés, jeux vidéo, WordPress et SEO : les domaines que je couvre en pigiste au quotidien pour des médias comme IGN France ou Android MT. Je rédige en français."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Puis-je voir des exemples de textes ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui : mes publications sont consultables sur les pages auteur d'IGN France, d'Android MT (Ouest-France), de NuMedia et du Mag Jeux High-Tech."
             }
           }
         ]
@@ -145,6 +153,8 @@
     ]
   }
   </script>
+  <!-- Rappel : garder ce JSON-LD FAQPage synchronisé avec la section #faq
+       (mêmes questions et mêmes réponses que le contenu visible). -->
 </head>
 <body>
 
@@ -416,46 +426,70 @@
         <p class="section-eyebrow">Questions fréquentes</p>
         <h2 class="section-title" id="faq-title">FAQ</h2>
         <div class="faq">
-          <details class="faq-item">
-            <summary>Quels types de contenus rédigez-vous ?</summary>
-            <div class="faq-answer">
-              <p>Articles de blog, tutoriels, dossiers, guides d'achat, fiches produits
-                e-commerce, newsletters et contenus SEO, principalement dans les domaines des
-                NTIC et de la high-tech.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Dans quelle langue écrivez-vous ?</summary>
-            <div class="faq-answer">
-              <p>En français.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Sous quel format livrez-vous les contenus ?</summary>
-            <div class="faq-answer">
-              <p>Textes prêts à publier, avec intégration et publication possibles sous WordPress.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Travaillez-vous avec des médias ?</summary>
-            <div class="faq-answer">
-              <p>Oui : collaborations régulières avec IGN France, Android MT (Ouest-France),
-                NuMedia et Le Mag Jeux High-Tech ; ancien rédacteur chez PhonAndroid.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
+          <details class="faq-item" name="faq" open>
             <summary>Comment se déroule une collaboration ?</summary>
             <div class="faq-answer">
-              <p>Un échange pour cadrer le besoin (sujet, ton, longueur, mots-clés), une
-                proposition avec devis, la rédaction, puis une passe de retours et la livraison.
-                L'intégration et la publication sous WordPress sont possibles.</p>
+              <ol>
+                <li><strong>Cadrage</strong> : un échange (email ou visio) pour définir le sujet,
+                  le ton, la longueur et les mots-clés.</li>
+                <li><strong>Proposition</strong> : le plan du contenu et le calendrier de livraison,
+                  sous 48 h ouvrées.</li>
+                <li><strong>Rédaction</strong> : le texte est écrit et structuré selon le brief
+                  validé.</li>
+                <li><strong>Retours</strong> : je retravaille le contenu selon vos remarques.</li>
+                <li><strong>Livraison</strong> : le texte prêt à publier, avec intégration et
+                  publication WordPress possibles.</li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary>Quels sont les délais de livraison ?</summary>
+            <div class="faq-answer">
+              <p>Le délai est annoncé avec la proposition, et je m'y tiens. Pour une publication
+                régulière, nous fixons un calendrier à l'avance afin que vous ne manquiez jamais
+                de contenus.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary>Quels retours sont inclus ?</summary>
+            <div class="faq-answer">
+              <p>Les corrections font partie de la prestation : après la livraison, je retravaille
+                le texte selon vos retours, dans le cadre défini au brief.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary>Sous quel format les contenus sont-ils livrés ?</summary>
+            <div class="faq-answer">
+              <p>Des textes prêts à publier, structurés (titres Hn) et optimisés SEO sur demande,
+                livrés dans Google Docs ou Word. L'intégration et la publication sous WordPress
+                sont possibles si vous le souhaitez.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary>Sur quels sujets écrivez-vous ?</summary>
+            <div class="faq-answer">
+              <p>NTIC, high-tech, objets connectés, jeux vidéo, WordPress et SEO : les domaines
+                que je couvre en pigiste au quotidien pour des médias comme IGN France ou
+                Android MT. Je rédige en français.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary>Puis-je voir des exemples de textes ?</summary>
+            <div class="faq-answer">
+              <p>Oui : mes publications sont consultables sur les pages auteur d'IGN France,
+                d'Android MT (Ouest-France), de NuMedia et du Mag Jeux High-Tech.
+                <a href="#realisations">Voir mes réalisations</a>.</p>
             </div>
           </details>
         </div>
+
+        <p class="faq-cta">Une autre question ?
+          <a href="#contact">Écrivez-moi</a> — réponse sous 48 h ouvrées.</p>
       </div>
     </section>
 
@@ -532,6 +566,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=6"></script>
+  <script src="js/main.js?v=7"></script>
 </body>
 </html>

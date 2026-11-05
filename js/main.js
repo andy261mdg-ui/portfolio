@@ -97,21 +97,9 @@
   window.addEventListener("resize", updateActive);
   updateActive();
 
-  /* ---------- FAQ : une seule réponse ouverte à la fois ---------- */
-  var faqItems = Array.prototype.slice.call(
-    document.querySelectorAll(".faq-item")
-  );
-  faqItems.forEach(function (item) {
-    item.addEventListener("toggle", function () {
-      if (item.open) {
-        faqItems.forEach(function (other) {
-          if (other !== item) {
-            other.open = false;
-          }
-        });
-      }
-    });
-  });
+  /* ---------- FAQ ----------
+     L'ouverture « une seule réponse à la fois » est gérée nativement par
+     l'attribut name="faq" des <details> : aucun JavaScript nécessaire. */
 
   /* ---------- Formulaire de contact → envoi direct (repli mailto) ---------- */
   var form = document.getElementById("contact-form");
