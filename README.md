@@ -21,7 +21,7 @@ s'affiche, hors ligne la police système prend le relais).
 index.html            Page unique (toutes les sections) + métadonnées SEO et JSON-LD
 404.html              Page d'erreur servie automatiquement par GitHub Pages
 css/style.css         Design (fond neutre + accent bleu)
-js/main.js            Menu mobile, scrollspy, FAQ, formulaire mailto, copie de l'email, année
+js/main.js            Menu mobile, scrollspy, FAQ, formulaire de contact, copie de l'email, année
 robots.txt            Autorise l'indexation et déclare le sitemap
 sitemap.xml           Plan du site (une URL)
 tools/generate-images.py  Régénère les dérivés d'image (WebP, OG, icône Apple)
@@ -81,8 +81,38 @@ Le script produit le portrait 300/600 px (WebP + JPEG de repli), la carte Open G
 
 ## Contact
 
-Formulaire : ouvre le logiciel de messagerie du visiteur avec un message pré-rempli vers
-**andy261mdg@gmail.com** (aucun serveur, aucun service externe).
+Le formulaire (`#contact-form` dans `index.html`) envoie les messages **directement vers
+andy261mdg@gmail.com** via [Formspree](https://formspree.io) : aucun serveur à héberger.
+
+### Activer l'envoi direct (une seule ligne à changer)
+
+1. Créer un compte gratuit sur [formspree.io](https://formspree.io) avec
+   **andy261mdg@gmail.com**, puis confirmer l'adresse email.
+2. Créer un formulaire (nom : « Portfolio ») et autoriser le domaine
+   `andy261mdg-ui.github.io` (« Restrict to domain »).
+3. Copier l'endpoint fourni (`https://formspree.io/f/xxxxxxxx`) et le coller dans
+   `index.html`, sur la balise du formulaire :
+
+   ```html
+   <form class="contact-form" id="contact-form" action="https://formspree.io/f/xxxxxxxx" method="post">
+   ```
+
+4. `git commit` + `git push` : l'envoi direct est actif.
+
+Tant que `action` reste un `mailto:`, le formulaire ouvre le logiciel de messagerie du
+visiteur : le site fonctionne donc avant même la configuration.
+
+### Comportements garantis
+
+- **Quota** : 50 envois/mois au niveau gratuit. Au-delà, Formspree renvoie une erreur et le
+  site affiche un lien `mailto` pré-rempli (aucun message n'est perdu dans le vide).
+- **Anti-spam** : filtrage Formspree + champ leurre `_gotcha` (invisible, jamais focusable).
+- **Réseau coupé / service indisponible** : après 10 s d'attente, un lien `mailto`
+  pré-rempli remplace le message d'erreur.
+- **Données personnelles** : nom, email et message transitent par Formspree (conformité RGPD
+  annoncée par le service) et ne servent qu'à répondre au message.
+- Le bouton **« Copier l'adresse »** et le lien `mailto` de la section contact restent
+  disponibles en secours.
 
 ## Déploiement
 

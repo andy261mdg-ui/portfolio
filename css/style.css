@@ -695,6 +695,34 @@ a:hover {
   display: none;
 }
 
+.form-status a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.form-status[data-state="success"] {
+  color: #15803d;
+}
+
+.form-status[data-state="error"] {
+  color: #b91c1c;
+}
+
+/* Champ leurre anti-robots : hors écran, jamais visible ni focusable */
+.form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form .btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
 /* ---------- Pied de page ---------- */
 .site-footer {
   border-top: 1px solid var(--border);

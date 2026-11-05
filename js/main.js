@@ -1,7 +1,7 @@
 /* ==========================================================================
    Portfolio — Andy Rakotondrabe
    Interactions : menu mobile, scrollspy, FAQ (fermeture des autres),
-   formulaire mailto, année du pied de page.
+   formulaire de contact (envoi direct + repli mailto), année du pied de page.
    ========================================================================== */
 
 (function () {
@@ -113,21 +113,36 @@
     });
   });
 
-  /* ---------- Formulaire de contact → mailto ---------- */
+  /* ---------- Formulaire de contact → envoi direct (repli mailto) ---------- */
   var form = document.getElementById("contact-form");
   if (form) {
     var DEST = "andy261mdg@gmail.com";
+    var TIMEOUT = 10000;
+    var statusEl = document.getElementById("form-status");
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var submitLabel = submitBtn ? submitBtn.textContent : "";
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+    function setStatus(message, state) {
+      if (!statusEl) {
+        return;
+      }
+      statusEl.textContent = message;
+      if (state) {
+        statusEl.setAttribute("data-state", state);
+      } else {
+        statusEl.removeAttribute("data-state");
+      }
+    }
 
-      var name = form.elements["name"].value.trim();
-      var email = form.elements["email"].value.trim();
-      var subject =
-        form.elements["subject"].value.trim() ||
-        "Prise de contact via le portfolio";
-      var message = form.elements["message"].value.trim();
+    function setSending(isSending) {
+      if (!submitBtn) {
+        return;
+      }
+      submitBtn.disabled = isSending;
+      submitBtn.textContent = isSending ? "Envoi en cours…" : submitLabel;
+    }
 
+    function buildMailto(name, email, subject, message) {
       var body =
         "Bonjour Andy,\n\n" +
         message +
@@ -136,25 +151,111 @@
         "\n" +
         email;
 
-      var mailto =
+      return (
         "mailto:" +
         DEST +
         "?subject=" +
         encodeURIComponent(subject) +
         "&body=" +
-        encodeURIComponent(body);
+        encodeURIComponent(body)
+      );
+    }
 
-      // Message de repli affiché avant l'ouverture du client de messagerie
-      var status = document.getElementById("form-status");
-      if (status) {
-        status.textContent =
-          "Votre logiciel de messagerie va s'ouvrir avec le message pré-rempli. " +
-          "Rien ne se passe ? Écrivez directement à " +
-          DEST +
-          ".";
+    // Repli : message d'échec + lien mailto pré-rempli, prêt à cliquer
+    function showError(mailto) {
+      if (!statusEl) {
+        return;
+      }
+      statusEl.textContent = "L'envoi n'a pas abouti. Écrivez-moi directement : ";
+      var link = document.createElement("a");
+      link.href = mailto;
+      link.textContent = DEST;
+      statusEl.appendChild(link);
+      statusEl.appendChild(
+        document.createTextNode(" (le lien ouvre votre messagerie).")
+      );
+      statusEl.setAttribute("data-state", "error");
+    }
+
+    form.addEventListener("submit", function (event) {
+      var name = form.elements["name"].value.trim();
+      var email = form.elements["email"].value.trim();
+      var subject =
+        form.elements["subject"].value.trim() ||
+        "Prise de contact via le portfolio";
+      var message = form.elements["message"].value.trim();
+
+      // Champ leurre rempli → robot : on ignore la soumission en silence
+      var trap = form.elements["_gotcha"];
+      if (trap && trap.value) {
+        event.preventDefault();
+        setStatus("", null);
+        form.reset();
+        return;
       }
 
-      window.location.href = mailto;
+      var endpoint = (form.getAttribute("action") || "").trim();
+      var hasRemoteEndpoint = /^https?:\/\//i.test(endpoint);
+
+      // Service d'envoi non configuré ou fetch indisponible → mailto
+      if (!hasRemoteEndpoint || typeof window.fetch !== "function") {
+        event.preventDefault();
+        setStatus(
+          "Votre logiciel de messagerie va s'ouvrir avec le message pré-rempli. " +
+            "Rien ne se passe ? Écrivez directement à " +
+            DEST +
+            ".",
+          null
+        );
+        window.location.href = buildMailto(name, email, subject, message);
+        return;
+      }
+
+      event.preventDefault();
+      setSending(true);
+      setStatus("Envoi en cours…", null);
+
+      var mailto = buildMailto(name, email, subject, message);
+      var payload = new FormData(form);
+      payload.set("_subject", "[Portfolio] " + subject);
+
+      var controller =
+        typeof AbortController === "function" ? new AbortController() : null;
+      var timer = window.setTimeout(function () {
+        if (controller) {
+          controller.abort();
+        }
+      }, TIMEOUT);
+
+      window
+        .fetch(endpoint, {
+          method: "POST",
+          body: payload,
+          headers: { Accept: "application/json" },
+          signal: controller ? controller.signal : undefined
+        })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+          }
+          return response.json().catch(function () {
+            return {};
+          });
+        })
+        .then(function () {
+          window.clearTimeout(timer);
+          setSending(false);
+          form.reset();
+          setStatus(
+            "Merci ! Votre message a bien été envoyé. Je vous réponds sous 24 à 48 h ouvrées.",
+            "success"
+          );
+        })
+        .catch(function () {
+          window.clearTimeout(timer);
+          setSending(false);
+          showError(mailto);
+        });
     });
   }
 

@@ -454,7 +454,10 @@
             </ul>
           </div>
 
-          <form class="contact-form" id="contact-form">
+          <!-- Envoi direct : remplacer la valeur de action par l'endpoint Formspree
+               (ex. https://formspree.io/f/xxxxxxxx). Tant que action reste un mailto,
+               le formulaire ouvre le logiciel de messagerie du visiteur. -->
+          <form class="contact-form" id="contact-form" action="mailto:andy261mdg@gmail.com" method="post">
             <div class="form-row">
               <label for="cf-name">Nom</label>
               <input type="text" id="cf-name" name="name" autocomplete="name" required>
@@ -471,11 +474,18 @@
               <label for="cf-message">Message</label>
               <textarea id="cf-message" name="message" rows="5" required></textarea>
             </div>
+            <input type="hidden" id="cf-mail-subject" name="_subject" value="[Portfolio] Nouveau message">
+            <!-- Champ leurre anti-robots : hors écran, sans libellé pour ne jamais
+                 être proposé par l'autofill du navigateur -->
+            <div class="form-honeypot" aria-hidden="true">
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
             <button class="btn btn-primary" type="submit">Envoyer le message</button>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            <p class="form-hint">Ce formulaire ouvre votre logiciel de messagerie avec un message
-              pré-rempli. Sans messagerie configurée ? Écrivez directement à
-              <a href="mailto:andy261mdg@gmail.com">andy261mdg@gmail.com</a>.</p>
+            <p class="form-hint">Votre message m'est envoyé directement, sans ouvrir de logiciel de
+              messagerie. Réponse sous 24 à 48 h ouvrées. Les informations transmises sont traitées
+              par le service d'envoi Formspree. Vous préférez un email ?
+              Écrivez à <a href="mailto:andy261mdg@gmail.com">andy261mdg@gmail.com</a>.</p>
           </form>
         </div>
       </div>
