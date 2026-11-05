@@ -381,6 +381,18 @@ a:hover {
   color: var(--text);
 }
 
+/* Texte justifié : bords gauche ET droit alignés sur la largeur commune (--measure).
+   Appliqué aux paragraphes uniquement (pas aux listes à puces). La césure
+   française (html lang="fr") évite les grands blancs dans les lignes. */
+.hero-tagline,
+.hero-offer,
+.prose p {
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
 /* Liste des collaborations régulières (section À propos) */
 .collab {
   display: grid;
@@ -804,6 +816,18 @@ a:hover {
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 34px;
+  }
+}
+
+/* Sous 640 px, retour au fer à gauche : justifier des lignes aussi courtes
+   crée des blancs trop importants entre les mots. */
+@media (max-width: 640px) {
+  .hero-tagline,
+  .hero-offer,
+  .prose p {
+    text-align: left;
+    -webkit-hyphens: manual;
+    hyphens: manual;
   }
 }
 
