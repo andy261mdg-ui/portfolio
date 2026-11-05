@@ -12,25 +12,62 @@ Aucune installation n'est nécessaire.
 1. Ouvrir le dossier `D:\portfolio`.
 2. Double-cliquer sur **`index.html`** (ou clic droit → Ouvrir avec → votre navigateur).
 
-Le site fonctionne **hors ligne** (la police « Inter » est un simple confort : en ligne elle
-s'affiche, hors ligne la police système prend le relais).
+Le site fonctionne **hors ligne** : la police Inter est **auto-hébergée** (`assets/fonts/`),
+donc aucune connexion n'est nécessaire — et aucune adresse IP n'est transmise à un service tiers.
 
 ## Structure
 
 ```
 index.html            Page unique (toutes les sections) + métadonnées SEO et JSON-LD
 404.html              Page d'erreur servie automatiquement par GitHub Pages
-css/style.css         Design (fond neutre + accent bleu)
+css/style.css         Design (fond neutre + accent bleu) + @font-face auto-hébergé
 js/main.js            Menu mobile, scrollspy, FAQ, formulaire de contact, copie de l'email, année
 robots.txt            Autorise l'indexation et déclare le sitemap
 sitemap.xml           Plan du site (une URL)
+package.json          Dépendances de TEST uniquement (le site reste sans build)
+playwright.config.js  Deux profils de test : 1366×900 et 390×844
+tests/                52 tests : formulaire, accessibilité (axe), liens, non-régression
+docs/                 audit.md (registre RGAA) + performance.json (Web Vitals mesurés)
+.github/workflows/qa.yml  CI : tests à chaque push + contrôle hebdomadaire du site
+tools/serve.mjs       Serveur statique pour les tests (aucune dépendance)
+tools/check-asset-versions.mjs  Garde-fou : ?v= incrémenté si un asset change
+tools/check-live.mjs  Contrôle du site réellement publié
+tools/lighthouse-report.mjs  Scores Lighthouse via l'API PageSpeed (clé PSI_KEY)
 tools/generate-images.py  Régénère les dérivés d'image (WebP, OG, icône Apple)
+assets/fonts/         Inter auto-hébergée (woff2 variable, sous-ensemble latin) + licence OFL
 assets/favicon.svg    Monogramme « AR »
 assets/apple-touch-icon.png  Icône Apple (180×180)
 assets/cv/            CV d'Andy (CV-Andy-Rakotondrabe.pdf)
 assets/img/           Portrait optimisé (WebP + JPEG, 300 et 600 px) + carte de partage OG
 sources/              Originaux haute définition — ignorés par Git, jamais déployés
 ```
+
+## Tests et intégration continue
+
+Le site livré n'a **aucune dépendance** : `package.json` ne contient que des outils de test
+(`devDependencies`), jamais chargés par les visiteurs.
+
+```bash
+npm install     # une seule fois (outils de test uniquement)
+npm test        # 52 tests sur deux profils : 1366×900 et 390×844
+npm run guard   # échoue si css/js a changé sans incrémenter ?v=
+npm run live    # contrôle le site réellement publié
+npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run audit)
+```
+
+| Fichier | Ce qui est vérifié |
+|---|---|
+| `tests/contact.spec.js` | soumission vide → 3 erreurs visibles, `aria-invalid`, focus sur le premier champ, résumé `role="status"` ; email invalide ; nettoyage à la saisie ; envoi intercepté ; menu à 7 options ; copie annoncée |
+| `tests/regression.spec.js` | grilles 6/6/6, aucun débordement, année, hiérarchie du hero, scrollspy (5 sections), FAQ exclusive, menu mobile + Échap + retour du focus |
+| `tests/a11y.spec.js` | axe-core (WCAG 2.1 AA) sur les trois pages : **aucune violation sérieuse ou critique** ; `lang` et `<title>` |
+| `tests/links.spec.js` | liens externes (`rel="noopener"` + « nouvel onglet »), ancres internes, `alt` + dimensions des images, identifiants uniques, ressources en 200, `sitemap.xml` |
+
+La CI (`.github/workflows/qa.yml`) lance la suite à chaque `push` et `pull request`, puis
+contrôle **une fois par semaine** le site publié (liens, ressources, contenu clé). Le rapport
+HTML est archivé automatiquement en cas d'échec.
+
+> En local, les tests utilisent votre Chrome installé (aucun navigateur à télécharger) ;
+> en CI, Playwright installe son propre Chromium.
 
 ## Performances & référencement
 
@@ -43,8 +80,16 @@ sources/              Originaux haute définition — ignorés par Git, jamais d
   (schema.org) dans un bloc `application/ld+json`.
 - **URL canonique** : `https://andy261mdg-ui.github.io/portfolio/`.
 - **`robots.txt`** + **`sitemap.xml`** à la racine.
+- **Police auto-hébergée** : Inter (variable, sous-ensemble latin, 47 Ko en woff2) servie
+  depuis `assets/fonts/` avec `preload`. Supprime la requête tierce bloquante
+  (≈ 950 ms mesurés sur le chemin critique) et n'expose plus l'adresse IP des visiteurs.
+  Licence OFL incluse : `assets/fonts/LICENSE-Inter.txt`.
+- **Mesures** : `docs/performance.json` consigne les Web Vitals relevés au chargement
+  (LCP, CLS, FCP, TTFB, poids transféré) et le détail des requêtes les plus longues.
 - **Accessibilité** : `prefers-reduced-motion`, focus visibles, lien d'évitement,
-  fermeture du menu avec `Échap`, statut de formulaire en `aria-live`.
+  fermeture du menu avec `Échap`, statut de formulaire en `aria-live`, monogramme
+  décoratif exclu du nom accessible (WCAG 2.5.3) — le tout verrouillé par les tests
+  `tests/a11y.spec.js` (axe-core, aucune violation sérieuse ou critique).
 
 > ⚠️ Si le site change d'adresse (domaine personnalisé), mettre à jour les URL absolues
 > dans `index.html` (`canonical`, `og:url`, `og:image`, `twitter:image`, JSON-LD),
@@ -70,12 +115,15 @@ Trois gestes à faire à chaque modification publiée :
    si le script change) dans **les trois pages** — `index.html`, `404.html`,
    `confidentialite.html`. GitHub Pages sert ces fichiers avec
    `Cache-Control: max-age=600` : sans incrément, un visiteur peut conserver
-   l'ancienne version jusqu'à 10 minutes.
+   l'ancienne version jusqu'à 10 minutes. **`npm run guard` vérifie ce point** (et échoue
+   en CI si l'incrément a été oublié).
 2. **Datation** : reporter la date du jour dans `sitemap.xml` (`<lastmod>` de l'URL
    modifiée). Une date figée fait douter les moteurs de la fraîcheur du contenu.
 3. **Cohérence des données structurées** : si les questions de la FAQ ou les
    prestations changent, mettre à jour le bloc JSON-LD correspondant (`FAQPage`,
    `hasOfferCatalog`). Un commentaire de rappel suit le bloc dans `index.html`.
+4. **Lancer les tests** : `npm test` (52 tests, ~1 min). Tout défaut corrigé doit être
+   verrouillé par une assertion dans `tests/` — sinon il revient.
 
 Conventions à respecter :
 
