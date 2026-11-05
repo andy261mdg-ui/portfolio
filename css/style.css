@@ -329,15 +329,27 @@ a:hover {
   max-width: var(--measure);
 }
 
+/* Encadré du hero : la barre d'accent est décorative et sortie du flux,
+   pour que le texte démarre exactement sur la même colonne que « À propos ». */
 .hero-offer {
+  position: relative;
   margin-top: 14px;
-  padding-left: 14px;
-  border-left: 3px solid var(--accent);
   font-size: 1.08rem;
   font-weight: 500;
   line-height: 1.65;
   color: var(--text);
   max-width: var(--measure);
+}
+
+.hero-offer::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 3px;
+  bottom: 3px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
 }
 
 .hero-actions {
@@ -514,6 +526,21 @@ a:hover {
   height: 24px;
 }
 
+/* Logo du média, en tête des cartes « Réalisations » */
+.card-logo {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin-bottom: 14px;
+}
+
+.card-logo img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
 .card-title {
   font-size: 1.1rem;
   font-weight: 700;
@@ -592,10 +619,11 @@ a:hover {
 
 .media-grid a {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   height: 100%;
-  padding: 13px 16px;
+  padding: 12px 14px;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -607,6 +635,20 @@ a:hover {
     box-shadow 0.18s ease;
 }
 
+.media-logo {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  object-fit: contain;
+}
+
+.media-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
 .media-grid a:hover {
   text-decoration: none;
   border-color: var(--accent);
@@ -615,9 +657,12 @@ a:hover {
 }
 
 .media-host {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 500;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ---------- FAQ ---------- */
@@ -952,12 +997,9 @@ a:hover {
 /* Sous 640 px, retour au fer à gauche : justifier des lignes aussi courtes
    crée des blancs trop importants entre les mots. */
 @media (max-width: 640px) {
-  .hero-tagline,
-  .hero-offer,
-  .prose p {
-    text-align: left;
-    -webkit-hyphens: manual;
-    hyphens: manual;
+  /* (les blocs de texte restent justifiés : bords gauche et droit alignés) */
+  .hero-offer::before {
+    left: -12px;
   }
 }
 
