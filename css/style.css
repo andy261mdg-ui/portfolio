@@ -7,7 +7,10 @@
   --bg: #ffffff;
   --bg-soft: #f6f8fb;
   --text: #0f172a;
-  --text-muted: #64748b;
+  /* Gris secondaire : choisi pour rester au-dessus de 4,5:1 (AA) sur les deux
+     fonds du site — #fff (5,19:1) et --bg-soft (4,87:1). L'ancien #64748b
+     tombait à 4,47:1 sur les sections teintées. */
+  --text-muted: #5f6e84;
   --border: #e2e8f0;
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
@@ -470,31 +473,59 @@ a:hover {
   margin-top: 10px;
 }
 
-/* Liste des collaborations régulières (section À propos) */
-.collab {
+/* ---------- Section À propos ----------
+   Récit à gauche sur la largeur de lecture commune (--measure), encadré de
+   repères à droite. Les deux colonnes s'empilent au même palier que le hero. */
+.about-grid {
   display: grid;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: 40px;
+  align-items: start;
 }
 
-.collab-list {
-  margin: 0;
-  padding-left: 22px;
-  list-style: disc;
-  display: grid;
-  gap: 8px;
-}
-
-.collab-list li {
-  padding-left: 2px;
-}
-
-.collab-list a {
+/* Renvoi interne dans le récit (ex. vers les réalisations) : souligné pour
+   être identifiable au milieu du texte, l'accent seul ne suffisant pas. */
+.about-grid .prose a {
   font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-.collab-meta {
-  margin-left: 6px;
-  font-size: 0.92rem;
+/* Encadré « Repères » : résumé factuel scannable (chiffres et repères clés),
+   sur fond doux et barre d'accent à gauche, comme l'encadré du hero. */
+.about-box {
+  padding: 22px 24px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.about-box-title {
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.about-facts {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.about-facts dt {
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.about-facts dd {
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
   color: var(--text-muted);
 }
 
@@ -1026,6 +1057,17 @@ a:hover {
   .hero-inner {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  /* L'encadré de repères passe sous le récit, aligné sur la colonne de texte
+     (et non sur toute la largeur du conteneur). */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .about-box {
+    max-width: var(--measure);
   }
 
   .hero-photo {
