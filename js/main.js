@@ -175,22 +175,8 @@
       }, 2600);
     }
 
-    btn.addEventListener("click", function () {
-      var value = btn.getAttribute("data-copy") || "";
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(value).then(
-          function () {
-            feedback("Adresse copiée !");
-          },
-          function () {
-            feedback("Copie impossible — sélectionnez l'adresse");
-          }
-        );
-        return;
-      }
-
-      // Repli pour les navigateurs sans API Clipboard
+    // Repli classique : champ temporaire + document.execCommand("copy")
+    function legacyCopy(value) {
       var field = document.createElement("textarea");
       field.value = value;
       field.setAttribute("readonly", "");
@@ -206,8 +192,34 @@
         copied = false;
       }
       document.body.removeChild(field);
+      return copied;
+    }
 
-      feedback(copied ? "Adresse copiée !" : "Copie impossible — sélectionnez l'adresse");
+    btn.addEventListener("click", function () {
+      var value = btn.getAttribute("data-copy") || "";
+      if (!value) {
+        return;
+      }
+
+      function afterFailure() {
+        feedback(
+          legacyCopy(value)
+            ? "Adresse copiée !"
+            : "Copie impossible, sélectionnez l'adresse"
+        );
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value).then(
+          function () {
+            feedback("Adresse copiée !");
+          },
+          afterFailure
+        );
+        return;
+      }
+
+      afterFailure();
     });
   });
 })();
