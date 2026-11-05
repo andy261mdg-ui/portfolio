@@ -335,52 +335,66 @@ a:hover {
   font-weight: 800;
 }
 
+/* Signature de marque (titre de métier anglais) : volontairement discrète,
+   la promesse ci-dessous porte le message. */
 .hero-subtitle {
   margin-top: 10px;
-  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-size: clamp(1.05rem, 2vw, 1.15rem);
   font-weight: 600;
   color: var(--text-muted);
 }
 
-.hero-tagline {
-  margin-top: 22px;
-  font-size: 1.15rem;
-  color: var(--text-muted);
-  max-width: var(--measure);
-}
-
-/* Encadré du hero : la barre d'accent est décorative et sortie du flux,
-   pour que le texte démarre exactement sur la même colonne que « À propos ». */
-.hero-offer {
+/* Promesse : le message principal du hero (le bénéfice client). Remontée
+   au-dessus de la liste de prestations et mise en avant. La barre d'accent
+   est décorative et sortie du flux, pour que le texte démarre exactement sur
+   la même colonne que « À propos ». */
+.hero-promise {
   position: relative;
-  margin-top: 14px;
-  font-size: 1.08rem;
+  margin-top: 26px;
+  font-size: clamp(1.15rem, 2.6vw, 1.45rem);
   font-weight: 500;
-  line-height: 1.65;
+  line-height: 1.5;
   color: var(--text);
   max-width: var(--measure);
 }
 
-.hero-offer::before {
+.hero-promise::before {
   content: "";
   position: absolute;
   left: -14px;
-  top: 3px;
-  bottom: 3px;
+  top: 4px;
+  bottom: 4px;
   width: 3px;
   border-radius: 2px;
   background: var(--accent);
+}
+
+/* Livrables : la liste de ce qui est concrètement produit, en retrait. */
+.hero-tagline {
+  margin-top: 14px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: var(--measure);
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 34px;
+  margin-top: 30px;
+}
+
+/* Micro-réassurance collée au CTA principal : le délai de réponse est la
+   première objection avant d'écrire à un freelance. */
+.hero-reassurance {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
 .hero-meta {
-  margin-top: 30px;
+  margin-top: 26px;
   font-size: 0.92rem;
   color: var(--text-muted);
   font-weight: 500;
@@ -439,9 +453,10 @@ a:hover {
 
 /* Texte justifié : bords gauche ET droit alignés sur la largeur commune (--measure).
    Appliqué aux paragraphes uniquement (pas aux listes à puces). La césure
-   française (html lang="fr") évite les grands blancs dans les lignes. */
+   française (html lang="fr") évite les grands blancs dans les lignes.
+   Exception : .hero-promise, composée en corps plus grand, où la justification
+   produirait des rivières (écarts trop visibles entre les mots). */
 .hero-tagline,
-.hero-offer,
 .section-lead,
 .prose p {
   text-align: justify;
@@ -1148,7 +1163,7 @@ a:hover {
    crée des blancs trop importants entre les mots. */
 @media (max-width: 640px) {
   /* (les blocs de texte restent justifiés : bords gauche et droit alignés) */
-  .hero-offer::before {
+  .hero-promise::before {
     left: -12px;
   }
 }

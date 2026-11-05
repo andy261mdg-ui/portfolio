@@ -86,6 +86,12 @@ Conventions à respecter :
 - **Grilles de cartes** : 6 éléments = aucune ligne incomplète, quel que soit le
   nombre de colonnes (`auto-fit`, minimum 250 px) ; d'où les cartes d'appel à l'action
   qui referment les grilles « Services » et « Réalisations ».
+- **Hero** : hiérarchie de lecture figée — `.hero-subtitle` = signature de marque
+  (discrète), `.hero-promise` = bénéfice client (message principal, barre d'accent),
+  `.hero-tagline` = livrables, puis un seul CTA primaire (`Parlons de votre projet`)
+  suivi de `.hero-reassurance` (« Réponse sous 48 h ouvrées. »). Modifier le délai de
+  réponse impose de mettre à jour les trois emplacements (hero, formulaire, message
+  de succès) — la promesse doit rester identique partout.
 
 ## Points à compléter plus tard
 
