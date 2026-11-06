@@ -135,6 +135,13 @@ Conventions à respecter :
 - **Grilles de cartes** : 6 éléments = aucune ligne incomplète, quel que soit le
   nombre de colonnes (`auto-fit`, minimum 250 px) ; d'où les cartes d'appel à l'action
   qui referment les grilles « Services » et « Réalisations ».
+- **Densité des grilles** : « Réalisations » reste en 3 colonnes (textes d'une ligne) ;
+  « Prestations » passe à 2 colonnes (`min(400px, 100%)`) pour que la justification
+  dispose d'une mesure suffisante (≈ 29 em). Voir le commentaire du bloc « Texte
+  justifié » dans `css/style.css`.
+- **Justification** : bords gauche et droit alignés dès qu'un bloc atteint ~22 em de
+  mesure ; en dessous (colonnes de cartes étroites, écrans < 640 px) le texte repasse
+  en fer à gauche — justifier des lignes courtes crée des blancs entre les mots.
 - **Hero** : hiérarchie de lecture figée — `.hero-subtitle` = signature de marque
   (discrète), `.hero-promise` = bénéfice client (message principal, barre d'accent),
   `.hero-tagline` = livrables, puis un seul CTA primaire (`Parlons de votre projet`)
