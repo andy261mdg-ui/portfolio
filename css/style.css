@@ -474,14 +474,18 @@ a:hover {
 }
 
 /* Texte justifié : bords gauche ET droit alignés sur la largeur commune (--measure).
-   Appliqué aux paragraphes uniquement (pas aux listes à puces). La césure
-   française (html lang="fr") évite les grands blancs dans les lignes.
+   Appliqué aux paragraphes (pas aux listes à puces, dont les puces casseraient
+   l'alignement). La césure française (html lang="fr") limite les écarts entre
+   les mots — indispensable dans les colonnes étroites des cartes.
    La promesse du hero suit la même règle : sa taille est donc plafonnée à
    ~1.3rem, au-delà les lignes trop courtes produisent des « rivières ». */
 .hero-tagline,
 .hero-promise,
 .section-lead,
-.prose p {
+.prose p,
+.card-text,
+.faq-answer p,
+.contact-lead {
   text-align: justify;
   text-justify: inter-word;
   -webkit-hyphens: auto;

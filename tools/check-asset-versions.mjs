@@ -76,7 +76,11 @@ if (modifsNonCommitees === null) {
     const anciennePage = show(reference, "index.html");
     const actuelle = lire("index.html");
 
-    if (toucheLocal.concat(toucheCommit).includes("css/style.css")) {
+    // On ne contrôle que les fichiers réellement concernés par la comparaison :
+    // les modifications locales si l'on compare à HEAD, sinon celles du dernier commit.
+    const fichiers = reference === "HEAD" ? toucheLocal : toucheCommit;
+
+    if (fichiers.includes("css/style.css")) {
       const avant = anciennePage && versionCss(anciennePage);
       const apres = versionCss(actuelle);
       if (avant === apres) {
@@ -86,7 +90,7 @@ if (modifsNonCommitees === null) {
       }
     }
 
-    if (toucheLocal.concat(toucheCommit).includes("js/main.js")) {
+    if (fichiers.includes("js/main.js")) {
       const avant = anciennePage && versionJs(anciennePage);
       const apres = versionJs(actuelle);
       if (avant === apres) {
