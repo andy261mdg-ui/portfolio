@@ -6,6 +6,7 @@ import { chromium } from "playwright";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { access, stat } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
 
 const RACINE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SOURCE = resolve(RACINE, "sources/cv/CV-Andy-Rakotondrabe.html");
@@ -31,6 +32,17 @@ await page.pdf({
   preferCSSPageSize: true // respecte @page { size: A4; margin: 0 }
 });
 await navigateur.close();
+
+// Chrome/Skia n'exporte pas les <meta> HTML : on complète les métadonnées du
+// PDF (auteur, sujet, mots-clés) avec pypdf — cf. tools/set-pdf-metadata.py.
+const meta = spawnSync("python", ["tools/set-pdf-metadata.py", SORTIE], {
+  cwd: RACINE,
+  stdio: "inherit"
+});
+if (meta.status !== 0) {
+  console.error("Échec : métadonnées du CV non écrites.");
+  process.exit(1);
+}
 
 const { size } = await stat(SORTIE);
 console.log(`CV généré : ${SORTIE} (${Math.round(size / 1024)} Ko)`);

@@ -135,6 +135,9 @@ npm run cv     # sources/cv/CV-Andy-Rakotondrabe.html → assets/cv/CV-Andy-Rako
 
 Le PDF produit, lui, est versionné et lié depuis `index.html` (Hero et Contact).
 
+Le script complète les **métadonnées du PDF** (auteur, sujet, mots-clés), que
+Chrome n'exporte pas — dépendance : `pypdf` (`pip install pypdf`).
+
 ## Maintenance courante
 
 Trois gestes à faire à chaque modification publiée :

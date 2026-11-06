@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+"""Complète les métadonnées du CV PDF (Chrome/Skia n'exporte pas les <meta> HTML).
+
+Usage : python tools/set-pdf-metadata.py <cv.pdf>
+Appele par tools/generate-cv.mjs après la génération (npm run cv).
+Dépendance : pypdf (pip install pypdf)
+"""
+import os
+import sys
+
+from pypdf import PdfWriter
+
+METADONNEES = {
+    "/Title": "CV — Andy Rakotondrabe · Rédacteur web freelance SEO",
+    "/Author": "Andy Rakotondrabe",
+    "/Subject": (
+        "CV — rédacteur web freelance SEO (NTIC & high-tech), "
+        "pigiste IGN France, Android MT, NuMedia, guest blogger"
+    ),
+    "/Keywords": (
+        "CV, rédacteur web freelance, rédaction SEO, contenu web, "
+        "pigiste, high-tech, NTIC, WordPress, Andy Rakotondrabe"
+    ),
+}
+
+
+def main(chemin):
+    ecrivain = PdfWriter(clone_from=chemin)
+    ecrivain.add_metadata(METADONNEES)
+    temporaire = chemin + ".tmp"
+    with open(temporaire, "wb") as fichier:
+        ecrivain.write(fichier)
+    os.replace(temporaire, chemin)
+    print("Métadonnées PDF écrites :", chemin)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        sys.exit("Usage : python tools/set-pdf-metadata.py <cv.pdf>")
+    main(sys.argv[1])
