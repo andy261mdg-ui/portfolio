@@ -49,11 +49,12 @@ Le site livré n'a **aucune dépendance** : `package.json` ne contient que des o
 
 ```bash
 npm install     # une seule fois (outils de test uniquement)
-npm test        # 58 tests sur deux profils : 1366×900 et 390×844
+npm test        # 62 tests sur deux profils : 1366×900 et 390×844
 npm run guard   # échoue si css/js a changé sans incrémenter ?v=
 npm run live    # contrôle le site réellement publié
 npm run vitals  # Web Vitals du site publié → docs/performance.json
 npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run audit)
+npm run cv      # régénère le CV PDF (source locale : sources/cv/)
 ```
 
 | Fichier | Ce qui est vérifié |
@@ -61,7 +62,7 @@ npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run a
 | `tests/contact.spec.js` | soumission vide → 3 erreurs visibles, `aria-invalid`, focus sur le premier champ, résumé `role="status"` ; email invalide ; nettoyage à la saisie ; envoi intercepté ; menu à 7 options ; copie annoncée |
 | `tests/regression.spec.js` | grilles 6/6/6, aucun débordement (texte à 100 % **et** 200 %), année, hiérarchie du hero, scrollspy (5 sections + `aria-current`), FAQ exclusive, menu mobile (Échap, clic extérieur, sortie de focus) |
 | `tests/a11y.spec.js` | axe-core (WCAG 2.1 AA) sur les trois pages : **aucune violation sérieuse ou critique** ; `lang` et `<title>` |
-| `tests/links.spec.js` | liens externes (`rel="noopener"` + « nouvel onglet »), ancres internes, `alt` + dimensions des images, identifiants uniques, ressources en 200, `sitemap.xml` |
+| `tests/links.spec.js` | liens externes (`rel="noopener"` + « nouvel onglet »), ancres internes, `alt` + dimensions des images, identifiants uniques, ressources en 200, `sitemap.xml`, meta description ≤ 160 caractères, FAQPage JSON-LD synchronisé avec la FAQ visible |
 
 La CI (`.github/workflows/qa.yml`) lance la suite à chaque `push` et `pull request`, puis
 contrôle **une fois par semaine** le site publié (liens, ressources, contenu clé). Le rapport
@@ -79,6 +80,9 @@ HTML est archivé automatiquement en cas d'échec.
   (1200×630, 85 Ko).
 - **Données structurées** : `Person`, `ProfessionalService`, `WebSite` et `FAQPage`
   (schema.org) dans un bloc `application/ld+json`.
+- **Meta description** : ≤ 160 caractères et ciblée « rédacteur web freelance » —
+  verrouillée par `tests/links.spec.js` et par le contrôle du site publié
+  (`npm run live`).
 - **URL canonique** : `https://andy261mdg-ui.github.io/portfolio/`.
 - **`robots.txt`** + **`sitemap.xml`** à la racine.
 - **Police auto-hébergée** : Inter (variable, sous-ensemble latin, 47 Ko en woff2) servie
@@ -118,6 +122,18 @@ arrêté à la bande blanche qui le sépare du wordmark). Raccourci :
 ```bash
 npm run logo
 ```
+
+## Régénérer le CV (facultatif)
+
+Le CV est un PDF **généré** à partir d'une source HTML (mise en page A4 sur une
+seule page, police Inter du site). La source vit dans `sources/cv/` — dossier local
+non versionné, comme les originaux d'images :
+
+```bash
+npm run cv     # sources/cv/CV-Andy-Rakotondrabe.html → assets/cv/CV-Andy-Rakotondrabe.pdf
+```
+
+Le PDF produit, lui, est versionné et lié depuis `index.html` (Hero et Contact).
 
 ## Maintenance courante
 
@@ -166,9 +182,10 @@ Conventions à respecter :
 
 ## Points à compléter plus tard
 
-- **CV** : le PDF est intégré (`assets/cv/CV-Andy-Rakotondrabe.pdf`) et lié depuis le
-  Hero et la section Contact. Remplacer le fichier (même nom) pour mettre le CV à jour.
-  `CV-Andy-Rakotondrabe-linkedin.pdf` est une variante non liée, prévue pour LinkedIn.
+- **CV** : le PDF (`assets/cv/CV-Andy-Rakotondrabe.pdf`) est généré depuis sa source
+  HTML locale `sources/cv/CV-Andy-Rakotondrabe.html` (`npm run cv`) et lié depuis le
+  Hero et la section Contact. `CV-Andy-Rakotondrabe-linkedin.pdf` est une variante non
+  liée, prévue pour LinkedIn (mise à jour manuelle).
 - **Témoignages** : la section `#temoignages` est **commentée** dans `index.html` tant
   qu'aucun avis client réel n'est disponible (un bloc « à venir » sur un site en ligne
   nuit à la crédibilité). Pour la réactiver : décommenter le bloc, remplacer

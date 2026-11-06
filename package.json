@@ -6,6 +6,7 @@
   "scripts": {
     "serve": "node tools/serve.mjs 8765",
     "logo": "python tools/generate-images.py",
+    "cv": "node tools/generate-cv.mjs",
     "test": "playwright test",
     "test:liste": "playwright test --list",
     "test:ui": "playwright test --ui",

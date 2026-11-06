@@ -10,13 +10,13 @@
 ## 1. Ce qui est vérifié automatiquement
 
 La suite tourne à chaque `push` (voir `.github/workflows/qa.yml`) et en local (`npm test`) :
-58 tests sur deux profils (1366×900 et 390×844).
+62 tests sur deux profils (1366×900 et 390×844).
 
 | Fichier | Couverture |
 |---|---|
 | `tests/a11y.spec.js` | axe-core, règles WCAG 2.0/2.1 A et AA, sur les trois pages — seuil : **0 violation sérieuse ou critique** |
 | `tests/contact.spec.js` | contrôle de saisie : messages, `aria-describedby`, `aria-invalid`, focus, `role="status"` |
-| `tests/links.spec.js` | intitulés de liens, `rel="noopener"`, ancres, alternatives des images, identifiants uniques |
+| `tests/links.spec.js` | intitulés de liens, `rel="noopener"`, ancres, alternatives des images, identifiants uniques, meta description ≤ 160 caractères, synchronisation FAQPage |
 | `tests/regression.spec.js` | navigation clavier (menu : `Échap`, clic extérieur, sortie de focus), FAQ, scrollspy + `aria-current`, taille de texte 200 %, mise en page |
 
 ## 2. Registre des points de contrôle

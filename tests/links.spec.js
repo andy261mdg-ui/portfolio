@@ -89,3 +89,34 @@ test("sitemap : URL déclarée et lastmod plausible", async ({ request }) => {
   expect(lastmod, "lastmod présent").toBeTruthy();
   expect(new Date(lastmod).getTime(), "lastmod non futur").toBeLessThanOrEqual(Date.now() + 86400000);
 });
+
+test("meta description : présente, ciblée et ≤ 160 caractères", async ({ page }) => {
+  const description = await page.evaluate(() => {
+    const meta = document.querySelector('meta[name="description"]');
+    return meta ? meta.content : null;
+  });
+
+  expect(description, "meta description présente").toBeTruthy();
+  expect(description.length, "longueur ≤ 160 (troncature Google)").toBeLessThanOrEqual(160);
+  expect(description.length, "longueur suffisante").toBeGreaterThanOrEqual(80);
+  expect(description.toLowerCase()).toContain("rédacteur web freelance");
+});
+
+test("JSON-LD FAQPage synchronisé avec la FAQ visible", async ({ page }) => {
+  const { questionsJsonLd, questionsVisibles } = await page.evaluate(() => {
+    const script = document.querySelector('script[type="application/ld+json"]');
+    const data = JSON.parse(script.textContent);
+    const graphe = data["@graph"] || [data];
+    const faq = graphe.find((n) => n["@type"] === "FAQPage");
+    const questionsJsonLd = Array.isArray(faq && faq.mainEntity)
+      ? faq.mainEntity.map((q) => q.name.replace(/\s+/g, " ").trim())
+      : [];
+    const questionsVisibles = [...document.querySelectorAll("#faq summary")].map((s) =>
+      s.textContent.replace(/\s+/g, " ").trim()
+    );
+    return { questionsJsonLd, questionsVisibles };
+  });
+
+  expect(questionsVisibles.length, "FAQ visible non vide").toBeGreaterThan(0);
+  expect(questionsJsonLd).toEqual(questionsVisibles);
+});
