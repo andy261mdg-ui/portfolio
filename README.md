@@ -99,6 +99,11 @@ HTML est archivé automatiquement en cas d'échec.
   serait tronqué.
 - **GEO** : présenté comme une pratique (réponses directes, entités nommées, FAQ
   balisée), jamais comme un résultat garanti.
+- **CV aligné** : `cv.html` porte le même champ lexical (intentions de recherche, GEO,
+  plus de 6 200 articles) depuis novembre 2026. La liste `FAITS` de
+  `tools/check-pdf-a11y.py` fait **échouer** `npm run cv` si ce positionnement
+  disparaît du document : le CV ne peut plus redevenir une page « rédacteur web
+  généraliste » sans alerte.
 - **Meta description** : ≤ 160 caractères et ciblée « rédacteur web freelance » —
   verrouillée par `tests/links.spec.js` et par le contrôle du site publié
   (`npm run live`), qui vérifie aussi le positionnement (SEO dans le title,
@@ -155,7 +160,9 @@ npm run cv     # cv.html → assets/cv/CV-Andy-Rakotondrabe.pdf (une page A4, ba
 
 La mise en page d'impression vit dans `cv.html` (`@media print` + `@page A4`) : le
 PDF tient sur **une page**, avec la police Inter du site, sans navigation ni pied de
-page. Le script fait trois choses :
+page. Le script produit **deux exports de la même source** : `CV-Andy-Rakotondrabe.pdf`
+(avec les liens cliquables) et `CV-Andy-Rakotondrabe-linkedin.pdf` (même contenu, liens
+retirés, pour un envoi depuis LinkedIn). Il fait trois choses :
 
 1. rend la page en média `print` et exporte le PDF avec `tagged: true` : Chromium
    écrit alors un **arbre de structure** (`H1`, `H2`, `P`, `L`/`LI`/`Lbl`, `Link`),
@@ -163,8 +170,8 @@ page. Le script fait trois choses :
 2. complète les **métadonnées** (titre, auteur, sujet, mots-clés), déclare la langue
    du document (`/Lang fr-FR`) et `/ViewerPreferences /DisplayDocTitle` (le titre
    s'affiche dans la barre du lecteur au lieu du nom de fichier) ;
-3. lance `tools/check-pdf-a11y.py`, qui **échoue** si le balisage, la langue, le
-   titre ou la tenue sur une page sont perdus.
+3. lance `tools/check-pdf-a11y.py` sur les deux fichiers, qui **échoue** si le balisage,
+   la langue, le titre, la tenue sur une page ou les faits de positionnement sont perdus.
 
 Dépendances : Playwright (déjà installé pour les tests) et `pypdf`
 (`pip install pypdf`). La CI rejoue le même contrôle à chaque `push`.
@@ -186,7 +193,7 @@ Trois gestes à faire à chaque modification publiée :
 3. **Cohérence des données structurées** : si les questions de la FAQ ou les
    prestations changent, mettre à jour le bloc JSON-LD correspondant (`FAQPage`,
    `hasOfferCatalog`). Un commentaire de rappel suit le bloc dans `index.html`.
-4. **Lancer les tests** : `npm test` (62 tests, ~2 min). Tout défaut corrigé doit être
+4. **Lancer les tests** : `npm test` (70 tests, ~2 min). Tout défaut corrigé doit être
    verrouillé par une assertion dans `tests/` — sinon il revient.
 
 Conventions à respecter :
@@ -234,8 +241,9 @@ médias dans une seule phrase.
 
 Volumes publiés (chiffres arrondis, à rafraîchir si les pages auteur évoluent) :
 Fredzone ≈ 4 700 articles, JustGeek ≈ 1 250, Daily Geek Show ≈ 330, soit **plus de
-6 200 articles** au total. Ces volumes apparaissent dans le hero, l'encadré « Repères »
-et le chapô « Autres publications » : les modifier **partout à la fois**.
+6 200 articles** au total. Ces volumes apparaissent dans le hero, l'encadré « Repères »,
+le chapô « Autres publications » et le Profil du CV (`cv.html`, donc les deux PDF) :
+les modifier **partout à la fois**.
 
 Règles de rédaction de ces blocs :
 
@@ -254,8 +262,9 @@ Règles de rédaction de ces blocs :
   `npm run cv` et lié depuis le hero, la section Contact et la page CV elle-même.
   Le PDF est **balisé** (arbre de structure, langue, titre affiché) et contrôlé à
   chaque génération et en CI ; il n'est pas certifié PDF/UA-1, voir `docs/audit.md` §5.
-  `CV-Andy-Rakotondrabe-linkedin.pdf` est une variante non liée, prévue pour LinkedIn
-  (mise à jour manuelle).
+  `CV-Andy-Rakotondrabe-linkedin.pdf` est la variante sans liens cliquables, régénérée
+  par le même `npm run cv` : elle ne peut plus se désynchroniser du CV en ligne (elle
+  avait deux pages, un ancien argumentaire et un lien `bit.ly` retiré du site).
 - **Témoignages** : la section `#temoignages` est **commentée** dans `index.html` tant
   qu'aucun avis client réel n'est disponible (un bloc « à venir » sur un site en ligne
   nuit à la crédibilité). Pour la réactiver : décommenter le bloc, remplacer

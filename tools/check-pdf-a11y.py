@@ -18,8 +18,19 @@ from pypdf.generic import DictionaryObject, IndirectObject
 SECTIONS = ["Profil", "Expérience", "Formation", "Compétences"]
 
 # Quelques faits de la source de vérité éditoriale (cf. README) : le PDF doit
-# les contenir, sinon c'est que la page cv.html a régressé.
-FAITS = ["IGN France", "Android MT", "NuMedia", "Le Mag Auto Prestige", "PhonAndroid"]
+# les contenir, sinon c'est que la page cv.html a régressé. Les trois derniers
+# verrouillent le positionnement : un retour à « rédacteur web généraliste »,
+# sans volume publié ni champ lexical SEO/GEO, échoue ici.
+FAITS = [
+    "IGN France",
+    "Android MT",
+    "NuMedia",
+    "Le Mag Auto Prestige",
+    "PhonAndroid",
+    "6 200",
+    "intentions de recherche",
+    "GEO",
+]
 
 
 def resoudre(objet):
@@ -92,7 +103,10 @@ def verifier(chemin):
         erreurs.append(f"un seul titre H1 attendu, {noms.count('/H1')} trouvé(s)")
 
     # 5. Titres de sections présents et dans l'ordre de lecture
-    texte = lecteur.pages[0].extract_text() or ""
+    # Les espaces insécables du HTML (« 6 200 ») ressortent en U+00A0 dans le
+    # texte extrait : on compare les faits à un texte normalisé, sans quoi le
+    # contrôle échouerait sur un simple détail typographique.
+    texte = (lecteur.pages[0].extract_text() or "").replace("\u00a0", " ")
     positions = []
     for section in SECTIONS:
         position = texte.find(section.upper())

@@ -16,11 +16,13 @@ METADONNEES = {
     "/Author": "Andy Rakotondrabe",
     "/Subject": (
         "CV de rédacteur web freelance SEO (NTIC et high-tech) : "
-        "guest blogger IGN France et Android MT, pigiste NuMedia"
+        "guest blogger IGN France et Android MT, pigiste NuMedia, "
+        "plus de 6 200 articles publiés"
     ),
     "/Keywords": (
-        "CV, rédacteur web freelance, rédaction SEO, contenu web, "
-        "pigiste, high-tech, NTIC, WordPress, Andy Rakotondrabe"
+        "CV, rédacteur web freelance, rédacteur web SEO, intentions de recherche, "
+        "GEO, rédaction SEO, contenu web, pigiste, high-tech, NTIC, WordPress, "
+        "Andy Rakotondrabe"
     ),
 }
 
