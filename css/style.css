@@ -415,8 +415,15 @@ a:hover {
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 10px;
   margin-top: 30px;
+}
+
+/* Trois appels à l'action sur une seule ligne dans la colonne de texte du hero
+   (≥ 1049 px) : on resserre le padding horizontal et l'espacement, pas la
+   typographie. En dessous, les boutons se replient normalement (flex-wrap). */
+.hero-actions .btn {
+  padding: 11px 12px;
 }
 
 /* Micro-réassurance collée au CTA principal : le délai de réponse est la
