@@ -84,9 +84,25 @@ HTML est archivé automatiquement en cas d'échec.
   (1200×630, 85 Ko).
 - **Données structurées** : `Person`, `ProfessionalService`, `WebSite` et `FAQPage`
   (schema.org) dans un bloc `application/ld+json`.
+- **Positionnement SEO explicite** : le `<title>` commence par « Rédacteur web freelance
+  SEO », la phrase cible ouvre le hero (`.hero-eyebrow`) et les titres de section la
+  reprennent ; le champ lexical (intention de recherche, champ sémantique, maillage
+  interne, indexation, GEO) est réparti dans « À propos », les prestations et la FAQ.
+  Le `h1` reste le nom : c'est l'entité de la page, et la requête est portée par le
+  title, l'eyebrow et les H2 — un `h1` surchargé de mots-clés casserait la hiérarchie
+  visuelle du hero pour un gain nul.
+- **Preuve chiffrée** : « plus de 6 200 articles publiés » dans le hero, l'encadré
+  « Repères » et le chapô « Autres publications » (Fredzone ≈ 4 700, JustGeek ≈ 1 250,
+  Daily Geek Show ≈ 330). Volontairement arrondis : un compteur exact se périme, et une
+  fausse précision se voit. Les volumes restent dans le chapô, pas dans les puces médias :
+  `.media-host` est en `text-overflow: ellipsis`, un compteur ajouté à la ligne du domaine
+  serait tronqué.
+- **GEO** : présenté comme une pratique (réponses directes, entités nommées, FAQ
+  balisée), jamais comme un résultat garanti.
 - **Meta description** : ≤ 160 caractères et ciblée « rédacteur web freelance » —
   verrouillée par `tests/links.spec.js` et par le contrôle du site publié
-  (`npm run live`).
+  (`npm run live`), qui vérifie aussi le positionnement (SEO dans le title,
+  « intention de recherche », « GEO » : voir `tools/check-live.mjs`).
 - **URL canonique** : `https://andy261mdg-ui.github.io/portfolio/`.
 - **`robots.txt`** + **`sitemap.xml`** à la racine.
 - **Police auto-hébergée** : Inter (variable, sous-ensemble latin, 47 Ko en woff2) servie
@@ -215,6 +231,11 @@ médias dans une seule phrase.
 | Le Mag Jeux High-Tech | guest blogger | juin 2021 – 2025 | brèves fournies par le client, certains sujets choisis en autonomie |
 | Le Mag Auto Prestige | rédacteur | 2024 | proposition de sujets de dossiers |
 | PhonAndroid | rédacteur web | sept. 2020 – juil. 2022 | articles longs uniquement : guides d'achat, comparatifs, dossiers |
+
+Volumes publiés (chiffres arrondis, à rafraîchir si les pages auteur évoluent) :
+Fredzone ≈ 4 700 articles, JustGeek ≈ 1 250, Daily Geek Show ≈ 330, soit **plus de
+6 200 articles** au total. Ces volumes apparaissent dans le hero, l'encadré « Repères »
+et le chapô « Autres publications » : les modifier **partout à la fois**.
 
 Règles de rédaction de ces blocs :
 

@@ -19,7 +19,13 @@ const CONTENUS = [
   ["micro-réassurance 48 heures", /R[ée]ponse sous 48 heures ouvr[ée]es/],
   ["type de prestation (menu)", /Type de prestation/],
   ["meta description ≤ 160 caractères", /<meta name="description" content="(?=[^"]{1,160}")[^"]*r[ée]dacteur web freelance[^"]*"/],
-  ["données structurées FAQPage", /"@type":\s*"FAQPage"/]
+  ["données structurées FAQPage", /"@type":\s*"FAQPage"/],
+  ["positionnement SEO dans le titre", /<title>[^<]*R[ée]dacteur web freelance SEO/],
+  // Le positionnement SEO/GEO doit survivre aux réécritures : sans ces deux
+  // contrôles, un retour au discours « rédacteur web généraliste » passerait
+  // inaperçu en production.
+  ["champ lexical : intention de recherche", /intentions?\s+de\s+recherche/],
+  ["champ lexical : GEO", /\(GEO\)/]
 ];
 
 const problemes = [];
