@@ -516,16 +516,13 @@ a:hover {
 }
 
 /* Justifier n'est lisible qu'à partir d'environ 22 em de mesure (≈ 45 caractères).
-   Les cartes de « Prestations » contiennent un vrai paragraphe : la grille passe
-   donc à deux colonnes (mesure ≈ 29 em) au lieu de trois (18 em). Les cartes de
-   « Réalisations » n'ont qu'une ligne de texte : elles restent en trois colonnes
-   et leur texte demeure en fer à gauche. */
-#services .cards-grid {
+   Les cartes de « Prestations » et de « Réalisations » contiennent un vrai
+   paragraphe : leurs grilles passent donc à deux colonnes (mesure ≈ 29 em) au
+   lieu de trois (19 em), où la justification produirait des blancs trop
+   importants entre les mots. Les deux sections gardent ainsi le même rythme. */
+#services .cards-grid,
+#realisations .cards-grid {
   grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
-}
-
-#realisations .cards-grid .card-text {
-  text-align: left;
 }
 
 /* Sous 640 px, aucune colonne n'atteint 22 em : retour au fer à gauche pour tous
