@@ -1,7 +1,7 @@
 # Portfolio — Andy Rakotondrabe
 
 Site portfolio statique (une seule page) pour promouvoir l'activité de rédaction web
-d'Andy Rakotondrabe — **SEO Content Writer - Guest Blogger**.
+d'Andy Rakotondrabe, **SEO Content Writer & Guest Blogger**.
 
 En ligne : <https://andy261mdg-ui.github.io/portfolio/>
 
@@ -26,7 +26,7 @@ robots.txt            Autorise l'indexation et déclare le sitemap
 sitemap.xml           Plan du site (une URL)
 package.json          Dépendances de TEST uniquement (le site reste sans build)
 playwright.config.js  Deux profils de test : 1366×900 et 390×844
-tests/                58 tests : formulaire, accessibilité (axe), liens, non-régression
+tests/                62 tests : formulaire, accessibilité (axe), liens, non-régression
 docs/                 audit.md (registre RGAA) + performance.json (Web Vitals mesurés)
 .github/workflows/qa.yml  CI : tests à chaque push + contrôle hebdomadaire du site
 tools/serve.mjs       Serveur statique pour les tests (aucune dépendance)
@@ -135,8 +135,9 @@ npm run cv     # sources/cv/CV-Andy-Rakotondrabe.html → assets/cv/CV-Andy-Rako
 
 Le PDF produit, lui, est versionné et lié depuis `index.html` (Hero et Contact).
 
-Le script complète les **métadonnées du PDF** (auteur, sujet, mots-clés), que
-Chrome n'exporte pas — dépendance : `pypdf` (`pip install pypdf`).
+Le script complète les **métadonnées du PDF** (titre, auteur, sujet, mots-clés) et
+déclare la langue du document (`/Lang fr-FR`), que Chrome n'exporte pas — dépendance :
+`pypdf` (`pip install pypdf`).
 
 ## Maintenance courante
 
@@ -153,7 +154,7 @@ Trois gestes à faire à chaque modification publiée :
 3. **Cohérence des données structurées** : si les questions de la FAQ ou les
    prestations changent, mettre à jour le bloc JSON-LD correspondant (`FAQPage`,
    `hasOfferCatalog`). Un commentaire de rappel suit le bloc dans `index.html`.
-4. **Lancer les tests** : `npm test` (58 tests, ~1 min). Tout défaut corrigé doit être
+4. **Lancer les tests** : `npm test` (62 tests, ~2 min). Tout défaut corrigé doit être
    verrouillé par une assertion dans `tests/` — sinon il revient.
 
 Conventions à respecter :
@@ -183,6 +184,33 @@ Conventions à respecter :
   réponse impose de mettre à jour les trois emplacements (hero, formulaire, message
   de succès) — la promesse doit rester identique partout.
 
+## Faits éditoriaux (source de vérité)
+
+Les statuts et les missions doivent rester **identiques** dans `index.html` (À propos,
+cartes Réalisations, FAQ), dans le CV et dans les données structurées. Une reprise de
+ces faits est un contenu, pas une formule : on ne résume pas, on ne fusionne pas deux
+médias dans une seule phrase.
+
+| Média | Statut | Période | Missions |
+|---|---|---|---|
+| IGN France | guest blogger | déc. 2024 – présent | veille et choix des brèves du jour ; articles piliers et satellites validés par le client ; communiqués de presse ; traduction anglais → français lors des grands événements |
+| Android MT (Ouest-France) | guest blogger | avr. 2024 – présent | sujets evergreen choisis en autonomie ; publication directe sous WordPress |
+| NuMedia | pigiste | fév. 2023 – présent | choix des sujets et des formats, planification et publication WordPress |
+| Le Mag Jeux High-Tech | guest blogger | juin 2021 – 2025 | brèves fournies par le client, certains sujets choisis en autonomie |
+| Le Mag Auto Prestige | rédacteur | 2024 | proposition de sujets de dossiers |
+| PhonAndroid | rédacteur web | sept. 2020 – juil. 2022 | articles longs uniquement : guides d'achat, comparatifs, dossiers |
+
+Règles de rédaction de ces blocs :
+
+- **Première personne.** Les missions se décrivent avec « je » (« je choisis les brèves du
+  jour »), jamais à la troisième personne (« il », « lui-même »).
+- **Un média, un bloc.** Pas de liste commune qui laisse croire que tous les médias
+  demandent la même chose.
+- **Un fait daté reste daté.** Une collaboration terminée garde ses bornes (« juin 2021 –
+  2025 ») ; seules les collaborations en cours portent « depuis … ».
+- **Pas de tiret cadratin.** Le site utilise « : », « , » ou « · » ; le tiret cadratin
+  (—) est réservé aux commentaires de code.
+
 ## Points à compléter plus tard
 
 - **CV** : le PDF (`assets/cv/CV-Andy-Rakotondrabe.pdf`) est généré depuis sa source
@@ -204,7 +232,7 @@ Conventions à respecter :
   `python tools/generate-images.py` (ou `npm run logo`). L'en-tête affiche le
   pictogramme seul (`assets/img/logo-icon.png`, `<img alt="">` dans `.brand-mark`
   `aria-hidden`) à côté du nom en texte : le nom accessible reste « Andy
-  Rakotondrabe — accueil » (WCAG 2.5.3). Les favicons sont une tuile blanche —
+  Rakotondrabe, accueil » (WCAG 2.5.3). Les favicons sont une tuile blanche :
   pictogramme lisible aussi sur onglet en thème sombre ; l'icône Apple reste un
   carré plein à logo complet, iOS applique lui-même son masque d'arrondi. Pour un
   nouveau logo : remplacer l'original dans `sources/` et relancer le script.

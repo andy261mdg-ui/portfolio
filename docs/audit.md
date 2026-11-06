@@ -38,7 +38,7 @@ La suite tourne à chaque `push` (voir `.github/workflows/qa.yml`) et en local (
 | 13.x | Ordre de lecture et de tabulation cohérent | Conforme | ordre DOM = ordre visuel ; photo du hero en `order: -1` seulement en mobile |
 | WCAG 1.4.1 | Section courante signalée hors couleur (lecteur d'écran) | Conforme | scrollspy pose `aria-current="location"` sur un seul lien ; assertion dans `tests/regression.spec.js` |
 | WCAG 1.4.4 | Texte agrandi jusqu'à 200 % sans perte ni débordement horizontal | Conforme | `tests/regression.spec.js` (dédié) ; en-tête en `min-height`, navigation sur deux lignes, mots non coupables (`overflow-wrap: anywhere`) ; vérifié de 320 à 1366 px |
-| WCAG 2.5.3 | Libellé visible contenu dans le nom accessible | **Corrigé** | pictogramme du logo décoratif (`<img alt="">` + `aria-hidden`), nom accessible = « Andy Rakotondrabe — accueil » |
+| WCAG 2.5.3 | Libellé visible contenu dans le nom accessible | **Corrigé** | pictogramme du logo décoratif (`<img alt="">` + `aria-hidden`), nom accessible = « Andy Rakotondrabe, accueil » |
 | WCAG 2.2.2 | Mouvement : respect de `prefers-reduced-motion` | Conforme | `scroll-behavior: auto` + transitions FAQ neutralisées |
 
 ## 3. Contrastes mesurés

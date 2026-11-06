@@ -12,11 +12,11 @@ from pypdf import PdfWriter
 from pypdf.generic import NameObject, TextStringObject
 
 METADONNEES = {
-    "/Title": "CV — Andy Rakotondrabe · Rédacteur web freelance SEO",
+    "/Title": "CV d'Andy Rakotondrabe · Rédacteur web freelance SEO",
     "/Author": "Andy Rakotondrabe",
     "/Subject": (
-        "CV — rédacteur web freelance SEO (NTIC & high-tech), "
-        "pigiste IGN France, Android MT, NuMedia, guest blogger"
+        "CV de rédacteur web freelance SEO (NTIC et high-tech) : "
+        "guest blogger IGN France et Android MT, pigiste NuMedia"
     ),
     "/Keywords": (
         "CV, rédacteur web freelance, rédaction SEO, contenu web, "
