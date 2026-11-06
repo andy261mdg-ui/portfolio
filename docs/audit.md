@@ -86,6 +86,11 @@ Reproduire la mesure : `npm run vitals` (met à jour `docs/performance.json`).
    automatisables) : l'absence de violation ne vaut pas conformité totale.
 4. **Pas de mesure d'audience** : aucune donnée de conversion ni de comportement visiteur.
 5. **Lighthouse via API PageSpeed** : quota `429` sans clé ; utiliser `PSI_KEY=... npm run audit`.
+6. **CV PDF non balisé.** Le PDF est produit par Chrome (`print to PDF`) : la langue
+   (`/Lang fr-FR`), le titre, l'auteur, le sujet et les mots-clés sont renseignés et le
+   texte reste sélectionnable, mais le document n'est pas **balisé** (pas d'ordre de
+   lecture structuré pour un lecteur d'écran). Pour un PDF pleinement conforme, produire
+   une version balisée (Word → PDF/A) ou publier la même source en HTML.
 
 ## 6. Règle de maintenance
 
