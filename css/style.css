@@ -213,27 +213,20 @@ a:hover {
   text-decoration: none;
 }
 
+/* Pictogramme du logo (dérivé de sources/logo-*.png par tools/generate-images.py).
+   Image décorative (alt="" + aria-hidden) : le nom accessible du lien reste
+   « Andy Rakotondrabe — accueil » (WCAG 2.5.3, libellé dans le nom). Taille en
+   px fixes, stable si la taille de texte du navigateur double (WCAG 1.4.4). */
 .brand-mark {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: var(--accent);
-  color: #fff;
-  /* Badge à dimensions fixes : la taille du monogramme aussi, sinon il
-     déborde du carré quand la taille de texte du navigateur double. */
-  font-size: 14.4px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  flex: none;
 }
 
-/* Le monogramme est décoratif (aria-hidden) : il est produit par le style et
-   non par le contenu, pour que le nom accessible du lien reste « Andy
-   Rakotondrabe — accueil » (WCAG 2.5.3, libellé dans le nom). */
-.brand-mark::before {
-  content: "AR";
+.brand-mark img {
+  display: block;
+  height: 38px;
+  width: auto;
 }
 
 .brand-name {

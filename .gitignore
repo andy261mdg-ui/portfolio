@@ -6,6 +6,7 @@ Desktop.ini
 # Fichiers temporaires
 *.log
 *.tmp
+__pycache__/
 .chrome-profile/
 
 # Dépendances éventuelles

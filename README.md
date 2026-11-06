@@ -26,20 +26,19 @@ robots.txt            Autorise l'indexation et déclare le sitemap
 sitemap.xml           Plan du site (une URL)
 package.json          Dépendances de TEST uniquement (le site reste sans build)
 playwright.config.js  Deux profils de test : 1366×900 et 390×844
-tests/                52 tests : formulaire, accessibilité (axe), liens, non-régression
+tests/                58 tests : formulaire, accessibilité (axe), liens, non-régression
 docs/                 audit.md (registre RGAA) + performance.json (Web Vitals mesurés)
 .github/workflows/qa.yml  CI : tests à chaque push + contrôle hebdomadaire du site
 tools/serve.mjs       Serveur statique pour les tests (aucune dépendance)
 tools/check-asset-versions.mjs  Garde-fou : ?v= incrémenté si un asset change
 tools/check-live.mjs  Contrôle du site réellement publié
 tools/lighthouse-report.mjs  Scores Lighthouse via l'API PageSpeed (clé PSI_KEY)
-tools/generate-images.py  Régénère les dérivés d'image (portraits WebP/JPEG, carte OG)
-tools/generate-logo.mjs   Régénère les icônes du monogramme (favicons + icône Apple, via Chrome)
+tools/generate-images.py  Régénère les dérivés d'image (portraits WebP/JPEG, carte OG, logo)
 assets/fonts/         Inter auto-hébergée (woff2 variable, sous-ensemble latin) + licence OFL
-assets/favicon-16.png / favicon-32.png  Monogramme « AR » — onglet (PNG rendu par Chrome)
-assets/apple-touch-icon.png  Icône Apple (180×180, carré plein : iOS masque les coins)
+assets/favicon-16.png / favicon-32.png  Logo (pictogramme) — onglet, tuile blanche
+assets/apple-touch-icon.png  Icône Apple (180×180, logo complet, carré plein : iOS masque les coins)
 assets/cv/            CV d'Andy (CV-Andy-Rakotondrabe.pdf)
-assets/img/           Portrait optimisé (WebP + JPEG, 300 et 600 px) + carte de partage OG
+assets/img/           Portrait optimisé (WebP + JPEG, 300 et 600 px) + carte OG + logo-icon.png
 sources/              Originaux haute définition — ignorés par Git, jamais déployés
 ```
 
@@ -91,7 +90,7 @@ HTML est archivé automatiquement en cas d'échec.
 - **Accessibilité** : `prefers-reduced-motion`, focus visibles, lien d'évitement,
   fermeture du menu (`Échap`, clic extérieur, tabulation hors navigation), section
   courante annoncée (`aria-current`) **et** soulignée (WCAG 1.4.1), statut de formulaire
-  en `aria-live`, monogramme décoratif exclu du nom accessible (WCAG 2.5.3), page sans
+  en `aria-live`, pictogramme décoratif exclu du nom accessible (WCAG 2.5.3), page sans
   débordement horizontal jusqu'à 200 % de taille de texte (WCAG 1.4.4) — le tout verrouillé
   par les tests `tests/a11y.spec.js` et `tests/regression.spec.js` (axe-core, aucune
   violation sérieuse ou critique).
@@ -109,9 +108,12 @@ Nécessite Python 3 et Pillow (`pip install pillow`). Placer l'original dans
 python tools/generate-images.py
 ```
 
-Le script produit le portrait 300/600 px (WebP + JPEG de repli) et la carte Open Graph
-1200×630. Les icônes du monogramme (favicons 16/32 px + icône Apple 180×180) se
-régénèrent séparément, à partir du badge `.brand-mark` de l'en-tête :
+Le script produit le portrait 300/600 px (WebP + JPEG de repli), la carte Open Graph
+1200×630 **et les dérivés du logo** à partir de `sources/logo-andy-rakotondrabe.png` :
+pictogramme de l'en-tête (`assets/img/logo-icon.png`, fond transparent), favicons
+16/32 px (tuile blanche, lisible aussi en thème sombre) et icône Apple 180×180
+(logo complet). La découpe du pictogramme est automatique (premier bloc non blanc,
+arrêté à la bande blanche qui le sépare du wordmark). Raccourci :
 
 ```bash
 npm run logo
@@ -176,13 +178,16 @@ Conventions à respecter :
 - **Site personnel** : l'ancien lien `bit.ly/375BslN` a été retiré (il pointait vers une
   recherche Google, pas vers un site). Pour le remettre, ajouter une entrée dans
   `.contact-list` de la section `#contact` avec l'URL réelle.
-- **Photo / logo** : l'en-tête conserve le monogramme « AR » (badge CSS `.brand-mark`) ;
-  les favicons et l'icône Apple sont rendus **à partir de ce même badge** par
-  `npm run logo` (Chrome + Inter, `tools/generate-logo.mjs`) : identique au pixel près
-  à l'en-tête, sans dépendre des polices locales. L'icône Apple reste un carré plein —
-  iOS applique lui-même son masque d'arrondi. Aucun fichier logo externe n'existe :
-  si un logo est un jour fourni, remplacer le badge à ses deux sources (`.brand-mark`
-  dans `css/style.css` et `tools/generate-logo.mjs`) plutôt que d'en ajouter un troisième.
+- **Photo / logo** : le logo fourni (livre + curseur + pixels, wordmark « Andy
+  Rakotondrabe / SEO Content Writer ») est la source unique : original dans
+  `sources/logo-andy-rakotondrabe.png` (ignoré par Git), dérivés régénérés par
+  `python tools/generate-images.py` (ou `npm run logo`). L'en-tête affiche le
+  pictogramme seul (`assets/img/logo-icon.png`, `<img alt="">` dans `.brand-mark`
+  `aria-hidden`) à côté du nom en texte : le nom accessible reste « Andy
+  Rakotondrabe — accueil » (WCAG 2.5.3). Les favicons sont une tuile blanche —
+  pictogramme lisible aussi sur onglet en thème sombre ; l'icône Apple reste un
+  carré plein à logo complet, iOS applique lui-même son masque d'arrondi. Pour un
+  nouveau logo : remplacer l'original dans `sources/` et relancer le script.
 
 ## Contact
 
