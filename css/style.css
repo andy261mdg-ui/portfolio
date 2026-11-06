@@ -181,7 +181,9 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 50;
-  height: var(--header-h);
+  /* min-height (et non height) : avec un texte agrandi à 200 %, l'en-tête
+     grandit au lieu de rogner les liens (WCAG 1.4.4) */
+  min-height: var(--header-h);
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.88);
@@ -193,6 +195,9 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* Repli sur deux lignes si la navigation ne tient plus (taille de texte
+     agrandie) : jamais de débordement horizontal (WCAG 1.4.4 / 1.4.10) */
+  flex-wrap: wrap;
   gap: 24px;
 }
 
@@ -217,7 +222,9 @@ a:hover {
   border-radius: 10px;
   background: var(--accent);
   color: #fff;
-  font-size: 0.9rem;
+  /* Badge à dimensions fixes : la taille du monogramme aussi, sinon il
+     déborde du carré quand la taille de texte du navigateur double. */
+  font-size: 14.4px;
   font-weight: 800;
   letter-spacing: 0.5px;
 }
@@ -238,6 +245,9 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 4px;
+  /* Si la navigation entient plus à 200 % de texte, les liens passent sur
+     plusieurs lignes dans l'en-tête au lieu de déborder (WCAG 1.4.4). */
+  flex-wrap: wrap;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -259,19 +269,25 @@ a:hover {
   text-decoration: none;
 }
 
+/* Section courante : couleur ET soulignement — l'information ne doit pas
+   reposer sur la seule couleur (WCAG 1.4.1). Le soulignement survit au survol
+   (spécificité supérieure à .nav-list a:hover). `aria-current="location"` est
+   posé en JS par le scrollspy. */
 .nav-list a.active {
   color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
 }
 
-.nav-cta {
-  margin-left: 8px;
-  padding: 10px 18px !important;
-  font-size: 0.95rem;
-}
-
-/* Le bouton du menu est un lien : .nav-list a (gris) l'emportait sur .btn-primary,
-   d'où un texte gris sur fond bleu. On rétablit le blanc. */
+/* Le CTA « Me contacter » est un lien de la liste : les règles ciblées ci-dessous
+   portent le niveau de spécificité de `.nav-list a` (gris) pour ne pas dépendre
+   de `!important`. En section courante, le texte reste blanc (bleu sur bleu
+   serait illisible) ; le soulignement signale l'état actif. */
 .nav-list a.nav-cta {
+  margin-left: 8px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
   color: #fff;
 }
 
@@ -280,8 +296,8 @@ a:hover {
   background: var(--accent-hover);
 }
 
-.nav-cta.active {
-  color: #fff !important;
+.nav-list a.nav-cta.active {
+  color: #fff;
 }
 
 .nav-toggle {
@@ -355,6 +371,10 @@ a:hover {
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 800;
+  /* « Rakotondrabe » est trop long pour tenir dans la colonne à 200 % de
+     texte : on autorise la coupure du mot plutôt que le débordement horizontal
+     (WCAG 1.4.4). À taille normale, le mot tient : rien ne change visuellement. */
+  overflow-wrap: anywhere;
 }
 
 /* Signature de marque (titre de métier anglais) : volontairement discrète,
@@ -449,6 +469,9 @@ a:hover {
   margin-bottom: 28px;
   /* Répartit la longueur des lignes si le titre venait à se replier. */
   text-wrap: balance;
+  /* « Réalisations » ne tient plus dans la colonne à 320 px × 200 % de
+     texte : coupure du mot autorisée plutôt que débordement (WCAG 1.4.4). */
+  overflow-wrap: anywhere;
 }
 
 /* Chapeau de section : une phrase de cadrage (pour qui / quel résultat)
@@ -683,6 +706,9 @@ a:hover {
 .card-text {
   color: var(--text-muted);
   font-size: 0.98rem;
+  /* Mots composés des cartes : coupure autorisée si le mot dépasse la
+     colonne (taille de texte agrandie, WCAG 1.4.4). */
+  overflow-wrap: anywhere;
 }
 
 .card-link {
@@ -818,6 +844,10 @@ a:hover {
   flex-direction: column;
   gap: 1px;
   min-width: 0;
+  /* « Blog-United », « PIX GEEKS »… : à 200 % de texte, le jeton dépasse la
+     pastille et fait défiler la page. On coupe le mot seulement si nécessaire
+     (WCAG 1.4.4) — à taille normale, rien ne change. */
+  overflow-wrap: anywhere;
 }
 
 .media-grid a:hover {
@@ -948,6 +978,14 @@ a:hover {
   align-items: start;
 }
 
+/* Colonne d'infos : sans min-width:0, la largeur min-content de l'email non
+   coupable (andy261mdg@gmail.com) élargit la piste de grille au-delà du
+   conteneur quand la taille de texte double (WCAG 1.4.4). */
+.contact-info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .contact-lead {
   font-size: 1.1rem;
   color: var(--text-muted);
@@ -1020,11 +1058,15 @@ a:hover {
   box-shadow: var(--shadow-sm);
   display: grid;
   gap: 16px;
+  /* Élément de grille : sans cela, la largeur intrinsèque du <select> (options
+     × 200 % de texte) fait déborder le formulaire hors de sa piste. */
+  min-width: 0;
 }
 
 .form-row {
   display: grid;
   gap: 6px;
+  min-width: 0;
 }
 
 .form-row label {
@@ -1037,6 +1079,9 @@ a:hover {
 .contact-form textarea,
 .contact-form select {
   width: 100%;
+  /* le <select> a une largeur intrinsèque (options) : on l'autorise à
+     rétrécir sous sa taille minimale dans une colonne étroite */
+  min-width: 0;
   padding: 12px 14px;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -1171,6 +1216,9 @@ a:hover {
 
 .footer-links {
   display: flex;
+  /* Les liens passent sur plusieurs lignes à 200 % de texte plutôt que de
+     faire défiler la page horizontalement (WCAG 1.4.4). */
+  flex-wrap: wrap;
   gap: 20px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -1231,7 +1279,9 @@ a:hover {
 
   .nav-list {
     position: absolute;
-    top: var(--header-h);
+    /* 100 % de la hauteur réelle de l'en-tête (et non --header-h) : le panneau
+       suit l'en-tête quand le texte est agrandi */
+    top: 100%;
     left: 0;
     right: 0;
     flex-direction: column;
@@ -1252,7 +1302,7 @@ a:hover {
     padding: 12px 14px;
   }
 
-  .nav-cta {
+  .nav-list a.nav-cta {
     margin: 8px 0 0;
     text-align: center;
   }

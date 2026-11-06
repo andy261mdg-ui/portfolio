@@ -16,33 +16,59 @@
   /* ---------- Menu mobile ---------- */
   var toggle = document.getElementById("nav-toggle");
   var menu = document.getElementById("menu");
+  var nav = document.querySelector(".site-nav");
 
-  if (toggle && menu) {
-    toggle.addEventListener("click", function () {
-      var isOpen = menu.classList.toggle("open");
+  if (toggle && menu && nav) {
+    // Une seule source de vérité pour l'état ouvert/fermé (classe + ARIA).
+    function setMenuOpen(isOpen) {
+      menu.classList.toggle("open", isOpen);
       toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
       toggle.setAttribute(
         "aria-label",
         isOpen ? "Fermer le menu" : "Ouvrir le menu"
       );
+    }
+
+    toggle.addEventListener("click", function () {
+      setMenuOpen(!menu.classList.contains("open"));
     });
 
     // Fermer le menu après un clic sur un lien
     menu.addEventListener("click", function (event) {
       if (event.target.closest("a")) {
-        menu.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-label", "Ouvrir le menu");
+        setMenuOpen(false);
       }
     });
 
     // Fermer le menu avec la touche Échap
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && menu.classList.contains("open")) {
-        menu.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-label", "Ouvrir le menu");
+        setMenuOpen(false);
         toggle.focus();
+      }
+    });
+
+    // Fermer le menu en cliquant ou en touchant hors de la navigation
+    // (le pattern disclosure attend une fermeture au clic extérieur).
+    document.addEventListener("pointerdown", function (event) {
+      if (
+        menu.classList.contains("open") &&
+        !menu.contains(event.target) &&
+        !toggle.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    });
+
+    // Fermer le menu quand le focus sort complètement de la navigation :
+    // la tabulation ne doit pas s'échapper d'un menu ouvert sans le refermer.
+    nav.addEventListener("focusout", function (event) {
+      if (
+        menu.classList.contains("open") &&
+        event.relatedTarget &&
+        !nav.contains(event.relatedTarget)
+      ) {
+        setMenuOpen(false);
       }
     });
   }
@@ -64,10 +90,18 @@
   var headerOffsetCache = null;
   function getHeaderOffset() {
     if (headerOffsetCache === null) {
-      var v = parseFloat(
-        window.getComputedStyle(document.documentElement).scrollPaddingTop
-      );
-      headerOffsetCache = isNaN(v) ? 84 : v;
+      // Mesure réelle de l'en-tête : avec une taille de texte agrandie
+      // (zoom / polices utilisateur), la hauteur dépasse --header-h et le
+      // décalage d'ancre doit suivre, pas la valeur CSS statique.
+      var header = document.querySelector(".site-header");
+      var hauteur = header ? header.offsetHeight : 0;
+      if (hauteur > 0) {
+        headerOffsetCache = hauteur + 16;
+        document.documentElement.style.scrollPaddingTop =
+          headerOffsetCache + "px";
+      } else {
+        headerOffsetCache = 84;
+      }
     }
     return headerOffsetCache;
   }
@@ -76,6 +110,13 @@
     navLinks.forEach(function (link) {
       var isActive = id !== "" && link.getAttribute("href") === "#" + id;
       link.classList.toggle("active", isActive);
+      // Section courante annoncée aux technologies d'assistance : la couleur
+      // seule (WCAG 1.4.1) ne suffit pas pour les lecteurs d'écran.
+      if (isActive) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
     });
   }
 
@@ -94,7 +135,21 @@
   }
 
   window.addEventListener("scroll", updateActive, { passive: true });
-  window.addEventListener("resize", updateActive);
+  window.addEventListener("resize", function () {
+    headerOffsetCache = null;
+    updateActive();
+  });
+
+  // Un changement de taille de texte ne déclenche pas « resize » : on suit la
+  // hauteur réelle de l'en-tête pour invalider le décalage mesuré.
+  var siteHeader = document.querySelector(".site-header");
+  if (siteHeader && window.ResizeObserver) {
+    new ResizeObserver(function () {
+      headerOffsetCache = null;
+      updateActive();
+    }).observe(siteHeader);
+  }
+
   updateActive();
 
   /* ---------- FAQ ----------

@@ -49,7 +49,7 @@ Le site livré n'a **aucune dépendance** : `package.json` ne contient que des o
 
 ```bash
 npm install     # une seule fois (outils de test uniquement)
-npm test        # 52 tests sur deux profils : 1366×900 et 390×844
+npm test        # 58 tests sur deux profils : 1366×900 et 390×844
 npm run guard   # échoue si css/js a changé sans incrémenter ?v=
 npm run live    # contrôle le site réellement publié
 npm run vitals  # Web Vitals du site publié → docs/performance.json
@@ -59,7 +59,7 @@ npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run a
 | Fichier | Ce qui est vérifié |
 |---|---|
 | `tests/contact.spec.js` | soumission vide → 3 erreurs visibles, `aria-invalid`, focus sur le premier champ, résumé `role="status"` ; email invalide ; nettoyage à la saisie ; envoi intercepté ; menu à 7 options ; copie annoncée |
-| `tests/regression.spec.js` | grilles 6/6/6, aucun débordement, année, hiérarchie du hero, scrollspy (5 sections), FAQ exclusive, menu mobile + Échap + retour du focus |
+| `tests/regression.spec.js` | grilles 6/6/6, aucun débordement (texte à 100 % **et** 200 %), année, hiérarchie du hero, scrollspy (5 sections + `aria-current`), FAQ exclusive, menu mobile (Échap, clic extérieur, sortie de focus) |
 | `tests/a11y.spec.js` | axe-core (WCAG 2.1 AA) sur les trois pages : **aucune violation sérieuse ou critique** ; `lang` et `<title>` |
 | `tests/links.spec.js` | liens externes (`rel="noopener"` + « nouvel onglet »), ancres internes, `alt` + dimensions des images, identifiants uniques, ressources en 200, `sitemap.xml` |
 
@@ -88,9 +88,12 @@ HTML est archivé automatiquement en cas d'échec.
 - **Mesures** : `docs/performance.json` consigne les Web Vitals relevés au chargement
   (LCP, CLS, FCP, TTFB, poids transféré) et le détail des requêtes les plus longues.
 - **Accessibilité** : `prefers-reduced-motion`, focus visibles, lien d'évitement,
-  fermeture du menu avec `Échap`, statut de formulaire en `aria-live`, monogramme
-  décoratif exclu du nom accessible (WCAG 2.5.3) — le tout verrouillé par les tests
-  `tests/a11y.spec.js` (axe-core, aucune violation sérieuse ou critique).
+  fermeture du menu (`Échap`, clic extérieur, tabulation hors navigation), section
+  courante annoncée (`aria-current`) **et** soulignée (WCAG 1.4.1), statut de formulaire
+  en `aria-live`, monogramme décoratif exclu du nom accessible (WCAG 2.5.3), page sans
+  débordement horizontal jusqu'à 200 % de taille de texte (WCAG 1.4.4) — le tout verrouillé
+  par les tests `tests/a11y.spec.js` et `tests/regression.spec.js` (axe-core, aucune
+  violation sérieuse ou critique).
 
 > ⚠️ Si le site change d'adresse (domaine personnalisé), mettre à jour les URL absolues
 > dans `index.html` (`canonical`, `og:url`, `og:image`, `twitter:image`, JSON-LD),
@@ -123,7 +126,7 @@ Trois gestes à faire à chaque modification publiée :
 3. **Cohérence des données structurées** : si les questions de la FAQ ou les
    prestations changent, mettre à jour le bloc JSON-LD correspondant (`FAQPage`,
    `hasOfferCatalog`). Un commentaire de rappel suit le bloc dans `index.html`.
-4. **Lancer les tests** : `npm test` (52 tests, ~1 min). Tout défaut corrigé doit être
+4. **Lancer les tests** : `npm test` (58 tests, ~1 min). Tout défaut corrigé doit être
    verrouillé par une assertion dans `tests/` — sinon il revient.
 
 Conventions à respecter :
@@ -142,6 +145,10 @@ Conventions à respecter :
 - **Justification** : bords gauche et droit alignés dès qu'un bloc atteint ~22 em de
   mesure ; en dessous (colonnes de cartes étroites, écrans < 640 px) le texte repasse
   en fer à gauche — justifier des lignes courtes crée des blancs entre les mots.
+- **Taille de texte** : zéro débordement horizontal jusqu'à 200 % (test automatique) —
+  d'où `min-height` (et non `height`) sur l'en-tête, `flex-wrap` sur la navigation, et
+  `overflow-wrap: anywhere` sur les mots non coupables (« Rakotondrabe »,
+  « Réalisations », emails) : le mot ne se coupe que s'il ne tient pas.
 - **Hero** : hiérarchie de lecture figée — `.hero-subtitle` = signature de marque
   (discrète), `.hero-promise` = bénéfice client (message principal, barre d'accent),
   `.hero-tagline` = livrables, puis un seul CTA primaire (`Parlons de votre projet`)

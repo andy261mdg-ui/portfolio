@@ -52,6 +52,12 @@ test.describe("Interactions", () => {
         document.getElementById(id).scrollIntoView();
       }, section);
       await expect(page.locator(`.nav-list a.active[href="#${section}"]`)).toHaveCount(1);
+      // Section courante annoncée hors couleur (WCAG 1.4.1) : un seul lien porte
+      // aria-current, et c'est celui de la section visible.
+      await expect(
+        page.locator(`.nav-list a[aria-current="location"][href="#${section}"]`)
+      ).toHaveCount(1);
+      await expect(page.locator(".nav-list a[aria-current]")).toHaveCount(1);
     }
   });
 
@@ -64,6 +70,38 @@ test.describe("Interactions", () => {
     await items.nth(3).locator("summary").click();
     expect(await items.nth(3).evaluate((el) => el.open)).toBe(true);
     expect(await page.locator(".faq-item[open]").count()).toBe(1);
+  });
+});
+
+test.describe("Taille de texte agrandie (WCAG 1.4.4)", () => {
+  test("l'en-tête grandit au lieu de rogner ou déborder (texte à 200 %)", async ({ page }) => {
+    await page.addStyleTag({ content: "html { font-size: 200%; }" });
+    await page.waitForTimeout(200); // laisser le ResizeObserver de l'en-tête se déclencher
+
+    const resultat = await page.evaluate(() => {
+      const header = document.querySelector(".site-header").getBoundingClientRect();
+      const cibles = Array.prototype.slice.call(
+        document.querySelectorAll(
+          ".site-header .brand, .site-header .nav-list a, .site-header .nav-toggle"
+        )
+      ).filter((el) => el.getBoundingClientRect().width > 0); // liens masqués = mobile fermé
+
+      const rognes = cibles
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          return r.top < header.top - 1 || r.bottom > header.bottom + 1;
+        })
+        .map((el) => el.textContent.trim() || el.className);
+
+      return {
+        rognes: rognes,
+        debordement:
+          document.documentElement.scrollWidth - document.documentElement.clientWidth
+      };
+    });
+
+    expect(resultat.rognes).toEqual([]);
+    expect(resultat.debordement).toBe(0);
   });
 });
 
@@ -85,5 +123,36 @@ test.describe("Menu de navigation", () => {
     await expect(bouton).toHaveAttribute("aria-expanded", "false");
     await expect(menu).toBeHidden();
     await expect(bouton).toBeFocused();
+  });
+
+  test("fermeture en cliquant hors de la navigation", async ({ page }) => {
+    const bouton = page.locator("#nav-toggle");
+    const menu = page.locator("#menu");
+
+    await bouton.click();
+    await expect(menu).toBeVisible();
+
+    // Clic réel sur le fond de l'en-tête, à gauche de la marque : ni le menu
+    // ni le bouton ne reçoivent l'événement, le menu doit se refermer.
+    await page.mouse.click(10, 20);
+
+    await expect(menu).toBeHidden();
+    await expect(bouton).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("fermeture quand le focus sort de la navigation", async ({ page }) => {
+    const bouton = page.locator("#nav-toggle");
+    const menu = page.locator("#menu");
+
+    await bouton.click();
+    await expect(menu).toBeVisible();
+
+    // Tabulation depuis le dernier lien du menu : le focus entre dans le
+    // contenu principal, le menu ouvert ne doit pas rester affiché.
+    await menu.locator("a").last().focus();
+    await page.keyboard.press("Tab");
+
+    await expect(menu).toBeHidden();
+    await expect(bouton).toHaveAttribute("aria-expanded", "false");
   });
 });
