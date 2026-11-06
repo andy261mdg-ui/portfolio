@@ -5,6 +5,7 @@
   "description": "Site vitrine statique. Les dépendances ci-dessous servent uniquement aux tests : elles ne sont jamais livrées avec le site.",
   "scripts": {
     "serve": "node tools/serve.mjs 8765",
+    "logo": "node tools/generate-logo.mjs",
     "test": "playwright test",
     "test:liste": "playwright test --list",
     "test:ui": "playwright test --ui",

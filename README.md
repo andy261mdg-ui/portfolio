@@ -33,10 +33,11 @@ tools/serve.mjs       Serveur statique pour les tests (aucune dépendance)
 tools/check-asset-versions.mjs  Garde-fou : ?v= incrémenté si un asset change
 tools/check-live.mjs  Contrôle du site réellement publié
 tools/lighthouse-report.mjs  Scores Lighthouse via l'API PageSpeed (clé PSI_KEY)
-tools/generate-images.py  Régénère les dérivés d'image (WebP, OG, icône Apple)
+tools/generate-images.py  Régénère les dérivés d'image (portraits WebP/JPEG, carte OG)
+tools/generate-logo.mjs   Régénère les icônes du monogramme (favicons + icône Apple, via Chrome)
 assets/fonts/         Inter auto-hébergée (woff2 variable, sous-ensemble latin) + licence OFL
-assets/favicon.svg    Monogramme « AR »
-assets/apple-touch-icon.png  Icône Apple (180×180)
+assets/favicon-16.png / favicon-32.png  Monogramme « AR » — onglet (PNG rendu par Chrome)
+assets/apple-touch-icon.png  Icône Apple (180×180, carré plein : iOS masque les coins)
 assets/cv/            CV d'Andy (CV-Andy-Rakotondrabe.pdf)
 assets/img/           Portrait optimisé (WebP + JPEG, 300 et 600 px) + carte de partage OG
 sources/              Originaux haute définition — ignorés par Git, jamais déployés
@@ -108,8 +109,13 @@ Nécessite Python 3 et Pillow (`pip install pillow`). Placer l'original dans
 python tools/generate-images.py
 ```
 
-Le script produit le portrait 300/600 px (WebP + JPEG de repli), la carte Open Graph
-1200×630 et l'icône Apple 180×180.
+Le script produit le portrait 300/600 px (WebP + JPEG de repli) et la carte Open Graph
+1200×630. Les icônes du monogramme (favicons 16/32 px + icône Apple 180×180) se
+régénèrent séparément, à partir du badge `.brand-mark` de l'en-tête :
+
+```bash
+npm run logo
+```
 
 ## Maintenance courante
 
@@ -170,8 +176,13 @@ Conventions à respecter :
 - **Site personnel** : l'ancien lien `bit.ly/375BslN` a été retiré (il pointait vers une
   recherche Google, pas vers un site). Pour le remettre, ajouter une entrée dans
   `.contact-list` de la section `#contact` avec l'URL réelle.
-- **Photo / logo** : l'en-tête conserve le monogramme « AR » ; le favicon est
-  `assets/favicon.svg`.
+- **Photo / logo** : l'en-tête conserve le monogramme « AR » (badge CSS `.brand-mark`) ;
+  les favicons et l'icône Apple sont rendus **à partir de ce même badge** par
+  `npm run logo` (Chrome + Inter, `tools/generate-logo.mjs`) : identique au pixel près
+  à l'en-tête, sans dépendre des polices locales. L'icône Apple reste un carré plein —
+  iOS applique lui-même son masque d'arrondi. Aucun fichier logo externe n'existe :
+  si un logo est un jour fourni, remplacer le badge à ses deux sources (`.brand-mark`
+  dans `css/style.css` et `tools/generate-logo.mjs`) plutôt que d'en ajouter un troisième.
 
 ## Contact
 

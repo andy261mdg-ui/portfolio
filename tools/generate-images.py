@@ -6,7 +6,9 @@
   assets/img/andy-rakotondrabe-portrait-300.webp / .jpg   portrait 300 px
   assets/img/andy-rakotondrabe-portrait-600.webp / .jpg   portrait 600 px (écrans HiDPI)
   assets/img/andy-rakotondrabe-og-cover.jpg              carte de partage 1200×630
-  assets/apple-touch-icon.png                            icône Apple 180×180
+
+Les icônes du monogramme (favicons + apple-touch-icon) ne sont PAS générées ici
+mais par `npm run logo` : voir tools/generate-logo.mjs.
 
 Dépendance : Pillow (`pip install pillow`).
 Utilisation : `python tools/generate-images.py`
@@ -136,26 +138,6 @@ def main():
         "JPEG", quality=88, optimize=True, progressive=True,
     )
 
-    # ---------- 3. Icône Apple touch 180 × 180 ----------
-    icon_size = 180
-    icon = Image.new("RGBA", (icon_size, icon_size), (0, 0, 0, 0))
-    idraw = ImageDraw.Draw(icon)
-    idraw.rounded_rectangle(
-        [0, 0, icon_size - 1, icon_size - 1], radius=34, fill=BLUE
-    )
-    font = load_font(BOLD_CANDIDATES, 74)
-    bbox = idraw.textbbox((0, 0), "AR", font=font)
-    idraw.text(
-        (
-            (icon_size - (bbox[2] - bbox[0])) / 2 - bbox[0],
-            (icon_size - (bbox[3] - bbox[1])) / 2 - bbox[1],
-        ),
-        "AR", font=font, fill=WHITE,
-    )
-    icon.save(
-        os.path.join(ROOT, "assets", "apple-touch-icon.png"), "PNG", optimize=True
-    )
-
     print("Images générées :")
     for folder, name in (
         (IMG, "andy-rakotondrabe-portrait-300.webp"),
@@ -163,7 +145,6 @@ def main():
         (IMG, "andy-rakotondrabe-portrait-300.jpg"),
         (IMG, "andy-rakotondrabe-portrait-600.jpg"),
         (IMG, "andy-rakotondrabe-og-cover.jpg"),
-        (os.path.join(ROOT, "assets"), "apple-touch-icon.png"),
     ):
         path = os.path.join(folder, name)
         print("  %-44s %7.1f Ko" % (name, os.path.getsize(path) / 1024))
