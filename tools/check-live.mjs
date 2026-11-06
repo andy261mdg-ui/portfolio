@@ -9,6 +9,7 @@ const ATTENDUES = [
   ["sitemap.xml", new URL("sitemap.xml", BASE).href],
   ["feuille de style", new URL("css/style.css", BASE).href],
   ["script", new URL("js/main.js", BASE).href],
+  ["CV (page en ligne)", new URL("cv.html", BASE).href],
   ["CV (PDF)", new URL("assets/cv/CV-Andy-Rakotondrabe.pdf", BASE).href]
 ];
 

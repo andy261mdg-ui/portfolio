@@ -30,11 +30,22 @@ jobs:
       - name: Installer Chromium
         run: npx playwright install --with-deps chromium
 
+      - name: Installer Python (contrôle du balisage du CV)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer pypdf
+        run: python -m pip install --quiet pypdf
+
       - name: Garde-fou des versions d'assets
         run: node tools/check-asset-versions.mjs
 
       - name: Lancer les tests
         run: npm test
+
+      - name: Contrôler le balisage du CV PDF
+        run: python tools/check-pdf-a11y.py assets/cv/CV-Andy-Rakotondrabe.pdf
 
       - name: Archiver le rapport en cas d'échec
         if: failure()

@@ -8,7 +8,7 @@ import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 const BASE = process.env.GUARD_BASE || "HEAD~1";
-const PAGES = ["index.html", "404.html", "confidentialite.html"];
+const PAGES = ["index.html", "cv.html", "404.html", "confidentialite.html"];
 
 const lire = (fichier) => readFileSync(fichier, "utf8");
 const versionCss = (html) => (html.match(/style\.css\?v=(\d+)/) || [])[1];

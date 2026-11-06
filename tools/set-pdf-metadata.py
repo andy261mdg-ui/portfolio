@@ -9,7 +9,7 @@ import os
 import sys
 
 from pypdf import PdfWriter
-from pypdf.generic import NameObject, TextStringObject
+from pypdf.generic import BooleanObject, DictionaryObject, NameObject, TextStringObject
 
 METADONNEES = {
     "/Title": "CV d'Andy Rakotondrabe · Rédacteur web freelance SEO",
@@ -31,6 +31,11 @@ def main(chemin):
     # Langue du document (catalogue, pas l'info dict) : détection de langue des
     # moteurs et prise en charge par les lecteurs d'écran.
     ecrivain.root_object[NameObject("/Lang")] = TextStringObject("fr-FR")
+    # Le titre doit s'afficher dans la barre du lecteur au lieu du nom de
+    # fichier : attendu par PDF/UA et utile pour identifier le document.
+    ecrivain.root_object[NameObject("/ViewerPreferences")] = DictionaryObject(
+        {NameObject("/DisplayDocTitle"): BooleanObject(True)}
+    )
     temporaire = chemin + ".tmp"
     with open(temporaire, "wb") as fichier:
         ecrivain.write(fichier)

@@ -3,6 +3,7 @@ const AxeBuilder = require("@axe-core/playwright").default;
 
 const PAGES = [
   ["accueil", "/"],
+  ["CV", "/cv.html"],
   ["confidentialité", "/confidentialite.html"],
   ["page 404", "/404.html"]
 ];

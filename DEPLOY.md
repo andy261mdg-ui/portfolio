@@ -67,7 +67,8 @@ GitHub Pages republie automatiquement à chaque `push`.
   configure en une ligne dans `index.html` (attribut `action` du formulaire) — voir la
   section « Contact » du [README](README.md). Tant qu'il n'est pas configuré, le formulaire
   ouvre le logiciel de messagerie du visiteur (repli `mailto`).
-- Pensez à envoyer aussi `assets/` (CV PDF et images) : ils font partie du site.
+- Pensez à envoyer aussi `assets/` (CV PDF et images) et `cv.html` (CV en ligne) :
+  ils font partie du site.
 - `sources/` (originaux haute définition) est ignoré par Git : il n'est jamais publié.
 
 ## Référencement après mise en ligne

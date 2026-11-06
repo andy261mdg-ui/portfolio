@@ -19,19 +19,21 @@ donc aucune connexion n'est nécessaire — et aucune adresse IP n'est transmise
 
 ```
 index.html            Page unique (toutes les sections) + métadonnées SEO et JSON-LD
+cv.html               CV consultable en ligne (accessible) ET source du PDF
 404.html              Page d'erreur servie automatiquement par GitHub Pages
 css/style.css         Design (fond neutre + accent bleu) + @font-face auto-hébergé
 js/main.js            Menu mobile, scrollspy, FAQ, formulaire de contact, copie de l'email, année
 robots.txt            Autorise l'indexation et déclare le sitemap
-sitemap.xml           Plan du site (une URL)
+sitemap.xml           Plan du site (accueil, CV, confidentialité)
 package.json          Dépendances de TEST uniquement (le site reste sans build)
 playwright.config.js  Deux profils de test : 1366×900 et 390×844
-tests/                62 tests : formulaire, accessibilité (axe), liens, non-régression
+tests/                70 tests : formulaire, accessibilité (axe), liens, CV, non-régression
 docs/                 audit.md (registre RGAA) + performance.json (Web Vitals mesurés)
 .github/workflows/qa.yml  CI : tests à chaque push + contrôle hebdomadaire du site
 tools/serve.mjs       Serveur statique pour les tests (aucune dépendance)
 tools/check-asset-versions.mjs  Garde-fou : ?v= incrémenté si un asset change
 tools/check-live.mjs  Contrôle du site réellement publié
+tools/check-pdf-a11y.py  Contrôle du balisage du CV PDF (arbre de structure, langue, titre)
 tools/lighthouse-report.mjs  Scores Lighthouse via l'API PageSpeed (clé PSI_KEY)
 tools/generate-images.py  Régénère les dérivés d'image (portraits WebP/JPEG, carte OG, logo)
 assets/fonts/         Inter auto-hébergée (woff2 variable, sous-ensemble latin) + licence OFL
@@ -40,6 +42,7 @@ assets/apple-touch-icon.png  Icône Apple (180×180, logo complet, carré plein 
 assets/cv/            CV d'Andy (CV-Andy-Rakotondrabe.pdf)
 assets/img/           Portrait optimisé (WebP + JPEG, 300 et 600 px) + carte OG + logo-icon.png
 sources/              Originaux haute définition — ignorés par Git, jamais déployés
+                      (le CV n'y est plus : sa source est cv.html, versionnée)
 ```
 
 ## Tests et intégration continue
@@ -49,20 +52,21 @@ Le site livré n'a **aucune dépendance** : `package.json` ne contient que des o
 
 ```bash
 npm install     # une seule fois (outils de test uniquement)
-npm test        # 62 tests sur deux profils : 1366×900 et 390×844
+npm test        # 70 tests sur deux profils : 1366×900 et 390×844
 npm run guard   # échoue si css/js a changé sans incrémenter ?v=
 npm run live    # contrôle le site réellement publié
 npm run vitals  # Web Vitals du site publié → docs/performance.json
 npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run audit)
-npm run cv      # régénère le CV PDF (source locale : sources/cv/)
+npm run cv      # régénère le CV PDF balisé depuis cv.html
 ```
 
 | Fichier | Ce qui est vérifié |
 |---|---|
 | `tests/contact.spec.js` | soumission vide → 3 erreurs visibles, `aria-invalid`, focus sur le premier champ, résumé `role="status"` ; email invalide ; nettoyage à la saisie ; envoi intercepté ; menu à 7 options ; copie annoncée |
 | `tests/regression.spec.js` | grilles 6/6/6, aucun débordement (texte à 100 % **et** 200 %), année, hiérarchie du hero, scrollspy (5 sections + `aria-current`), FAQ exclusive, menu mobile (Échap, clic extérieur, sortie de focus) |
-| `tests/a11y.spec.js` | axe-core (WCAG 2.1 AA) sur les trois pages : **aucune violation sérieuse ou critique** ; `lang` et `<title>` |
+| `tests/a11y.spec.js` | axe-core (WCAG 2.1 AA) sur les quatre pages : **aucune violation sérieuse ou critique** ; `lang` et `<title>` |
 | `tests/links.spec.js` | liens externes (`rel="noopener"` + « nouvel onglet »), ancres internes, `alt` + dimensions des images, identifiants uniques, ressources en 200, `sitemap.xml`, meta description ≤ 160 caractères, FAQPage JSON-LD synchronisé avec la FAQ visible |
+| `tests/cv.spec.js` | CV : page en ligne (un seul `h1`, sections ordonnées, lien PDF) et **PDF balisé** — arbre de structure, `/Lang`, titre affiché, une page (`tools/check-pdf-a11y.py`) |
 
 La CI (`.github/workflows/qa.yml`) lance la suite à chaque `push` et `pull request`, puis
 contrôle **une fois par semaine** le site publié (liens, ressources, contenu clé). Le rapport
@@ -125,27 +129,39 @@ npm run logo
 
 ## Régénérer le CV (facultatif)
 
-Le CV est un PDF **généré** à partir d'une source HTML (mise en page A4 sur une
-seule page, police Inter du site). La source vit dans `sources/cv/` — dossier local
-non versionné, comme les originaux d'images :
+Le CV existe en **deux formats pour une seule source**, `cv.html` : une page du site
+accessible (un `h1`, des sections, des listes, des liens) et le PDF généré depuis
+elle. Pour changer le contenu, modifier `cv.html`, puis :
 
 ```bash
-npm run cv     # sources/cv/CV-Andy-Rakotondrabe.html → assets/cv/CV-Andy-Rakotondrabe.pdf
+npm run cv     # cv.html → assets/cv/CV-Andy-Rakotondrabe.pdf (une page A4, balisé)
 ```
 
-Le PDF produit, lui, est versionné et lié depuis `index.html` (Hero et Contact).
+La mise en page d'impression vit dans `cv.html` (`@media print` + `@page A4`) : le
+PDF tient sur **une page**, avec la police Inter du site, sans navigation ni pied de
+page. Le script fait trois choses :
 
-Le script complète les **métadonnées du PDF** (titre, auteur, sujet, mots-clés) et
-déclare la langue du document (`/Lang fr-FR`), que Chrome n'exporte pas — dépendance :
-`pypdf` (`pip install pypdf`).
+1. rend la page en média `print` et exporte le PDF avec `tagged: true` : Chromium
+   écrit alors un **arbre de structure** (`H1`, `H2`, `P`, `L`/`LI`/`Lbl`, `Link`),
+   c'est-à-dire un ordre de lecture exploitable par un lecteur d'écran ;
+2. complète les **métadonnées** (titre, auteur, sujet, mots-clés), déclare la langue
+   du document (`/Lang fr-FR`) et `/ViewerPreferences /DisplayDocTitle` (le titre
+   s'affiche dans la barre du lecteur au lieu du nom de fichier) ;
+3. lance `tools/check-pdf-a11y.py`, qui **échoue** si le balisage, la langue, le
+   titre ou la tenue sur une page sont perdus.
+
+Dépendances : Playwright (déjà installé pour les tests) et `pypdf`
+(`pip install pypdf`). La CI rejoue le même contrôle à chaque `push`.
+Limite assumée : le PDF est **balisé**, pas certifié PDF/UA-1 (Chromium n'émet pas
+les métadonnées XMP d'identification) — détail et solutions dans `docs/audit.md` §5.
 
 ## Maintenance courante
 
 Trois gestes à faire à chaque modification publiée :
 
 1. **Versionner les assets** : incrémenter `?v=` sur `css/style.css` (et `js/main.js`
-   si le script change) dans **les trois pages** — `index.html`, `404.html`,
-   `confidentialite.html`. GitHub Pages sert ces fichiers avec
+   si le script change) dans **les quatre pages** — `index.html`, `cv.html`,
+   `404.html`, `confidentialite.html`. GitHub Pages sert ces fichiers avec
    `Cache-Control: max-age=600` : sans incrément, un visiteur peut conserver
    l'ancienne version jusqu'à 10 minutes. **`npm run guard` vérifie ce point** (et échoue
    en CI si l'incrément a été oublié).
@@ -213,10 +229,12 @@ Règles de rédaction de ces blocs :
 
 ## Points à compléter plus tard
 
-- **CV** : le PDF (`assets/cv/CV-Andy-Rakotondrabe.pdf`) est généré depuis sa source
-  HTML locale `sources/cv/CV-Andy-Rakotondrabe.html` (`npm run cv`) et lié depuis le
-  Hero et la section Contact. `CV-Andy-Rakotondrabe-linkedin.pdf` est une variante non
-  liée, prévue pour LinkedIn (mise à jour manuelle).
+- **CV** : source unique `cv.html` (versionnée, publiée, accessible), PDF généré par
+  `npm run cv` et lié depuis le hero, la section Contact et la page CV elle-même.
+  Le PDF est **balisé** (arbre de structure, langue, titre affiché) et contrôlé à
+  chaque génération et en CI ; il n'est pas certifié PDF/UA-1, voir `docs/audit.md` §5.
+  `CV-Andy-Rakotondrabe-linkedin.pdf` est une variante non liée, prévue pour LinkedIn
+  (mise à jour manuelle).
 - **Témoignages** : la section `#temoignages` est **commentée** dans `index.html` tant
   qu'aucun avis client réel n'est disponible (un bloc « à venir » sur un site en ligne
   nuit à la crédibilité). Pour la réactiver : décommenter le bloc, remplacer

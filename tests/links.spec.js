@@ -71,6 +71,7 @@ test("ressources techniques servies (404 compris)", async ({ request }) => {
     "/sitemap.xml",
     "/css/style.css",
     "/js/main.js",
+    "/cv.html",
     "/assets/cv/CV-Andy-Rakotondrabe.pdf",
     "/assets/img/andy-rakotondrabe-portrait-600.webp"
   ];
@@ -84,6 +85,7 @@ test("sitemap : URL déclarée et lastmod plausible", async ({ request }) => {
   const xml = await (await request.get("/sitemap.xml")).text();
 
   expect(xml).toContain("<loc>https://andy261mdg-ui.github.io/portfolio/</loc>");
+  expect(xml).toContain("<loc>https://andy261mdg-ui.github.io/portfolio/cv.html</loc>");
 
   const lastmod = (xml.match(/<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/) || [])[1];
   expect(lastmod, "lastmod présent").toBeTruthy();

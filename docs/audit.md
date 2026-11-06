@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Périmètre** | `index.html`, `confidentialite.html`, `404.html` (3 pages) |
+| **Périmètre** | `index.html`, `cv.html`, `confidentialite.html`, `404.html` (4 pages) |
 | **Référentiel** | RGAA 4.1 / WCAG 2.1 niveau AA |
 | **Date** | 6 novembre 2026 |
 | **Méthode** | tests automatisés (axe-core, Playwright), vérifications ciblées, mesures de contraste calculées, parcours clavier |
@@ -10,12 +10,13 @@
 ## 1. Ce qui est vérifié automatiquement
 
 La suite tourne à chaque `push` (voir `.github/workflows/qa.yml`) et en local (`npm test`) :
-62 tests sur deux profils (1366×900 et 390×844).
+70 tests sur deux profils (1366×900 et 390×844).
 
 | Fichier | Couverture |
 |---|---|
-| `tests/a11y.spec.js` | axe-core, règles WCAG 2.0/2.1 A et AA, sur les trois pages — seuil : **0 violation sérieuse ou critique** |
+| `tests/a11y.spec.js` | axe-core, règles WCAG 2.0/2.1 A et AA, sur les quatre pages — seuil : **0 violation sérieuse ou critique** |
 | `tests/contact.spec.js` | contrôle de saisie : messages, `aria-describedby`, `aria-invalid`, focus, `role="status"` |
+| `tests/cv.spec.js` | CV en ligne : un seul `h1`, sections dans l'ordre, lien de téléchargement ; **PDF balisé** (arbre de structure, langue, titre affiché) via `tools/check-pdf-a11y.py` |
 | `tests/links.spec.js` | intitulés de liens, `rel="noopener"`, ancres, alternatives des images, identifiants uniques, meta description ≤ 160 caractères, synchronisation FAQPage |
 | `tests/regression.spec.js` | navigation clavier (menu : `Échap`, clic extérieur, sortie de focus), FAQ, scrollspy + `aria-current`, taille de texte 200 %, mise en page |
 
@@ -29,6 +30,7 @@ La suite tourne à chaque `push` (voir `.github/workflows/qa.yml`) et en local (
 | 6.1 / 6.2 | Intitulés de liens explicites, contextuels | Conforme | `tests/links.spec.js` |
 | 7.1 / 7.3 | Scripts compatibles avec les technologies d'assistance ; pas d'alternative obligatoire | Conforme | `form.noValidate` posé par JS uniquement → validation native sans JS |
 | 8.3 / 8.4 | `lang` déclaré, titre de page pertinent | Conforme | `tests/a11y.spec.js` |
+| 8.3 / 8.4 (document) | CV PDF : langue (`/Lang fr-FR`), titre affiché par le lecteur (`/DisplayDocTitle`), structure balisée (`H1`, `H2`, `P`, `L`/`LI`/`Lbl`, `Link`) et version HTML équivalente (`cv.html`) | Conforme | `tools/check-pdf-a11y.py` (lancé par `npm run cv`, par la CI et par `tests/cv.spec.js`) |
 | 9.x | Structure : titres hiérarchisés, régions (`header`/`main`/`footer`), lien d'évitement | Conforme | audit axe (règles `region`, `heading-order`) |
 | 10.7 | Ouverture d'un nouvel onglet annoncée | Conforme | 14/14 liens externes : `rel="noopener"` + `<span class="sr-only"> (nouvel onglet)</span>` |
 | 11.1 / 11.2 | Champs étiquetés, aide à la saisie | Conforme | `label for` sur les 4 champs + `aria-describedby` vers aide et message |
@@ -86,11 +88,20 @@ Reproduire la mesure : `npm run vitals` (met à jour `docs/performance.json`).
    automatisables) : l'absence de violation ne vaut pas conformité totale.
 4. **Pas de mesure d'audience** : aucune donnée de conversion ni de comportement visiteur.
 5. **Lighthouse via API PageSpeed** : quota `429` sans clé ; utiliser `PSI_KEY=... npm run audit`.
-6. **CV PDF non balisé.** Le PDF est produit par Chrome (`print to PDF`) : la langue
-   (`/Lang fr-FR`), le titre, l'auteur, le sujet et les mots-clés sont renseignés et le
-   texte reste sélectionnable, mais le document n'est pas **balisé** (pas d'ordre de
-   lecture structuré pour un lecteur d'écran). Pour un PDF pleinement conforme, produire
-   une version balisée (Word → PDF/A) ou publier la même source en HTML.
+6. **CV PDF : balisé, pas certifié PDF/UA-1.** Le PDF est produit par Chromium
+   (`page.pdf({ tagged: true })`) : il porte un vrai arbre de structure
+   (`/StructTreeRoot` : `H1`, `H2`, `P`, `L`/`LI`/`Lbl`, `Link`), la langue
+   (`/Lang fr-FR`), le titre, l'auteur et `/ViewerPreferences /DisplayDocTitle`.
+   L'ordre de lecture existe donc pour un lecteur d'écran ; en revanche Chromium
+   n'émet pas les métadonnées XMP d'identification PDF/UA (et enveloppe les
+   conteneurs de mise en page dans des groupes `/NonStruct`), donc le document
+   n'est **pas certifiable PDF/UA-1 en l'état**. Le contrôle
+   `tools/check-pdf-a11y.py` tourne à chaque génération et en CI : une perte de
+   balisage fait échouer la chaîne. Une version **HTML** accessible du même
+   contenu est publiée (`cv.html`), ce qui couvre le besoin sans PDF.
+   Si une certification PDF/UA ou PDF/A est exigée (appel d'offres, administration),
+   passer par une source Word exportée en PDF/A balisé, ou par WeasyPrint
+   (`--pdf-variant pdf/ua-1`), en refaisant la mise en page sur une page.
 
 ## 6. Règle de maintenance
 

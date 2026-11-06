@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CV d'Andy Rakotondrabe – Rédacteur web freelance SEO</title>
+  <meta name="description" content="CV d'Andy Rakotondrabe, rédacteur web freelance SEO : parcours, missions chez IGN France, Android MT et NuMedia, compétences, téléchargement du PDF.">
+  <meta name="author" content="Andy Rakotondrabe">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://andy261mdg-ui.github.io/portfolio/cv.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Andy Rakotondrabe">
+  <meta property="og:url" content="https://andy261mdg-ui.github.io/portfolio/cv.html">
+  <meta property="og:title" content="CV d'Andy Rakotondrabe · Rédacteur web freelance SEO">
+  <meta property="og:description" content="Parcours, missions (IGN France, Android MT, NuMedia), compétences : le CV d'Andy Rakotondrabe, rédacteur web freelance SEO.">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:image" content="https://andy261mdg-ui.github.io/portfolio/assets/img/andy-rakotondrabe-og-cover.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Portrait d'Andy Rakotondrabe, rédacteur web freelance SEO et guest blogger">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CV d'Andy Rakotondrabe · Rédacteur web freelance SEO">
+  <meta name="twitter:description" content="Parcours, missions (IGN France, Android MT, NuMedia), compétences : le CV d'Andy Rakotondrabe, rédacteur web freelance SEO.">
+  <meta name="twitter:image" content="https://andy261mdg-ui.github.io/portfolio/assets/img/andy-rakotondrabe-og-cover.jpg">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#2563eb">
+
+  <link rel="preload" href="assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=24">
+
+  <!-- Données structurées (schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://andy261mdg-ui.github.io/portfolio/cv.html#page",
+    "url": "https://andy261mdg-ui.github.io/portfolio/cv.html",
+    "name": "CV d'Andy Rakotondrabe – Rédacteur web freelance SEO",
+    "description": "CV d'Andy Rakotondrabe, rédacteur web freelance SEO : parcours, missions chez IGN France, Android MT et NuMedia, compétences, téléchargement du PDF.",
+    "inLanguage": "fr-FR",
+    "dateModified": "2026-11-06",
+    "isPartOf": { "@id": "https://andy261mdg-ui.github.io/portfolio/#website" },
+    "about": { "@id": "https://andy261mdg-ui.github.io/portfolio/#person" }
+  }
+  </script>
+
+  <style>
+    /* ------------------------------------------------------------------
+       CV : page consultable en ligne ET source du PDF (npm run cv).
+       Les règles d'impression vivent ici, pas dans style.css : la feuille
+       du site n'a pas de @media print, elle ne concerne que l'écran.
+       ------------------------------------------------------------------ */
+
+    /* ---------- Écran ---------- */
+    .cv {
+      padding: 56px 0 72px;
+    }
+
+    .cv-doc {
+      max-width: 760px;
+      display: grid;
+      gap: 26px;
+    }
+
+    .cv-head {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 18px;
+    }
+
+    .cv-name {
+      font-size: clamp(1.9rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .cv-titre {
+      margin-top: 6px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .cv-contact {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 2px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .cv-contact .label {
+      display: inline-block;
+      min-width: 88px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .cv-actions {
+      margin-top: 18px;
+    }
+
+    .cv-section h2 {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 700;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .cv-section p,
+    .cv-section li {
+      color: var(--text-muted);
+    }
+
+    .cv-section p + p,
+    .cv-section ul {
+      margin-top: 6px;
+    }
+
+    .cv-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .cv-item + .cv-item,
+    .cv-role + .cv-item,
+    .cv-section ul + .cv-item {
+      margin-top: 12px;
+    }
+
+    .cv-item strong {
+      color: var(--text);
+    }
+
+    .cv-date {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .cv-role {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .cv-section ul {
+      padding-left: 20px;
+    }
+
+    .cv-maj {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    /* ---------- Impression (PDF A4, une page) ---------- */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html,
+      body {
+        background: #fff;
+      }
+
+      body {
+        font-size: 9.3pt;
+        line-height: 1.36;
+        padding: 4.2mm 15mm;
+        margin: 0;
+      }
+
+      .skip-link,
+      .site-header,
+      .site-footer,
+      .cv-actions {
+        display: none !important;
+      }
+
+      /* Dans un PDF, un lien n'ouvre pas de nouvel onglet : la précision
+         réservée aux lecteurs d'écran du site n'a plus de sens et alourdirait
+         le texte extrait du document. */
+      .sr-only {
+        display: none !important;
+      }
+
+      .container {
+        width: auto;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .cv {
+        padding: 0;
+      }
+
+      .cv-doc {
+        display: block;
+        max-width: none;
+      }
+
+      .cv-head {
+        padding-bottom: 2mm;
+        margin-bottom: 1.8mm;
+      }
+
+      .cv-name {
+        font-size: 19pt;
+        letter-spacing: 0.4px;
+        line-height: 1.2;
+      }
+
+      .cv-titre {
+        margin-top: 1mm;
+        font-size: 11pt;
+      }
+
+      .cv-contact {
+        margin-top: 2mm;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        column-gap: 2.5mm;
+        row-gap: 0.3mm;
+        align-items: baseline;
+        font-size: 8.6pt;
+        line-height: 1.35;
+      }
+
+      .cv-contact li {
+        display: contents;
+      }
+
+      .cv-contact .label {
+        min-width: 0;
+      }
+
+      .cv-section {
+        margin-bottom: 1.1mm;
+        break-inside: avoid;
+      }
+
+      .cv-section h2 {
+        font-size: 9pt;
+        letter-spacing: 1.2px;
+        margin-bottom: 1.1mm;
+        padding-bottom: 0.7mm;
+      }
+
+      .cv-section p + p,
+      .cv-section ul {
+        margin-top: 0.2mm;
+      }
+
+      .cv-item {
+        gap: 4mm;
+      }
+
+      .cv-item + .cv-item,
+      .cv-role + .cv-item,
+      .cv-section ul + .cv-item {
+        margin-top: 0.7mm;
+      }
+
+      .cv-date {
+        font-size: 8.6pt;
+      }
+
+      .cv-role {
+        font-size: 9pt;
+      }
+
+      .cv-section ul {
+        padding-left: 4mm;
+      }
+
+      .cv-maj {
+        margin-top: 0.8mm;
+        font-size: 8pt;
+        text-align: right;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./" aria-label="Andy Rakotondrabe, accueil">
+        <span class="brand-mark" aria-hidden="true"><img src="assets/img/logo-icon.png" alt="" width="280" height="152"></span>
+        <span class="brand-name">Andy Rakotondrabe</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenu" class="cv">
+    <div class="container">
+      <div class="cv-doc">
+        <div class="cv-head">
+          <h1 class="cv-name">Andy Rakotondrabe</h1>
+          <p class="cv-titre">Rédacteur web freelance SEO · NTIC &amp; high-tech · Guest blogger</p>
+
+          <ul class="cv-contact">
+            <li><span class="label">Email :</span> <a href="mailto:andy261mdg@gmail.com">andy261mdg@gmail.com</a></li>
+            <li><span class="label">WhatsApp :</span> <a href="https://wa.me/261345186663">+261 34 51 866 63</a></li>
+            <li><span class="label">LinkedIn :</span> <a href="https://www.linkedin.com/in/andy-rakotondrabe/" target="_blank" rel="noopener">linkedin.com/in/andy-rakotondrabe<span class="sr-only"> (nouvel onglet)</span></a></li>
+            <li><span class="label">Site web :</span> <a href="./">andy261mdg-ui.github.io/portfolio</a></li>
+          </ul>
+
+          <p class="cv-actions">
+            <a class="btn btn-primary" href="assets/cv/CV-Andy-Rakotondrabe.pdf" download>Télécharger le CV en PDF</a>
+          </p>
+        </div>
+
+        <section class="cv-section">
+          <h2>Profil</h2>
+          <p>Rédacteur web freelance et guest blogger spécialisé dans les NTIC et la high-tech.
+            Plus de 15 ans d'expérience en veille IT et en rédaction SEO : articles, tutoriels,
+            dossiers, guides d'achat. J'intègre et je publie sous WordPress. Des centaines
+            d'articles pour une dizaine de médias et marques, en collaboration à distance.
+            Je vous réponds sous 48 heures ouvrées.</p>
+        </section>
+
+        <section class="cv-section">
+          <h2>Expérience</h2>
+
+          <p class="cv-item"><strong>Rédacteur web freelance</strong><span class="cv-date">2010 – présent</span></p>
+          <p class="cv-role">Indépendant</p>
+          <ul>
+            <li>Contenus pour médias et marques : articles, fiches produits, billets de blog, textes SEO</li>
+            <li>Références : NeozOne (2019 – 2022), Fredzone, Daily Geek Show, MinuteNews</li>
+          </ul>
+
+          <p class="cv-item"><strong>IGN France</strong><span class="cv-date">déc. 2024 – présent</span></p>
+          <p class="cv-role">Guest blogger</p>
+          <ul>
+            <li>Veille quotidienne et choix des brèves à traiter (high-tech, cinéma, anime, manga)</li>
+            <li>Articles piliers et satellites validés par le client, communiqués de presse et tests de produits</li>
+            <li>Traduction de l'actualité de l'anglais vers le français lors des grands événements</li>
+          </ul>
+
+          <p class="cv-item"><strong>Android MT (Ouest-France)</strong><span class="cv-date">avr. 2024 – présent</span></p>
+          <p class="cv-role">Guest blogger</p>
+          <ul>
+            <li>Choix quotidien de sujets evergreen, en autonomie complète</li>
+            <li>Rédaction et publication directe sous WordPress : tutoriels, trucs et astuces</li>
+          </ul>
+
+          <p class="cv-item"><strong>Le Mag Auto Prestige</strong><span class="cv-date">2024</span></p>
+          <p class="cv-role">Rédacteur</p>
+          <ul>
+            <li>Proposition de sujets de dossiers</li>
+          </ul>
+
+          <p class="cv-item"><strong>NuMedia</strong><span class="cv-date">fév. 2023 – présent</span></p>
+          <p class="cv-role">Pigiste</p>
+          <ul>
+            <li>Autonomie complète : choix des sujets et des formats, planification et publication sous WordPress</li>
+            <li>Articles d'actualité, dossiers pratiques, comparatifs et top 10 (tech, société, lifestyle)</li>
+          </ul>
+
+          <p class="cv-item"><strong>Le Mag Jeux High-Tech</strong><span class="cv-date">juin 2021 – 2025</span></p>
+          <p class="cv-role">Guest blogger</p>
+          <ul>
+            <li>Brèves fournies par le client, sujets choisis en autonomie, veille IT et intégration WordPress</li>
+          </ul>
+
+          <p class="cv-item"><strong>PhonAndroid</strong><span class="cv-date">sept. 2020 – juil. 2022</span></p>
+          <p class="cv-role">Rédacteur web</p>
+          <ul>
+            <li>Articles longs uniquement : guides d'achat, comparatifs et dossiers</li>
+          </ul>
+
+          <p class="cv-item"><strong>TWO</strong><span class="cv-date">sept. 2008 – fév. 2010</span></p>
+          <p class="cv-role">Opérateur média</p>
+
+          <p class="cv-item"><strong>VIVETIC</strong><span class="cv-date">sept. 2006 – sept. 2008</span></p>
+          <p class="cv-role">Animateur web</p>
+        </section>
+        <section class="cv-section">
+          <h2>Formation</h2>
+          <p class="cv-item"><strong>Master 2 en Philosophie</strong><span class="cv-date">2009 – 2013</span></p>
+          <p class="cv-role">Université d'Antananarivo</p>
+          <ul>
+            <li>Analyse, argumentation et rigueur rédactionnelle au service de la structure et de la clarté des contenus</li>
+          </ul>
+        </section>
+
+        <section class="cv-section">
+          <h2>Compétences</h2>
+          <p><strong>Rédaction</strong> : articles, tutoriels, dossiers, guides d'achat, fiches produits,
+            newsletters, communiqués</p>
+          <p><strong>SEO</strong> : mots-clés, structure, maillage, articles piliers et satellites,
+            réécriture et optimisation</p>
+          <p><strong>Éditorial</strong> : ligne éditoriale, planification, veille IT, relecture, correction
+            et traduction de l'anglais</p>
+          <p><strong>Technique</strong> : intégration et publication sous WordPress</p>
+        </section>
+
+        <p class="cv-maj">Mis à jour : novembre 2026</p>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-copy">© <span id="year">2026</span> Andy Rakotondrabe · SEO Content Writer &amp; Guest Blogger</p>
+      <p class="footer-links">
+        <a href="./">Accueil</a>
+        <a href="mailto:andy261mdg@gmail.com">Email</a>
+        <a href="confidentialite.html">Confidentialité</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=11"></script>
+</body>
+</html>
