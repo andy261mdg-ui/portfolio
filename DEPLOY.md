@@ -77,8 +77,14 @@ GitHub Pages republie automatiquement à chaque `push`.
 2. Si vous utilisez un **domaine personnalisé**, remplacer les URL absolues dans
    `index.html` (`canonical`, `og:url`, `og:image`, `twitter:image`, JSON-LD),
    `robots.txt` et `sitemap.xml`.
-3. Déclarer le site dans **Google Search Console** et **Bing Webmaster Tools**
-   (soumission du sitemap).
-4. Tester la carte de partage (LinkedIn Post Inspector, opengraph.xyz) après le premier
+3. **Google Search Console** (propriété par URL : `https://andy261mdg-ui.github.io/portfolio/`) :
+   Paramètres → Propriété → Vérification de la propriété → méthode **« Balise HTML »** ;
+   copier le jeton fourni par Google et l'insérer dans le `<head>` d'`index.html` :
+   `<meta name="google-site-verification" content="VOTRE_JETON">` (une seule ligne,
+   aucune ressource tierce chargée). Après déploiement, cliquer sur « Vérifier » dans
+   l'outil, puis soumettre `sitemap.xml`.
+4. **Bing Webmaster Tools** : importer la vérification depuis la Search Console
+   (pas de balise `msvalidate.01` supplémentaire), puis soumettre le sitemap.
+5. Tester la carte de partage (LinkedIn Post Inspector, opengraph.xyz) après le premier
    déploiement.
 
