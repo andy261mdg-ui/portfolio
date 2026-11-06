@@ -9,6 +9,7 @@ import os
 import sys
 
 from pypdf import PdfWriter
+from pypdf.generic import NameObject, TextStringObject
 
 METADONNEES = {
     "/Title": "CV — Andy Rakotondrabe · Rédacteur web freelance SEO",
@@ -27,6 +28,9 @@ METADONNEES = {
 def main(chemin):
     ecrivain = PdfWriter(clone_from=chemin)
     ecrivain.add_metadata(METADONNEES)
+    # Langue du document (catalogue, pas l'info dict) : détection de langue des
+    # moteurs et prise en charge par les lecteurs d'écran.
+    ecrivain.root_object[NameObject("/Lang")] = TextStringObject("fr-FR")
     temporaire = chemin + ".tmp"
     with open(temporaire, "wb") as fichier:
         ecrivain.write(fichier)
