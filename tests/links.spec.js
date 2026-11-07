@@ -38,6 +38,22 @@ test("images : alt et dimensions déclarées (pas de décalage de mise en page)"
   expect(problemes).toEqual([]);
 });
 
+test("images : alt sémantique (porteuse renseignée, décoratives vides)", async ({ page }) => {
+  const rapport = await page.evaluate(() => {
+    const portrait = document.querySelector(".hero-photo img");
+    const autres = [...document.querySelectorAll("img")].filter((i) => i !== portrait);
+    return {
+      portrait: portrait ? portrait.getAttribute("alt") : null,
+      decoratives: autres.length,
+      altNonVides: autres.filter((i) => (i.getAttribute("alt") || "") !== "").length
+    };
+  });
+
+  expect(rapport.portrait, "alt du portrait renseigné").toContain("Andy Rakotondrabe");
+  expect(rapport.decoratives, "au moins un logo décoratif").toBeGreaterThan(0);
+  expect(rapport.altNonVides, "les logos décoratifs gardent alt vide").toBe(0);
+});
+
 test("identifiants uniques et cibles aria valides", async ({ page }) => {
   const rapport = await page.evaluate(() => {
     const ids = [...document.querySelectorAll("[id]")].map((e) => e.id);
@@ -69,6 +85,7 @@ test("ressources techniques servies (404 compris)", async ({ request }) => {
     "/",
     "/robots.txt",
     "/sitemap.xml",
+    "/llms.txt",
     "/css/style.css",
     "/js/main.js",
     "/cv.html",

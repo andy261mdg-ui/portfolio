@@ -1,0 +1,34 @@
+# Andy Rakotondrabe — Rédacteur web freelance SEO
+
+> Rédacteur web freelance SEO spécialisé NTIC et high-tech : articles, tutoriels,
+> dossiers, guides d'achat et fiches produits. Plus de 6 200 articles publiés,
+> +15 ans d'expérience (IGN France, Android MT/Ouest-France, NuMedia).
+> Disponible pour de nouvelles missions · réponse sous 48 heures ouvrées.
+
+Ce site est un portfolio professionnel en français. Aucun cookie, aucune mesure
+d'audience, aucune donnée vendue.
+
+## Pages
+
+- [Accueil](https://andy261mdg-ui.github.io/portfolio/): profil, prestations, réalisations, FAQ et formulaire de contact
+- [CV en ligne](https://andy261mdg-ui.github.io/portfolio/cv.html): parcours, compétences et publications
+- [Confidentialité](https://andy261mdg-ui.github.io/portfolio/confidentialite.html): mentions légales et données personnelles
+
+## Prestations
+
+- Rédaction d'articles de blog et de contenus SEO
+- Fiches produits e-commerce
+- Newsletters et emails marketing
+- Réécriture et optimisation de contenus
+- Relecture et correction
+
+## Contact
+
+- Email : andy261mdg@gmail.com
+- LinkedIn : https://www.linkedin.com/in/andy-rakotondrabe/
+
+## Notes techniques
+
+- Données structurées schema.org : Person, ProfessionalService, FAQPage
+- Sitemap : https://andy261mdg-ui.github.io/portfolio/sitemap.xml
+- Délai de réponse unique annoncé sur tout le site : 48 heures ouvrées

@@ -38,7 +38,7 @@
        aucune requête tierce bloquante. Licence : assets/fonts/LICENSE-Inter.txt -->
   <link rel="preload" href="assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=26">
+  <link rel="stylesheet" href="css/style.css?v=27">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -100,6 +100,7 @@
           "itemListElement": [
             {
               "@type": "Offer",
+              "availability": "https://schema.org/LimitedAvailability",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Articles de blog et contenus SEO",
@@ -108,6 +109,7 @@
             },
             {
               "@type": "Offer",
+              "availability": "https://schema.org/LimitedAvailability",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Fiches produits e-commerce",
@@ -116,6 +118,7 @@
             },
             {
               "@type": "Offer",
+              "availability": "https://schema.org/LimitedAvailability",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Newsletters et emails marketing",
@@ -124,6 +127,7 @@
             },
             {
               "@type": "Offer",
+              "availability": "https://schema.org/LimitedAvailability",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Réécriture et optimisation de contenus",
@@ -132,6 +136,7 @@
             },
             {
               "@type": "Offer",
+              "availability": "https://schema.org/LimitedAvailability",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Relecture et correction",
@@ -200,6 +205,14 @@
               "@type": "Answer",
               "text": "Oui : mes publications sont consultables sur les pages auteur d'IGN France, d'Android MT (Ouest-France), de NuMedia, du Mag Jeux High-Tech, de Fredzone, de JustGeek et de NeozOne."
             }
+          },
+          {
+            "@type": "Question",
+            "name": "Êtes-vous disponible pour de nouvelles missions ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui — je suis disponible pour de nouvelles missions. Décrivez votre volume, votre fréquence et vos délais dans le formulaire : je vous réponds sous 48 heures ouvrées."
+            }
           }
         ]
       }
@@ -258,6 +271,7 @@
             <a class="btn btn-secondary" href="#realisations">Voir mes réalisations</a>
             <a class="btn btn-secondary" href="assets/cv/CV-Andy-Rakotondrabe.pdf" download>Télécharger mon CV (PDF)</a>
           </div>
+          <p class="hero-availability">Disponible pour de nouvelles missions</p>
           <p class="hero-reassurance">Réponse sous 48 heures ouvrées.</p>
           <p class="hero-meta">+15 ans d'expérience · plus de 6&nbsp;200 articles publiés · IGN France · Android MT · NuMedia</p>
         </div>
@@ -271,7 +285,7 @@
               src="assets/img/andy-rakotondrabe-portrait-600.jpg"
               srcset="assets/img/andy-rakotondrabe-portrait-300.jpg 300w, assets/img/andy-rakotondrabe-portrait-600.jpg 600w"
               sizes="(max-width: 860px) 190px, 300px"
-              alt="Portrait d'Andy Rakotondrabe"
+              alt="Portrait d'Andy Rakotondrabe, rédacteur web freelance SEO"
               width="300" height="300"
               fetchpriority="high" decoding="async">
           </picture>
@@ -688,6 +702,15 @@
                 <a href="#realisations">Voir mes réalisations</a>.</p>
             </div>
           </details>
+
+          <details class="faq-item" name="faq">
+            <summary>Êtes-vous disponible pour de nouvelles missions ?</summary>
+            <div class="faq-answer">
+              <p>Oui — je suis disponible pour de nouvelles missions. Décrivez votre volume,
+                votre fréquence et vos délais dans le formulaire : je vous réponds sous
+                48 heures ouvrées.</p>
+            </div>
+          </details>
         </div>
 
         <p class="faq-cta">Une autre question ?
@@ -718,6 +741,10 @@
                 <span class="contact-label">CV</span>
                 <a href="cv.html">Consulter le CV en ligne</a>
                 <a href="assets/cv/CV-Andy-Rakotondrabe.pdf" download>Télécharger la version PDF</a>
+              </li>
+              <li>
+                <span class="contact-label">Disponibilité</span>
+                <span class="contact-value">Disponible pour de nouvelles missions</span>
               </li>
             </ul>
           </div>
@@ -750,6 +777,35 @@
               </select>
             </div>
             <div class="form-row">
+              <label for="cf-volume">Volume estimé <span class="label-optional">(facultatif)</span></label>
+              <select id="cf-volume" name="volume">
+                <option value="">Sans préférence</option>
+                <option>Ponctuel (1 à 5 contenus)</option>
+                <option>Régulier (5 à 20 par mois)</option>
+                <option>Volume important (plus de 20 par mois)</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="cf-frequency">Fréquence souhaitée <span class="label-optional">(facultatif)</span></label>
+              <select id="cf-frequency" name="frequency">
+                <option value="">Sans préférence</option>
+                <option>À la carte</option>
+                <option>Hebdomadaire</option>
+                <option>2 à 3 par semaine</option>
+                <option>Quotidien</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="cf-deadline">Échéance souhaitée <span class="label-optional">(facultatif)</span></label>
+              <select id="cf-deadline" name="deadline">
+                <option value="">Sans préférence</option>
+                <option>Dès que possible</option>
+                <option>Sous 1 mois</option>
+                <option>Sous 3 mois</option>
+                <option>À définir ensemble</option>
+              </select>
+            </div>
+            <div class="form-row">
               <label for="cf-message">Message</label>
               <textarea id="cf-message" name="message" rows="5" maxlength="2000" required
                 aria-describedby="cf-message-help cf-message-error"></textarea>
@@ -765,8 +821,8 @@
             </div>
             <button class="btn btn-primary" type="submit" aria-describedby="form-hint">Envoyer le message</button>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            <p class="form-hint" id="form-hint">Vos données (nom, email, message) servent uniquement à
-              vous répondre sous 48 heures ouvrées, via Formspree.
+            <p class="form-hint" id="form-hint">Vos données (nom, email, message et préférences de projet)
+              servent uniquement à vous répondre sous 48 heures ouvrées, via Formspree.
               <a href="confidentialite.html">Politique de confidentialité</a>.</p>
           </form>
         </div>
@@ -786,6 +842,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=11"></script>
+  <script src="js/main.js?v=12"></script>
 </body>
 </html>

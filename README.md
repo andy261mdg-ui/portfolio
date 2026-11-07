@@ -27,7 +27,7 @@ robots.txt            Autorise l'indexation et déclare le sitemap
 sitemap.xml           Plan du site (accueil, CV, confidentialité)
 package.json          Dépendances de TEST uniquement (le site reste sans build)
 playwright.config.js  Deux profils de test : 1366×900 et 390×844
-tests/                70 tests : formulaire, accessibilité (axe), liens, CV, non-régression
+tests/                90 tests : formulaire, accessibilité (axe), liens, CV, non-régression
 docs/                 audit.md (registre RGAA) + performance.json (Web Vitals mesurés)
 .github/workflows/qa.yml  CI : tests à chaque push + contrôle hebdomadaire du site
 tools/serve.mjs       Serveur statique pour les tests (aucune dépendance)
@@ -52,7 +52,7 @@ Le site livré n'a **aucune dépendance** : `package.json` ne contient que des o
 
 ```bash
 npm install     # une seule fois (outils de test uniquement)
-npm test        # 70 tests sur deux profils : 1366×900 et 390×844
+npm test        # 90 tests sur deux profils : 1366×900 et 390×844
 npm run guard   # échoue si css/js a changé sans incrémenter ?v=
 npm run live    # contrôle le site réellement publié
 npm run vitals  # Web Vitals du site publié → docs/performance.json
@@ -109,7 +109,9 @@ HTML est archivé automatiquement en cas d'échec.
   (`npm run live`), qui vérifie aussi le positionnement (SEO dans le title,
   « intention de recherche », « GEO » : voir `tools/check-live.mjs`).
 - **URL canonique** : `https://andy261mdg-ui.github.io/portfolio/`.
-- **`robots.txt`** + **`sitemap.xml`** à la racine.
+- **`robots.txt`** + **`sitemap.xml`** + **`llms.txt`** à la racine (résumé du site
+  pour les moteurs génératifs, standard llmstxt.org ; robots IA explicitement
+  autorisés dans `robots.txt`, en cohérence avec le positionnement GEO).
 - **Police auto-hébergée** : Inter (variable, sous-ensemble latin, 47 Ko en woff2) servie
   depuis `assets/fonts/` avec `preload`. Supprime la requête tierce bloquante
   (≈ 950 ms mesurés sur le chemin critique) et n'expose plus l'adresse IP des visiteurs.
@@ -193,7 +195,7 @@ Trois gestes à faire à chaque modification publiée :
 3. **Cohérence des données structurées** : si les questions de la FAQ ou les
    prestations changent, mettre à jour le bloc JSON-LD correspondant (`FAQPage`,
    `hasOfferCatalog`). Un commentaire de rappel suit le bloc dans `index.html`.
-4. **Lancer les tests** : `npm test` (80 tests, ~2 min). Tout défaut corrigé doit être
+4. **Lancer les tests** : `npm test` (90 tests, ~2 min). Tout défaut corrigé doit être
    verrouillé par une assertion dans `tests/` — sinon il revient.
 
 Conventions à respecter :
@@ -212,7 +214,8 @@ Conventions à respecter :
 - **Justification** : bords gauche ET droit alignés **à toutes les largeurs**, smartphone
   compris (plus de retour en fer à gauche sous 640 px : `hyphens: auto` avec `lang="fr"`
   compense les lignes courtes). Périmètre : tous les textes de blocs — promesse, tagline,
-  réassurance et méta du hero, chapôs de section, paragraphes et listes de contenu
+  disponibilité, réassurance et méta du hero, chapôs de section, paragraphes et listes de
+  contenu
   (À propos, mentions légales), textes des cartes, questions/réponses de la FAQ (listes
   numérotées comprises), fer de page FAQ, aide et statut du formulaire, intro Contact,
   puis les textes du CV (titre, paragraphes et listes de section). Exclus : titres,
@@ -225,10 +228,13 @@ Conventions à respecter :
   « Réalisations », emails) : le mot ne se coupe que s'il ne tient pas.
 - **Hero** : hiérarchie de lecture figée — `.hero-subtitle` = signature de marque
   (discrète), `.hero-promise` = bénéfice client (message principal, barre d'accent),
-  `.hero-tagline` = livrables, puis un seul CTA primaire (`Parlons de votre projet`)
-  suivi de `.hero-reassurance` (« Réponse sous 48 heures ouvrées. »). Modifier le délai de
-  réponse impose de mettre à jour les trois emplacements (hero, formulaire, message
-  de succès) — la promesse doit rester identique partout.
+  `.hero-tagline` = livrables, puis un seul CTA primaire (`Parlons de votre projet`),
+  la pastille `.hero-availability` (« Disponible pour de nouvelles missions » — statut
+  stable, sans date à maintenir) et `.hero-reassurance` (« Réponse sous 48 heures
+  ouvrées. »). Modifier le délai de réponse impose de mettre à jour les trois
+  emplacements (hero, formulaire, message de succès) — la promesse doit rester
+  identique partout. La disponibilité est reprise dans la liste de contact et dans
+  la FAQ (JSON-LD FAQPage synchronisé).
 
 ## Faits éditoriaux (source de vérité)
 
@@ -324,13 +330,17 @@ visiteur : le site fonctionne donc avant même la configuration.
   `aria-describedby` et doublé de `aria-invalid`, focus placé sur le premier champ fautif,
   résumé annoncé par la région `role="status"` (RGAA 11.10). Sans JavaScript, la validation
   native du navigateur reprend la main (`required`, `type="email"`).
-- **Qualification sans friction** : le menu « Type de prestation » (facultatif) reprend les
-  cinq offres et alimente l'objet du message (`_subject`), sans ajouter de champ obligatoire.
+- **Qualification sans friction** : trois menus facultatifs après « Type de prestation » —
+  volume estimé, fréquence souhaitée et échéance — renseignés sans saisie libre ; le type
+  de prestation reprend les cinq offres et alimente l'objet du message (`_subject`).
+  Aucun champ obligatoire ajouté, et la qualification est reprise dans le repli mailto.
 - **Un seul délai annoncé** : « 48 heures ouvrées » (chapeau, aide du formulaire, message de succès).
 - **Réseau coupé / service indisponible** : après 10 s d'attente, un lien `mailto`
   pré-rempli remplace le message d'erreur.
-- **Données personnelles** : nom, email et message transitent par Formspree (conformité RGPD
-  annoncée par le service) et ne servent qu'à répondre au message.
+- **Données personnelles** : nom, email, message et préférences de projet (volume,
+  fréquence, échéance — facultatifs) transitent par Formspree (conformité RGPD
+  annoncée par le service) et ne servent qu'à répondre au message. Liste reprise
+  dans `confidentialite.html`.
 - Le bouton **« Copier l'adresse »** et le lien `mailto` de la section contact restent
   disponibles en secours ; la copie est confirmée visuellement **et** annoncée via une
   région `role="status"` (lecteurs d'écran).

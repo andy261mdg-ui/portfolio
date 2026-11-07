@@ -8,7 +8,7 @@ test.describe("Structure et contenu", () => {
   test("grilles complètes (6 / 6 / 6) et aucun débordement horizontal", async ({ page }) => {
     await expect(page.locator("#services .cards-grid > *")).toHaveCount(6);
     await expect(page.locator("#realisations .cards-grid > *")).toHaveCount(6);
-    await expect(page.locator(".faq-item")).toHaveCount(6);
+    await expect(page.locator(".faq-item")).toHaveCount(7);
 
     const debordement = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth
@@ -38,6 +38,15 @@ test.describe("Structure et contenu", () => {
     await expect(page.locator(".hero-actions .btn-primary")).toHaveText("Parlons de votre projet");
     await expect(page.locator(".hero-actions .btn").last()).toContainText("PDF");
     await expect(page.locator(".hero-reassurance")).toContainText("48 heures ouvrées");
+  });
+
+  test("disponibilité annoncée dans le hero et la liste de contact", async ({ page }) => {
+    await expect(page.locator(".hero-availability")).toHaveText(
+      "Disponible pour de nouvelles missions"
+    );
+    await expect(page.locator(".contact-list")).toContainText(
+      "Disponible pour de nouvelles missions"
+    );
   });
 });
 
@@ -166,7 +175,7 @@ test.describe("Alignement des textes (mobile & tablette)", () => {
     { width: 768, height: 1024 },
   ];
   const TEXTES =
-    ".hero-tagline, .hero-promise, .hero-reassurance, .hero-meta, " +
+    ".hero-tagline, .hero-promise, .hero-availability, .hero-reassurance, .hero-meta, " +
     ".section-lead, .prose p, .prose li, .card-text, " +
     ".faq-item summary, .faq-answer p, .faq-answer li, .faq-cta, " +
     ".form-help, .form-status, .contact-lead";

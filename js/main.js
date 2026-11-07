@@ -255,10 +255,33 @@
       });
     });
 
+    // Bloc de qualification (menus facultatifs) repris dans le repli mailto
+    function qualificationLines() {
+      var lignes = [];
+      var champs = [
+        ["volume", "Volume estimé"],
+        ["frequency", "Fréquence souhaitée"],
+        ["deadline", "Échéance"]
+      ];
+      champs.forEach(function (paire) {
+        var champ = form.elements[paire[0]];
+        if (champ && champ.value) {
+          lignes.push(paire[1] + " : " + champ.value);
+        }
+      });
+      return lignes;
+    }
+
     function buildMailto(name, email, subject, message) {
+      var corps = message;
+      var lignes = qualificationLines();
+      if (lignes.length) {
+        corps += "\n\n" + lignes.join("\n");
+      }
+
       var body =
         "Bonjour Andy,\n\n" +
-        message +
+        corps +
         "\n\n— " +
         (name || "Visiteur") +
         "\n" +
@@ -298,7 +321,7 @@
         return;
       }
       hintEl.textContent = isRemote
-        ? "Vos données (nom, email, message) servent uniquement à vous répondre sous 48 heures ouvrées, via Formspree. "
+        ? "Vos données (nom, email, message et préférences de projet) servent uniquement à vous répondre sous 48 heures ouvrées, via Formspree. "
         : "Ce formulaire ouvre votre logiciel de messagerie avec un message pré-rempli. " +
           "Sans messagerie configurée, écrivez directement à ";
 

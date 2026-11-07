@@ -1,4 +1,20 @@
+# Site statique professionnel : tout le contenu est public.
 User-agent: *
+Allow: /
+
+# Moteurs génératifs (GEO) : autorisés explicitement. Le site vise la
+# citation dans les réponses des IA — bloquer ces robots contredirait
+# le positionnement affiché (section GEO, FAQ, données structurées).
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://andy261mdg-ui.github.io/portfolio/sitemap.xml
