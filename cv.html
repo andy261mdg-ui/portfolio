@@ -35,7 +35,7 @@
   <meta name="theme-color" content="#2563eb">
 
   <link rel="preload" href="assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=25">
+  <link rel="stylesheet" href="css/style.css?v=26">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -286,6 +286,17 @@
 
       .cv-role {
         font-size: 9pt;
+      }
+
+      /* À l'écran, ces textes sont justifiés (règle commune de style.css) ;
+         le PDF garde le fer à gauche d'origine pour ne pas décaler la
+         pagination A4 d'une page. */
+      .cv-titre,
+      .cv-section p,
+      .cv-section li {
+        text-align: left;
+        -webkit-hyphens: manual;
+        hyphens: manual;
       }
 
       .cv-section ul {

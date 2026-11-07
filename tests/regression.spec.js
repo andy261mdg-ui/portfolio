@@ -156,3 +156,87 @@ test.describe("Menu de navigation", () => {
     await expect(bouton).toHaveAttribute("aria-expanded", "false");
   });
 });
+
+test.describe("Alignement des textes (mobile & tablette)", () => {
+  test.skip(({ isMobile }) => !isMobile, "une seule passe, exécutée sur le projet mobile");
+
+  const PAGES = ["/", "/confidentialite.html"];
+  const VUES = [
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+  ];
+  const TEXTES =
+    ".hero-tagline, .hero-promise, .hero-reassurance, .hero-meta, " +
+    ".section-lead, .prose p, .prose li, .card-text, " +
+    ".faq-item summary, .faq-answer p, .faq-answer li, .faq-cta, " +
+    ".form-help, .form-status, .contact-lead";
+
+  test("tous les textes de blocs sont justifiés", async ({ page }) => {
+    for (const url of PAGES) {
+      await page.goto(url);
+      for (const vue of VUES) {
+        await page.setViewportSize(vue);
+        if (url === "/") {
+          // Ouvre la première question : les réponses font partie du périmètre.
+          await page.evaluate(() => {
+            const item = document.querySelector(".faq-item");
+            if (item && !item.hasAttribute("open")) item.setAttribute("open", "");
+          });
+        }
+
+        const etats = await page.evaluate((selecteur) => {
+          return [...document.querySelectorAll(selecteur)].map((el) => ({
+            cible: el.className || el.tagName,
+            alignement: getComputedStyle(el).textAlign,
+          }));
+        }, TEXTES);
+
+        expect(etats.length, `${url} @ ${vue.width} px`).toBeGreaterThan(0);
+        for (const etat of etats) {
+          expect(etat.alignement, `${url} @ ${vue.width} px — ${etat.cible}`).toBe(
+            "justify"
+          );
+        }
+      }
+    }
+  });
+
+  test("photo du hero alignée sur la colonne de texte", async ({ page }) => {
+    await page.goto("/");
+    for (const vue of VUES) {
+      await page.setViewportSize(vue);
+      const ecart = await page.evaluate(() => {
+        const photo = document.querySelector(".hero-photo").getBoundingClientRect();
+        const texte = document.querySelector(".hero-tagline").getBoundingClientRect();
+        return Math.abs(photo.left - texte.left);
+      });
+      expect(ecart, `écart à ${vue.width} px`).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test("intro Contact sur la mesure commune des blocs de texte", async ({ page }) => {
+    await page.goto("/");
+    for (const vue of VUES) {
+      await page.setViewportSize(vue);
+      const largeurs = await page.evaluate(() => ({
+        intro: document.querySelector(".contact-lead").getBoundingClientRect().width,
+        mesure: document.querySelector(".about-box").getBoundingClientRect().width,
+      }));
+      expect(
+        Math.abs(largeurs.intro - largeurs.mesure),
+        `à ${vue.width} px`
+      ).toBeLessThanOrEqual(2);
+    }
+  });
+
+  test("aucun débordement horizontal", async ({ page }) => {
+    await page.goto("/");
+    for (const vue of VUES) {
+      await page.setViewportSize(vue);
+      const debordement = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+      );
+      expect(debordement, `à ${vue.width} px`).toBe(0);
+    }
+  });
+});

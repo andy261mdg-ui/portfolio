@@ -45,3 +45,39 @@ test("CV : PDF balisé (structure de lecture, langue, titre affiché)", async ()
   expect(controle.stdout.trim(), controle.stdout + controle.stderr).toContain("OK");
   expect(controle.status).toBe(0);
 });
+
+test("CV : textes justifiés à l'écran, fer à gauche en impression (PDF)", async ({ page }) => {
+  await page.goto("/cv.html");
+
+  const VUES = [
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 }
+  ];
+
+  for (const vue of VUES) {
+    await page.setViewportSize(vue);
+    const etats = await page.evaluate(() => {
+      const cibles = ".cv-titre, .cv-section p, .cv-section li";
+      return [...document.querySelectorAll(cibles)].map((el) => ({
+        cible: el.className || el.tagName,
+        alignement: getComputedStyle(el).textAlign
+      }));
+    });
+    expect(etats.length).toBeGreaterThan(0);
+    for (const etat of etats) {
+      expect(etat.alignement, `écran ${vue.width} px — ${etat.cible}`).toBe("justify");
+    }
+  }
+
+  // Le PDF (npm run cv) imprime cette page : le fer à gauche d'origine doit y
+  // être conservé, sinon la mise en page A4 d'une page se décale.
+  await page.emulateMedia({ media: "print" });
+  const enImpression = await page.evaluate(() => {
+    const cibles = ".cv-titre, .cv-section p, .cv-section li";
+    return [...document.querySelectorAll(cibles)].map((el) => getComputedStyle(el).textAlign);
+  });
+  expect(enImpression.length).toBeGreaterThan(0);
+  for (const alignement of enImpression) {
+    expect(alignement).toBe("left");
+  }
+});

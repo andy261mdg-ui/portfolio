@@ -193,7 +193,7 @@ Trois gestes à faire à chaque modification publiée :
 3. **Cohérence des données structurées** : si les questions de la FAQ ou les
    prestations changent, mettre à jour le bloc JSON-LD correspondant (`FAQPage`,
    `hasOfferCatalog`). Un commentaire de rappel suit le bloc dans `index.html`.
-4. **Lancer les tests** : `npm test` (70 tests, ~2 min). Tout défaut corrigé doit être
+4. **Lancer les tests** : `npm test` (80 tests, ~2 min). Tout défaut corrigé doit être
    verrouillé par une assertion dans `tests/` — sinon il revient.
 
 Conventions à respecter :
@@ -209,9 +209,16 @@ Conventions à respecter :
   (`min(400px, 100%)`) : leurs cartes portent un paragraphe de mission, et la
   justification a besoin d'une mesure suffisante (≈ 29 em). Voir le commentaire du bloc
   « Texte justifié » dans `css/style.css`.
-- **Justification** : bords gauche et droit alignés dès qu'un bloc atteint ~22 em de
-  mesure ; en dessous (colonnes de cartes étroites, écrans < 640 px) le texte repasse
-  en fer à gauche — justifier des lignes courtes crée des blancs entre les mots.
+- **Justification** : bords gauche ET droit alignés **à toutes les largeurs**, smartphone
+  compris (plus de retour en fer à gauche sous 640 px : `hyphens: auto` avec `lang="fr"`
+  compense les lignes courtes). Périmètre : tous les textes de blocs — promesse, tagline,
+  réassurance et méta du hero, chapôs de section, paragraphes et listes de contenu
+  (À propos, mentions légales), textes des cartes, questions/réponses de la FAQ (listes
+  numérotées comprises), fer de page FAQ, aide et statut du formulaire, intro Contact,
+  puis les textes du CV (titre, paragraphes et listes de section). Exclus : titres,
+  métadonnées, labels et liens — lignes uniques, aucun effet visuel. La dernière ligne
+  de chaque bloc reste en fer à gauche (définition du justify). Le PDF du CV, lui, garde
+  son fer à gauche : `@media print` dans `cv.html` (pagination A4 inchangée).
 - **Taille de texte** : zéro débordement horizontal jusqu'à 200 % (test automatique) —
   d'où `min-height` (et non `height`) sur l'en-tête, `flex-wrap` sur la navigation, et
   `overflow-wrap: anywhere` sur les mots non coupables (« Rakotondrabe »,
