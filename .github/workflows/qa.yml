@@ -16,7 +16,9 @@ jobs:
       - name: Récupérer le dépôt
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # nécessaire au garde-fou des versions (?v=)
+          # Historique complet : le garde-fou des versions compare à GUARD_BASE
+          # (SHA avant le push) — fetch-depth: 2 ne voyait que le dernier commit.
+          fetch-depth: 0
 
       - name: Installer Node
         uses: actions/setup-node@v4
@@ -40,6 +42,11 @@ jobs:
 
       - name: Garde-fou des versions d'assets
         run: node tools/check-asset-versions.mjs
+        env:
+          # Push : SHA du commit précédant le push (couvre les pushes
+          # multi-commits ; fetch-depth: 0 garantit qu'il est fetché).
+          # Autres événements : vide → le script retombe sur HEAD~1.
+          GUARD_BASE: ${{ github.event.before }}
 
       - name: Garde-fou de la disponibilité
         run: node tools/check-availability.mjs

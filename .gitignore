@@ -20,3 +20,7 @@ blob-report/
 
 # Sources haute définition (conservées en local, jamais déployées)
 sources/
+
+# Mesures Lighthouse générées par npm run audit
+# (docs/performance.json, lui, reste versionné : c'est un relevé daté)
+docs/lighthouse.json

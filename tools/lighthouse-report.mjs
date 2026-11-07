@@ -1,5 +1,7 @@
 // Récupère les scores Lighthouse via l'API PageSpeed Insights (mobile + desktop)
 // et enregistre une synthèse dans docs/. À lancer manuellement après publication.
+// Code 1 si moins des deux stratégies réussissent : jamais de sortie « verte »
+// sur un audit partiel ou raté (défaut ancien : exit 0 même si tout échouait).
 import { mkdir, writeFile } from "node:fs/promises";
 
 const URL_CIBLE = process.env.PSI_URL || "https://andy261mdg-ui.github.io/portfolio/";
@@ -65,4 +67,12 @@ if (resultats.length) {
   await mkdir("docs", { recursive: true });
   await writeFile("docs/lighthouse.json", JSON.stringify(resultats, null, 2) + "\n", "utf8");
   console.log("Écrit dans docs/lighthouse.json");
+}
+
+if (resultats.length < 2) {
+  console.error(
+    `Audit incomplet : ${resultats.length}/2 stratégies réussi(es) — scores partiels non concluants ` +
+      `(quota PSI : clé PSI_KEY requise, voir README).`
+  );
+  process.exit(1);
 }

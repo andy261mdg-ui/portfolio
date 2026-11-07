@@ -63,13 +63,13 @@ GitHub Pages republie automatiquement à chaque `push`.
 - Le fichier **`.nojekyll`** est inclus : GitHub sert les fichiers tels quels (sans Jekyll).
 - Tous les liens sont **relatifs** : le site fonctionne aussi dans un sous-dossier (`/portfolio/`).
 - Le formulaire de contact envoie les messages **directement vers andy261mdg@gmail.com**
-  via **Formspree** (service externe, 50 envois/mois au niveau gratuit). L'endpoint se
-  configure en une ligne dans `index.html` (attribut `action` du formulaire) — voir la
-  section « Contact » du [README](README.md). Tant qu'il n'est pas configuré, le formulaire
-  ouvre le logiciel de messagerie du visiteur (repli `mailto`).
-- Pensez à envoyer aussi `assets/` (CV PDF et images) et `cv.html` (CV en ligne) :
-  ils font partie du site.
-- `sources/` (originaux haute définition) est ignoré par Git : il n'est jamais publié.
+  via **Formspree** (service externe, 50 envois/mois au niveau gratuit) — endpoint déjà
+  configuré dans `index.html` (attribut `action` du formulaire), voir la section
+  « Contact » du [README](README.md). En cas d'échec d'envoi (quota, réseau), le site
+  bascule automatiquement sur un lien `mailto` pré-rempli : aucun message n'est perdu.
+- Tout fichier versionné (pages, `assets/`, `css/`, `js/`, `tools/`) part avec
+  `git push` — rien à envoyer à la main. Seul `sources/` (originaux haute
+  définition) est ignoré par Git : il n'est jamais publié.
 
 ## Référencement après mise en ligne
 

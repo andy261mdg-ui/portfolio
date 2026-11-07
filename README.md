@@ -24,7 +24,7 @@ cv.html               CV consultable en ligne (accessible) ET source du PDF
 css/style.css         Design (fond neutre + accent bleu) + @font-face auto-hébergé
 js/main.js            Menu mobile, scrollspy, FAQ, formulaire de contact, copie de l'email, année
 robots.txt            Autorise l'indexation et déclare le sitemap
-sitemap.xml           Plan du site (accueil, CV, confidentialité)
+sitemap.xml           Plan du site (accueil, CV, confidentialité, PDF du CV)
 package.json          Dépendances de TEST uniquement (le site reste sans build)
 playwright.config.js  Deux profils de test : 1366×900 et 390×844
 tests/                90 tests : formulaire, accessibilité (axe), liens, CV, non-régression
@@ -58,14 +58,14 @@ npm test        # 90 tests sur deux profils : 1366×900 et 390×844
 npm run guard   # échoue si css/js a changé sans incrémenter ?v= ou si la disponibilité diverge
 npm run live    # contrôle le site réellement publié
 npm run vitals  # Web Vitals du site publié → docs/performance.json
-npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run audit)
+npm run audit   # scores Lighthouse (clé PSI_KEY requise) → docs/lighthouse.json (non versionné)
 npm run cv      # régénère le CV PDF balisé depuis cv.html
 ```
 
 | Fichier | Ce qui est vérifié |
 |---|---|
 | `tests/contact.spec.js` | soumission vide → 3 erreurs visibles, `aria-invalid`, focus sur le premier champ, résumé `role="status"` ; email invalide ; nettoyage à la saisie ; envoi intercepté ; menu à 7 options ; copie annoncée |
-| `tests/regression.spec.js` | grilles 6/6/6, aucun débordement (texte à 100 % **et** 200 %), année, hiérarchie du hero, scrollspy (5 sections + `aria-current`), FAQ exclusive, menu mobile (Échap, clic extérieur, sortie de focus), disponibilité (état lu dans la classe du badge : hero, contact, FAQ) |
+| `tests/regression.spec.js` | grilles 6/6/6, aucun débordement (texte à 100 % **et** 200 %), année, hiérarchie du hero, scrollspy (5 sections + `aria-current`), FAQ exclusive, menu mobile (Échap, clic extérieur, sortie de focus), disponibilité (état lu dans la classe du badge : hero, contact, FAQ visible et FAQ JSON-LD) |
 | `tests/a11y.spec.js` | axe-core (WCAG 2.1 AA) sur les quatre pages : **aucune violation sérieuse ou critique** ; `lang` et `<title>` |
 | `tests/links.spec.js` | liens externes (`rel="noopener"` + « nouvel onglet »), ancres internes, `alt` + dimensions des images, identifiants uniques, ressources en 200, `sitemap.xml`, meta description ≤ 160 caractères, FAQPage JSON-LD synchronisé avec la FAQ visible |
 | `tests/cv.spec.js` | CV : page en ligne (un seul `h1`, sections ordonnées, lien PDF) et **PDF balisé** — arbre de structure, `/Lang`, titre affiché, une page (`tools/check-pdf-a11y.py`) |
@@ -186,9 +186,11 @@ les métadonnées XMP d'identification) — détail et solutions dans `docs/audi
 
 Trois gestes à faire à chaque modification publiée :
 
-1. **Versionner les assets** : incrémenter `?v=` sur `css/style.css` (et `js/main.js`
-   si le script change) dans **les quatre pages** — `index.html`, `cv.html`,
-   `404.html`, `confidentialite.html`. GitHub Pages sert ces fichiers avec
+1. **Versionner les assets** : incrémenter `?v=` sur `css/style.css` dans **les
+   quatre pages** — `index.html`, `cv.html`, `404.html`, `confidentialite.html` —
+   et sur `js/main.js` dans les **trois pages qui chargent le script**
+   (`index.html`, `cv.html`, `confidentialite.html` ; `404.html` n'en charge pas).
+   GitHub Pages sert ces fichiers avec
    `Cache-Control: max-age=600` : sans incrément, un visiteur peut conserver
    l'ancienne version jusqu'à 10 minutes. **`npm run guard` vérifie ce point** (et échoue
    en CI si l'incrément a été oublié).
@@ -339,6 +341,12 @@ Le formulaire (`#contact-form` dans `index.html`) envoie les messages **directem
 andy261mdg@gmail.com** via [Formspree](https://formspree.io) : aucun serveur à héberger.
 
 ### Activer l'envoi direct (une seule ligne à changer)
+
+> **État actuel : actif.** L'endpoint Formspree en place dans `index.html` est
+> `https://formspree.io/f/mpppnpkj` (compte et formulaire « Portfolio » déjà
+> créés, domaine `andy261mdg-ui.github.io` autorisé). Ne remplacez cette ligne
+> que pour changer de formulaire : écraser l'endpoint actif par un placeholder
+> casserait l'envoi direct en production.
 
 1. Créer un compte gratuit sur [formspree.io](https://formspree.io) avec
    **andy261mdg@gmail.com**, puis confirmer l'adresse email.

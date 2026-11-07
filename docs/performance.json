@@ -1,48 +1,54 @@
 {
   "url": "https://andy261mdg-ui.github.io/portfolio/",
-  "genere_le": "2026-11-05",
-  "methode": "Chrome local (Playwright), viewport 1366x900, cache vidé, réseau du poste. Mesures PerformanceObserver : ce n'est pas un audit Lighthouse complet.",
-  "lcp_ms": 1440,
-  "cls": 0.015,
-  "fcp_ms": 1440,
-  "ttfb_ms": 536,
-  "dom_content_loaded_ms": 1132,
-  "load_ms": 1141,
+  "genere_le": "2026-11-07",
+  "methode": "Chrome local (Playwright), viewport 1366x900, cache vidé, réseau du poste, rendu forcé après chargement (capture) pour que la peinture soit enregistrée. Mesures PerformanceObserver : ce n'est pas un audit Lighthouse complet.",
+  "lcp_ms": 2428,
+  "cls": 0,
+  "fcp_ms": 2428,
+  "ttfb_ms": 309,
+  "dom_content_loaded_ms": 806,
+  "load_ms": 883,
   "transfert_ko": {
-    "html": 8,
-    "ressources": 68
+    "html": 10,
+    "ressources": 110
   },
   "requetes_tierces": [],
   "ressources_plus_longues": [
     {
-      "url": "andy261mdg-ui.github.io/portfolio/assets/fonts/inter-latin-var.woff2",
-      "debut_ms": 552,
-      "duree_ms": 440,
-      "ko": 47
-    },
-    {
-      "url": "andy261mdg-ui.github.io/portfolio/css/style.css?v=18",
-      "debut_ms": 553,
-      "duree_ms": 438,
-      "ko": 7
-    },
-    {
-      "url": "andy261mdg-ui.github.io/portfolio/js/main.js?v=9",
-      "debut_ms": 554,
-      "duree_ms": 348,
-      "ko": 5
+      "url": "andy261mdg-ui.github.io/portfolio/assets/img/logo-icon.png",
+      "debut_ms": 486,
+      "duree_ms": 365,
+      "ko": 38
     },
     {
       "url": "andy261mdg-ui.github.io/portfolio/assets/img/andy-rakotondrabe-portrai",
-      "debut_ms": 554,
-      "duree_ms": 329,
+      "debut_ms": 487,
+      "duree_ms": 341,
       "ko": 8
     },
     {
-      "url": "andy261mdg-ui.github.io/portfolio/assets/favicon.svg",
-      "debut_ms": 1215,
-      "duree_ms": 323,
-      "ko": 1
+      "url": "andy261mdg-ui.github.io/portfolio/assets/favicon-32.png",
+      "debut_ms": 886,
+      "duree_ms": 321,
+      "ko": 2
+    },
+    {
+      "url": "andy261mdg-ui.github.io/portfolio/js/main.js?v=12",
+      "debut_ms": 487,
+      "duree_ms": 201,
+      "ko": 5
+    },
+    {
+      "url": "andy261mdg-ui.github.io/portfolio/assets/fonts/inter-latin-var.woff2",
+      "debut_ms": 485,
+      "duree_ms": 191,
+      "ko": 47
+    },
+    {
+      "url": "andy261mdg-ui.github.io/portfolio/css/style.css?v=29",
+      "debut_ms": 486,
+      "duree_ms": 185,
+      "ko": 10
     }
   ]
 }

@@ -2,7 +2,7 @@
 // Source : cv.html (versionnée : c'est aussi le CV consultable en ligne)
 // Sortie : assets/cv/CV-Andy-Rakotondrabe.pdf (versionnée, liée par cv.html et index.html)
 // Raccourci : npm run cv
-import { chromium } from "playwright";
+import { chromium } from "@playwright/test";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { access, stat } from "node:fs/promises";
@@ -70,8 +70,28 @@ await navigateur.close();
 // Contrôle d'accessibilité : le PDF doit rester balisé (structure, langue,
 // titre affiché) et tenir sur une page. Sans ce garde-fou, une option perdue
 // dans page.pdf() repasserait inaperçue jusqu'à un audit.
+//
+// Interpréteur Python : certains environnements (macOS récents, distros
+// réparties) n'exposent que « python3 » — détection alignée sur tests/cv.spec.js.
+function pythonCmd() {
+  for (const cmd of ["python", "python3"]) {
+    const probe = spawnSync(cmd, ["--version"], { encoding: "utf8" });
+    if (probe.status === 0) return cmd;
+  }
+  return null;
+}
+
+const python = pythonCmd();
+if (!python) {
+  console.error(
+    "Python introuvable (« python » ni « python3 ») : métadonnées et contrôle " +
+      "d'accessibilité du PDF impossibles — installer Python 3 (pip install pypdf)."
+  );
+  process.exit(1);
+}
+
 for (const fichier of [SORTIE, VARIANTE]) {
-  const meta = spawnSync("python", ["tools/set-pdf-metadata.py", fichier], {
+  const meta = spawnSync(python, ["tools/set-pdf-metadata.py", fichier], {
     cwd: RACINE,
     stdio: "inherit"
   });
@@ -80,7 +100,7 @@ for (const fichier of [SORTIE, VARIANTE]) {
     process.exit(1);
   }
 
-  const controle = spawnSync("python", ["tools/check-pdf-a11y.py", fichier], {
+  const controle = spawnSync(python, ["tools/check-pdf-a11y.py", fichier], {
     cwd: RACINE,
     stdio: "inherit"
   });
