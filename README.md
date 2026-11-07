@@ -32,6 +32,8 @@ docs/                 audit.md (registre RGAA) + performance.json (Web Vitals me
 .github/workflows/qa.yml  CI : tests à chaque push + contrôle hebdomadaire du site
 tools/serve.mjs       Serveur statique pour les tests (aucune dépendance)
 tools/check-asset-versions.mjs  Garde-fou : ?v= incrémenté si un asset change
+tools/check-availability.mjs  Garde-fou : disponibilité cohérente (hero, contact, FAQ, JSON-LD, llms.txt)
+tools/availability-states.json  Les 3 états de disponibilité (textes, classe du badge, valeur schema.org)
 tools/check-live.mjs  Contrôle du site réellement publié
 tools/check-pdf-a11y.py  Contrôle du balisage du CV PDF (arbre de structure, langue, titre)
 tools/lighthouse-report.mjs  Scores Lighthouse via l'API PageSpeed (clé PSI_KEY)
@@ -53,7 +55,7 @@ Le site livré n'a **aucune dépendance** : `package.json` ne contient que des o
 ```bash
 npm install     # une seule fois (outils de test uniquement)
 npm test        # 90 tests sur deux profils : 1366×900 et 390×844
-npm run guard   # échoue si css/js a changé sans incrémenter ?v=
+npm run guard   # échoue si css/js a changé sans incrémenter ?v= ou si la disponibilité diverge
 npm run live    # contrôle le site réellement publié
 npm run vitals  # Web Vitals du site publié → docs/performance.json
 npm run audit   # scores Lighthouse (nécessite une clé : PSI_KEY=... npm run audit)
@@ -63,7 +65,7 @@ npm run cv      # régénère le CV PDF balisé depuis cv.html
 | Fichier | Ce qui est vérifié |
 |---|---|
 | `tests/contact.spec.js` | soumission vide → 3 erreurs visibles, `aria-invalid`, focus sur le premier champ, résumé `role="status"` ; email invalide ; nettoyage à la saisie ; envoi intercepté ; menu à 7 options ; copie annoncée |
-| `tests/regression.spec.js` | grilles 6/6/6, aucun débordement (texte à 100 % **et** 200 %), année, hiérarchie du hero, scrollspy (5 sections + `aria-current`), FAQ exclusive, menu mobile (Échap, clic extérieur, sortie de focus) |
+| `tests/regression.spec.js` | grilles 6/6/6, aucun débordement (texte à 100 % **et** 200 %), année, hiérarchie du hero, scrollspy (5 sections + `aria-current`), FAQ exclusive, menu mobile (Échap, clic extérieur, sortie de focus), disponibilité (état lu dans la classe du badge : hero, contact, FAQ) |
 | `tests/a11y.spec.js` | axe-core (WCAG 2.1 AA) sur les quatre pages : **aucune violation sérieuse ou critique** ; `lang` et `<title>` |
 | `tests/links.spec.js` | liens externes (`rel="noopener"` + « nouvel onglet »), ancres internes, `alt` + dimensions des images, identifiants uniques, ressources en 200, `sitemap.xml`, meta description ≤ 160 caractères, FAQPage JSON-LD synchronisé avec la FAQ visible |
 | `tests/cv.spec.js` | CV : page en ligne (un seul `h1`, sections ordonnées, lien PDF) et **PDF balisé** — arbre de structure, `/Lang`, titre affiché, une page (`tools/check-pdf-a11y.py`) |
@@ -198,6 +200,33 @@ Trois gestes à faire à chaque modification publiée :
 4. **Lancer les tests** : `npm test` (90 tests, ~2 min). Tout défaut corrigé doit être
    verrouillé par une assertion dans `tests/` — sinon il revient.
 
+### Protocole de disponibilité (3 états)
+
+Le site n'affiche qu'un seul statut à la fois, choisi parmi trois états — et **sans date
+de mise à jour** : la règle du site reste « des faits qui ne se périment pas ». La
+fraîcheur est portée par les réalisations datées (« depuis avril 2024 »), jamais par le
+badge. Passer en ambre ou en rouge est donc un choix éditorial conscient, pas un défaut.
+
+| État | Classe du badge | Libellé affiché | `availability` (JSON-LD) |
+|---|---|---|---|
+| `disponible` (défaut) | *(aucune)* | Disponible pour de nouvelles missions | `InStock` |
+| `limite` | `hero-availability--limite` | Disponibilité limitée — volume de missions réduit | `LimitedAvailability` |
+| `complet` | `hero-availability--complet` | Agenda complet actuellement — projets futurs bienvenus | `PreOrder` |
+
+**Changer d'état** (≈ 3 minutes) :
+
+1. `index.html` : classe **et** texte du badge `.hero-availability`, réponse de la FAQ
+   (contenu visible **et** JSON-LD), `availability` des 5 offres du `hasOfferCatalog`.
+2. `llms.txt` : ligne 6 — reprendre le libellé exact de l'état choisi.
+3. `npm run guard` : vérifie les 6 contrôles (texte du badge, contact, FAQ HTML,
+   FAQ JSON-LD, availability des 5 offres, llms.txt) et échoue au moindre écart —
+   aussi en CI.
+4. `npm test` puis commit. Les assertions suivent la classe du badge : aucun libellé
+   n'est écrit en dur dans les tests.
+
+`tools/availability-states.json` est la source des textes de référence ;
+`tools/check-live.mjs` accepte les trois libellés (contrôle hebdomadaire du site publié).
+
 Conventions à respecter :
 
 - **Lien sortant** (`target="_blank"`) : toujours avec `rel="noopener"` **et**
@@ -228,8 +257,10 @@ Conventions à respecter :
   « Réalisations », emails) : le mot ne se coupe que s'il ne tient pas.
 - **Hero** : hiérarchie de lecture figée — `.hero-subtitle` = signature de marque
   (discrète), `.hero-promise` = bénéfice client (message principal, barre d'accent),
-  `.hero-tagline` = livrables, la pastille `.hero-availability` (« Disponible pour de
-  nouvelles missions » — statut stable, sans date à maintenir), remontée au-dessus des
+  `.hero-tagline` = livrables, la pastille `.hero-availability` (statut à 3 états —
+  vert « Disponible pour de nouvelles missions » par défaut, variantes ambre `--limite`
+  et rouge `--complet` — sans date à maintenir, voir « Protocole de disponibilité »),
+  remontée au-dessus des
   CTA sous forme de badge vert (fond `#f0fdf4`, halo pulsé du point neutralisé sous
   `prefers-reduced-motion`), puis un seul CTA primaire (`Parlons de votre projet`) et
   `.hero-reassurance` (« Réponse sous 48 heures ouvrées. »). Modifier le délai de

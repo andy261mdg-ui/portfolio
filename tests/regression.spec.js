@@ -1,4 +1,5 @@
 const { test, expect } = require("@playwright/test");
+const ETATS = require("../tools/availability-states.json");
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
@@ -40,12 +41,18 @@ test.describe("Structure et contenu", () => {
     await expect(page.locator(".hero-reassurance")).toContainText("48 heures ouvrées");
   });
 
-  test("disponibilité annoncée dans le hero et la liste de contact", async ({ page }) => {
-    await expect(page.locator(".hero-availability")).toHaveText(
-      "Disponible pour de nouvelles missions"
-    );
-    await expect(page.locator(".contact-list")).toContainText(
-      "Disponible pour de nouvelles missions"
+  test("disponibilité annoncée dans le hero, la liste de contact et la FAQ", async ({ page }) => {
+    // L'état canonique est la classe du badge (protocole à 3 états, voir README) :
+    // les assertions suivent le statut affiché, jamais un libellé figé.
+    const classe = await page.locator(".hero-availability").getAttribute("class");
+    const etat =
+      Object.values(ETATS).find((e) => e.modificateur && classe.includes(e.modificateur)) ||
+      ETATS.disponible;
+
+    await expect(page.locator(".hero-availability")).toHaveText(etat.texte);
+    await expect(page.locator(".contact-list")).toContainText(etat.texte);
+    await expect(page.locator(".faq-item").last().locator(".faq-answer")).toContainText(
+      etat.reponseFaq
     );
   });
 });

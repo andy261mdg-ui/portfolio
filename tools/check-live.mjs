@@ -18,7 +18,8 @@ const CONTENUS = [
   ["titre orienté métier", /<title>[^<]*R[ée]dacteur web freelance/],
   ["CTA principal du hero", /Parlons de votre projet/],
   ["micro-réassurance 48 heures", /R[ée]ponse sous 48 heures ouvr[ée]es/],
-  ["disponibilité (signal hero)", /Disponible pour de nouvelles missions/],
+  // Les trois états du protocole de disponibilité sont acceptés (voir README).
+  ["disponibilité (signal hero)", /(Disponible pour de nouvelles missions|Disponibilité limitée — volume de missions réduit|Agenda complet actuellement — projets futurs bienvenus)/],
   ["type de prestation (menu)", /Type de prestation/],
   ["meta description ≤ 160 caractères", /<meta name="description" content="(?=[^"]{1,160}")[^"]*r[ée]dacteur web freelance[^"]*"/],
   ["données structurées FAQPage", /"@type":\s*"FAQPage"/],

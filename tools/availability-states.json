@@ -1,0 +1,20 @@
+{
+  "disponible": {
+    "modificateur": "",
+    "texte": "Disponible pour de nouvelles missions",
+    "reponseFaq": "Oui — je suis disponible pour de nouvelles missions. Décrivez votre volume, votre fréquence et vos délais dans le formulaire : je vous réponds sous 48 heures ouvrées.",
+    "schema": "https://schema.org/InStock"
+  },
+  "limite": {
+    "modificateur": "hero-availability--limite",
+    "texte": "Disponibilité limitée — volume de missions réduit",
+    "reponseFaq": "Oui, mais partiellement : ma disponibilité est limitée et le volume de missions est réduit. Décrivez votre volume, votre fréquence et vos délais dans le formulaire : je vous réponds sous 48 heures ouvrées avec les créneaux réellement disponibles.",
+    "schema": "https://schema.org/LimitedAvailability"
+  },
+  "complet": {
+    "modificateur": "hero-availability--complet",
+    "texte": "Agenda complet actuellement — projets futurs bienvenus",
+    "reponseFaq": "Mon agenda est actuellement complet, mais je planifie déjà les projets futurs. Décrivez votre volume, votre fréquence et vos délais dans le formulaire : je vous réponds sous 48 heures ouvrées avec la prochaine fenêtre de disponibilité.",
+    "schema": "https://schema.org/PreOrder"
+  }
+}

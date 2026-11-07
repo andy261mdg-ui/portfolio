@@ -38,7 +38,7 @@
        aucune requête tierce bloquante. Licence : assets/fonts/LICENSE-Inter.txt -->
   <link rel="preload" href="assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=28">
+  <link rel="stylesheet" href="css/style.css?v=29">
 
   <!-- Données structurées (schema.org) -->
   <script type="application/ld+json">
@@ -100,7 +100,7 @@
           "itemListElement": [
             {
               "@type": "Offer",
-              "availability": "https://schema.org/LimitedAvailability",
+              "availability": "https://schema.org/InStock",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Articles de blog et contenus SEO",
@@ -109,7 +109,7 @@
             },
             {
               "@type": "Offer",
-              "availability": "https://schema.org/LimitedAvailability",
+              "availability": "https://schema.org/InStock",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Fiches produits e-commerce",
@@ -118,7 +118,7 @@
             },
             {
               "@type": "Offer",
-              "availability": "https://schema.org/LimitedAvailability",
+              "availability": "https://schema.org/InStock",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Newsletters et emails marketing",
@@ -127,7 +127,7 @@
             },
             {
               "@type": "Offer",
-              "availability": "https://schema.org/LimitedAvailability",
+              "availability": "https://schema.org/InStock",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Réécriture et optimisation de contenus",
@@ -136,7 +136,7 @@
             },
             {
               "@type": "Offer",
-              "availability": "https://schema.org/LimitedAvailability",
+              "availability": "https://schema.org/InStock",
               "itemOffered": {
                 "@type": "Service",
                 "name": "Relecture et correction",
@@ -266,6 +266,10 @@
             Articles, tutoriels, dossiers, guides d'achat et fiches produits : des contenus pensés
             pour le référencement sur Google et pour la visibilité dans les réponses des IA (GEO).
           </p>
+          <!-- État canonique du protocole de disponibilité (3 états) : la classe de
+               ce badge (sans modificateur / --limite / --complet) pilote les autres
+               emplacements (contact, FAQ, JSON-LD, llms.txt). Vérifié par
+               tools/check-availability.mjs — voir README. -->
           <p class="hero-availability">Disponible pour de nouvelles missions</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#contact">Parlons de votre projet</a>

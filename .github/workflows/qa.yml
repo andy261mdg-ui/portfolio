@@ -41,6 +41,9 @@ jobs:
       - name: Garde-fou des versions d'assets
         run: node tools/check-asset-versions.mjs
 
+      - name: Garde-fou de la disponibilité
+        run: node tools/check-availability.mjs
+
       - name: Lancer les tests
         run: npm test
 
