@@ -175,7 +175,7 @@ test.describe("Alignement des textes (mobile & tablette)", () => {
     { width: 768, height: 1024 },
   ];
   const TEXTES =
-    ".hero-tagline, .hero-promise, .hero-availability, .hero-reassurance, .hero-meta, " +
+    ".hero-tagline, .hero-promise, .hero-reassurance, .hero-meta, " +
     ".section-lead, .prose p, .prose li, .card-text, " +
     ".faq-item summary, .faq-answer p, .faq-answer li, .faq-cta, " +
     ".form-help, .form-status, .contact-lead";
@@ -210,14 +210,14 @@ test.describe("Alignement des textes (mobile & tablette)", () => {
     }
   });
 
-  test("photo du hero alignée sur la colonne de texte", async ({ page }) => {
+  test("photo du hero centrée (mobile & tablette)", async ({ page }) => {
     await page.goto("/");
     for (const vue of VUES) {
       await page.setViewportSize(vue);
       const ecart = await page.evaluate(() => {
         const photo = document.querySelector(".hero-photo").getBoundingClientRect();
-        const texte = document.querySelector(".hero-tagline").getBoundingClientRect();
-        return Math.abs(photo.left - texte.left);
+        const hero = document.querySelector(".hero-inner").getBoundingClientRect();
+        return Math.abs((photo.left + photo.right) / 2 - (hero.left + hero.right) / 2);
       });
       expect(ecart, `écart à ${vue.width} px`).toBeLessThanOrEqual(1);
     }

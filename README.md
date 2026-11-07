@@ -214,7 +214,7 @@ Conventions à respecter :
 - **Justification** : bords gauche ET droit alignés **à toutes les largeurs**, smartphone
   compris (plus de retour en fer à gauche sous 640 px : `hyphens: auto` avec `lang="fr"`
   compense les lignes courtes). Périmètre : tous les textes de blocs — promesse, tagline,
-  disponibilité, réassurance et méta du hero, chapôs de section, paragraphes et listes de
+  réassurance et méta du hero, chapôs de section, paragraphes et listes de
   contenu
   (À propos, mentions légales), textes des cartes, questions/réponses de la FAQ (listes
   numérotées comprises), fer de page FAQ, aide et statut du formulaire, intro Contact,
@@ -228,13 +228,17 @@ Conventions à respecter :
   « Réalisations », emails) : le mot ne se coupe que s'il ne tient pas.
 - **Hero** : hiérarchie de lecture figée — `.hero-subtitle` = signature de marque
   (discrète), `.hero-promise` = bénéfice client (message principal, barre d'accent),
-  `.hero-tagline` = livrables, puis un seul CTA primaire (`Parlons de votre projet`),
-  la pastille `.hero-availability` (« Disponible pour de nouvelles missions » — statut
-  stable, sans date à maintenir) et `.hero-reassurance` (« Réponse sous 48 heures
-  ouvrées. »). Modifier le délai de réponse impose de mettre à jour les trois
-  emplacements (hero, formulaire, message de succès) — la promesse doit rester
-  identique partout. La disponibilité est reprise dans la liste de contact et dans
-  la FAQ (JSON-LD FAQPage synchronisé).
+  `.hero-tagline` = livrables, la pastille `.hero-availability` (« Disponible pour de
+  nouvelles missions » — statut stable, sans date à maintenir), remontée au-dessus des
+  CTA sous forme de badge vert (fond `#f0fdf4`, halo pulsé du point neutralisé sous
+  `prefers-reduced-motion`), puis un seul CTA primaire (`Parlons de votre projet`) et
+  `.hero-reassurance` (« Réponse sous 48 heures ouvrées. »). Modifier le délai de
+  réponse impose de mettre à jour les trois emplacements (hero, formulaire, message de
+  succès) — la promesse doit rester identique partout. La disponibilité est reprise
+  dans la liste de contact et dans la FAQ (JSON-LD FAQPage synchronisé). En
+  empilement (≤ 1048 px, smartphone et tablette), la photo du hero est centrée sur
+  l'écran (`justify-self: center`) ; les blocs de texte, eux, restent alignés sur la
+  mesure commune.
 
 ## Faits éditoriaux (source de vérité)
 
