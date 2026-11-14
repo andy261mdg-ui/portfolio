@@ -78,7 +78,7 @@ GitHub Pages republie automatiquement à chaque `push`.
 2. Si vous utilisez un **domaine personnalisé**, remplacer les URL absolues dans
    `index.html` (`canonical`, `og:url`, `og:image`, `twitter:image`, JSON-LD),
    `robots.txt` et `sitemap.xml`.
-3. **Google Search Console** (propriété par URL : `https://andy261mdg-ui.github.io/portfolio/`) :
+3. **Google Search Console** (propriété par URL : `https://andy.rakotondrabe.net/`) :
    Paramètres → Propriété → Vérification de la propriété → méthode **« Balise HTML »** ;
    copier le jeton fourni par Google et l'insérer dans le `<head>` d'`index.html` :
    `<meta name="google-site-verification" content="VOTRE_JETON">` (une seule ligne,

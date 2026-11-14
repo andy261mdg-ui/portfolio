@@ -17,4 +17,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://andy261mdg-ui.github.io/portfolio/sitemap.xml
+Sitemap: https://andy.rakotondrabe.net/sitemap.xml

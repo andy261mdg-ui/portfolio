@@ -1,7 +1,7 @@
 // Contrôle hebdomadaire du site réellement publié (GitHub Pages).
 // Détecte : page indisponible, ressources cassées, régression de contenu
 // (title, CTA du hero), sitemap et robots.txt.
-const BASE = process.env.LIVE_BASE || "https://andy261mdg-ui.github.io/portfolio/";
+const BASE = process.env.LIVE_BASE || "https://andy.rakotondrabe.net/";
 
 const ATTENDUES = [
   ["page d'accueil", BASE],

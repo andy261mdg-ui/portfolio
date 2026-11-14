@@ -10,9 +10,9 @@ d'audience, aucune donnée vendue.
 
 ## Pages
 
-- [Accueil](https://andy261mdg-ui.github.io/portfolio/): profil, prestations, réalisations, FAQ et formulaire de contact
-- [CV en ligne](https://andy261mdg-ui.github.io/portfolio/cv.html): parcours, compétences et publications
-- [Confidentialité](https://andy261mdg-ui.github.io/portfolio/confidentialite.html): mentions légales et données personnelles
+- [Accueil](https://andy.rakotondrabe.net/): profil, prestations, réalisations, FAQ et formulaire de contact
+- [CV en ligne](https://andy.rakotondrabe.net/cv.html): parcours, compétences et publications
+- [Confidentialité](https://andy.rakotondrabe.net/confidentialite.html): mentions légales et données personnelles
 
 ## Prestations
 
@@ -30,5 +30,5 @@ d'audience, aucune donnée vendue.
 ## Notes techniques
 
 - Données structurées schema.org : Person, ProfessionalService, FAQPage
-- Sitemap : https://andy261mdg-ui.github.io/portfolio/sitemap.xml
+- Sitemap : https://andy.rakotondrabe.net/sitemap.xml
 - Délai de réponse unique annoncé sur tout le site : 48 heures ouvrées

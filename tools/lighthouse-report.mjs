@@ -4,7 +4,7 @@
 // sur un audit partiel ou raté (défaut ancien : exit 0 même si tout échouait).
 import { mkdir, writeFile } from "node:fs/promises";
 
-const URL_CIBLE = process.env.PSI_URL || "https://andy261mdg-ui.github.io/portfolio/";
+const URL_CIBLE = process.env.PSI_URL || "https://andy.rakotondrabe.net/";
 
 const METRIQUES = {
   "first-contentful-paint": "FCP",

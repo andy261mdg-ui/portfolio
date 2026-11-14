@@ -3,7 +3,7 @@
 import { chromium } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 
-const URL_CIBLE = process.env.LIVE_BASE || "https://andy261mdg-ui.github.io/portfolio/";
+const URL_CIBLE = process.env.LIVE_BASE || "https://andy.rakotondrabe.net/";
 
 const navigateur = await chromium.launch(
   process.env.CI ? {} : { channel: "chrome" }

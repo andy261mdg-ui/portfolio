@@ -182,7 +182,7 @@ def main():
               font=load_font(REGULAR_CANDIDATES, 28), fill=GREY_DARK)
     draw.text((x, 518), "Guides d'achat  -  Contenus SEO",
               font=load_font(REGULAR_CANDIDATES, 28), fill=GREY_DARK)
-    draw.text((x, 566), "andy261mdg-ui.github.io/portfolio",
+    draw.text((x, 566), "andy.rakotondrabe.net",
               font=load_font(REGULAR_CANDIDATES, 24), fill=LIGHT_BLUE)
 
     card.save(

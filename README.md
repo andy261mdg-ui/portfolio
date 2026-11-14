@@ -3,7 +3,7 @@
 Site portfolio statique (une seule page) pour promouvoir l'activité de rédaction web
 d'Andy Rakotondrabe, **SEO Content Writer & Guest Blogger**.
 
-En ligne : <https://andy261mdg-ui.github.io/portfolio/>
+En ligne : <https://andy.rakotondrabe.net/>
 
 ## Ouvrir le site
 
@@ -110,7 +110,7 @@ HTML est archivé automatiquement en cas d'échec.
   verrouillée par `tests/links.spec.js` et par le contrôle du site publié
   (`npm run live`), qui vérifie aussi le positionnement (SEO dans le title,
   « intention de recherche », « GEO » : voir `tools/check-live.mjs`).
-- **URL canonique** : `https://andy261mdg-ui.github.io/portfolio/`.
+- **URL canonique** : `https://andy.rakotondrabe.net/`.
 - **`robots.txt`** + **`sitemap.xml`** + **`llms.txt`** à la racine (résumé du site
   pour les moteurs génératifs, standard llmstxt.org ; robots IA explicitement
   autorisés dans `robots.txt`, en cohérence avec le positionnement GEO).
@@ -344,14 +344,14 @@ andy261mdg@gmail.com** via [Formspree](https://formspree.io) : aucun serveur à 
 
 > **État actuel : actif.** L'endpoint Formspree en place dans `index.html` est
 > `https://formspree.io/f/mpppnpkj` (compte et formulaire « Portfolio » déjà
-> créés, domaine `andy261mdg-ui.github.io` autorisé). Ne remplacez cette ligne
+> créés, domaine `andy.rakotondrabe.net` autorisé). Ne remplacez cette ligne
 > que pour changer de formulaire : écraser l'endpoint actif par un placeholder
 > casserait l'envoi direct en production.
 
 1. Créer un compte gratuit sur [formspree.io](https://formspree.io) avec
    **andy261mdg@gmail.com**, puis confirmer l'adresse email.
 2. Créer un formulaire (nom : « Portfolio ») et autoriser le domaine
-   `andy261mdg-ui.github.io` (« Restrict to domain »).
+   `andy.rakotondrabe.net` (« Restrict to domain »).
 3. Copier l'endpoint fourni (`https://formspree.io/f/xxxxxxxx`) et le coller dans
    `index.html`, sur la balise du formulaire :
 
