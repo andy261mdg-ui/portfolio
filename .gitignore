@@ -24,3 +24,6 @@ sources/
 # Mesures Lighthouse générées par npm run audit
 # (docs/performance.json, lui, reste versionné : c'est un relevé daté)
 docs/lighthouse.json
+
+# Correspondance client (emails et coordonnées) : reste locale, jamais publiée
+brouillons-emails.md
