@@ -315,12 +315,11 @@ Règles de rédaction de ces blocs :
   `CV-Andy-Rakotondrabe-linkedin.pdf` est la variante sans liens cliquables, régénérée
   par le même `npm run cv` : elle ne peut plus se désynchroniser du CV en ligne (elle
   avait deux pages, un ancien argumentaire et un lien `bit.ly` retiré du site).
-- **Témoignages** : la section `#temoignages` est **commentée** dans `index.html` tant
-  qu'aucun avis client réel n'est disponible (un bloc « à venir » sur un site en ligne
-  nuit à la crédibilité). Pour la réactiver : décommenter le bloc, remplacer
-  « Citation du client » par un vrai témoignage, puis rajouter
-  `<li><a href="#temoignages">Témoignages</a></li>` dans `.nav-list`. Pensez aussi à
-  ajouter les avis dans le JSON-LD si vous souhaitez des étoiles dans les résultats.
+- **Témoignages** : la section `#temoignages` est **active** depuis le 19/11/2026, avec
+  deux avis clients réels (Grégory Laverne, Byothe.fr ; Benoît Bailleul, Android MT).
+  Ils sont repris dans le JSON-LD `ProfessionalService` (tableau `review`) et dans le
+  lien de navigation. Pour ajouter un témoignage : dupliquer un `<blockquote class="card">`
+  dans `index.html` et ajouter l'avis correspondant dans le JSON-LD.
 - **Site personnel** : l'ancien lien `bit.ly/375BslN` a été retiré (il pointait vers une
   recherche Google, pas vers un site). Pour le remettre, ajouter une entrée dans
   `.contact-list` de la section `#contact` avec l'URL réelle.
