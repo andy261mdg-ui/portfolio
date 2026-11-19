@@ -316,7 +316,7 @@ Règles de rédaction de ces blocs :
   par le même `npm run cv` : elle ne peut plus se désynchroniser du CV en ligne (elle
   avait deux pages, un ancien argumentaire et un lien `bit.ly` retiré du site).
 - **Témoignages** : la section `#temoignages` est **active** depuis le 19/11/2026, avec
-  deux avis clients réels (Grégory Laverne, Byothe.fr ; Benoît Bailleul, Android MT).
+  deux avis clients réels (Grégory LAVERNE, Byothe.fr ; Benoît BAILLEUL, Android MT).
   Ils sont repris dans le JSON-LD `ProfessionalService` (tableau `review`) et dans le
   lien de navigation. Pour ajouter un témoignage : dupliquer un `<blockquote class="card">`
   dans `index.html` et ajouter l'avis correspondant dans le JSON-LD.
